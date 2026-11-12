@@ -28,7 +28,7 @@ import gsap from 'gsap'
  * GPU PERFORMANCE OPTIMIZATIONS:
  * - When `opacity <= 0.005`, the mesh is marked `visible = false` and frame loop
  *   uniform calculations are immediately bypassed.
- * - Single plane geometry allocation with responsive viewport dimension scaling.
+ * - Single plane geometry allocation (96x96 subdivision for optimal vertex shader throughput) with responsive viewport dimension scaling.
  * 
  * @param {Object} props
  * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
@@ -279,7 +279,7 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
 
   return (
     <mesh ref={meshRef} position={[0, -0.45, -1.0]} rotation={[-Math.PI / 3.6, 0, 0]}>
-      <planeGeometry args={[planeWidth, planeHeight, 130, 130]} />
+      <planeGeometry args={[planeWidth, planeHeight, 96, 96]} />
       <shaderMaterial
         vertexShader={waveVertexShader}
         fragmentShader={waveFragmentShader}
