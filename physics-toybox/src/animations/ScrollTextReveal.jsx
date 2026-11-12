@@ -5,12 +5,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * ScrollTextReveal
+ * ============================================================================
+ * DANIAL® — ScrollTextReveal Kinetic Typography Component
+ * ============================================================================
  * 
- * Reusable scroll-controlled text component.
- * Words start with comfortable readability and progressively illuminate
- * to radiant white and glowing lavender highlights as the user scrolls.
- * Fully reversible when scrolling backward.
+ * PURPOSE:
+ * Reusable scroll-driven paragraph reveal component. Words start in a legible
+ * muted slate-lavender tone (#A09BB0 at 0.75 opacity for WCAG accessibility)
+ * and smoothly illuminate to bright radiant white (#FFFFFF) with radiant
+ * lavender highlights (#E9D5FF) as the user scrolls through the section.
+ * 
+ * INTERACTION:
+ * - Scrub-linked: animation smoothly tracks scrollbar movement bidirectionally.
+ * - Cleanup: automatically reverts GSAP context on unmount to avoid leaks.
  */
 export default function ScrollTextReveal({
   text,

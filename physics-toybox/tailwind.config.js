@@ -1,3 +1,21 @@
+/**
+ * ============================================================================
+ * DANIAL® — Tailwind CSS Design System Configuration
+ * ============================================================================
+ * 
+ * CORE BRAND PALETTE:
+ * - Obsidian Dark: #08070D (Base canvas)
+ * - Obsidian Surface / Card: #0E0B18, #130E22 (Translucent glass panels)
+ * - Royal Violet: #6D28D9 (Deep cosmic undertones)
+ * - Electric Purple: #8B5CF6 (Primary luminous energy accent)
+ * - Lavender: #A78BFA (Secondary highlights & badges)
+ * - Light Lilac: #E9D5FF (Primary high-contrast typographic text)
+ * 
+ * EDITORIAL TYPOGRAPHY:
+ * - Editorial: 'Syne', sans-serif (Display headlines, brand title)
+ * - Display: 'Space Grotesk', sans-serif (Body paragraphs, subheadings)
+ * - Mono: 'DM Mono', monospace (Eyebrows, coordinates, tech tags)
+ */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],

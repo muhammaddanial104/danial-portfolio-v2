@@ -6,6 +6,20 @@ import CharRevealLabel from '../animations/CharRevealLabel.jsx'
 import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
 import MagneticButton from '../animations/MagneticButton.jsx'
 
+/**
+ * ============================================================================
+ * DANIAL® — Contact Page Route (/contact)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 6: Concentric Energy Portal Rings (nested pulsating arcs, glossy
+ *   reflective obsidian stage, laser pillars, rising sparks).
+ * 
+ * CONTENT:
+ * - Direct contact triggers: email inquiry CTA with magnetic interaction.
+ * - Live channels: GitHub profile, status beacon ("Available for Q1/Q2 2026").
+ * - Obsidian glass communication card with encrypted transmission styling.
+ */
 export default function Contact() {
   return (
     <PageTransition className="pt-28 pb-20 md:pt-36 md:pb-28">

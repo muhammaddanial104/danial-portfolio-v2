@@ -3,6 +3,37 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 6: Concentric Energy Portal Rings (Contact Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A cinematic futuristic gateway comprised of concentric luminous circular arcs
+ * of electric purple and white neon light. Light emanates outward across a glossy
+ * mirror-reflective obsidian stage, while vertical light pillars and rising sparks
+ * invite the visitor to initiate collaboration or connect.
+ * 
+ * SHADER & GEOMETRY ARCHITECTURE:
+ * 1. Portal Arch Geometry:
+ *    - 9 concentric nested ring segments with alternating radius offsets.
+ *    - Rotation and pulsation driven by sinusoidal time functions.
+ * 
+ * 2. Glossy Reflective Floor (floorVertexShader / floorFragmentShader):
+ *    - Planar reflective shader receiving portal light spill and concentric ripples.
+ * 
+ * 3. Spark Pillars & Floating Light Embers:
+ *    - Vertical laser line pillars framing the sides of the stage.
+ *    - 160 rising energy embers with custom circular discard and twinkle glow.
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - Frame culling: when `opacity <= 0.005`, group is hidden and all animation loops halt.
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Custom Shader for Reflective Glossy Floor with Expanding Circular Ripples (Panel 6 Reference)
 const floorVertexShader = `
   varying vec2 vUv;

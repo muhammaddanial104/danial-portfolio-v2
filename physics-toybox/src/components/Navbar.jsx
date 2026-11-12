@@ -4,6 +4,24 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import MagneticButton from '../animations/MagneticButton.jsx'
 
+/**
+ * ============================================================================
+ * DANIAL® — Global Navigation Bar (Header)
+ * ============================================================================
+ * 
+ * DESIGN SYSTEM FEATURES:
+ * - Editorial Typography & Obsidian Glassmorphism:
+ *   Translucent frosted backdrop (`backdrop-blur-md`) with subtle violet border
+ *   that activates when the user scrolls past 15px.
+ * - Framer Motion layoutId Pill:
+ *   Desktop navigation links feature a shared spring-animated pill indicator
+ *   (`layoutId="navPill"`) that glides effortlessly between the active tabs.
+ * - Responsive Mobile Drawer:
+ *   Smooth slide-in drawer for screens < 768px, ensuring accessible navigation
+ *   on smartphones and tablets with automatic closure on URL change.
+ * - Magnetic CTA Button:
+ *   Interactive contact trigger with cursor pull physics.
+ */
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)

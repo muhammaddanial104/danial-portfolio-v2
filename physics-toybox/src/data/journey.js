@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * DANIAL® — Developer Journey & Milestones Data Store
+ * ============================================================================
+ * 
+ * Chronological evolution timeline highlighting key career epochs, technical
+ * breakthroughs, and creative milestones from foundations to 3D WebGL mastery.
+ */
 export const journeyData = [
   {
     year: '2026',

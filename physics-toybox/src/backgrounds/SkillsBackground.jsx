@@ -3,6 +3,37 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 3: Digital Network & Energy Grid (Skills Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A high-tech cybernetic neural matrix consisting of an undulating 2D wireframe
+ * lattice. Luminous nodes pulse with electric purple energy along the intersections,
+ * while vertical energy pillars reach upward into the obsidian void, symbolizing
+ * modern technical architecture and algorithmic mastery.
+ * 
+ * SHADER & GEOMETRY ARCHITECTURE:
+ * 1. Undulating Matrix Grid (nx=52, nz=32):
+ *    - Dual orthogonal line segments (X-lines and Z-lines) forming the mathematical plane.
+ *    - Compound sinusoidal wave formulas simulate propagating data waves across the terrain.
+ * 
+ * 2. Luminous Intersecting Nodes:
+ *    - Custom GLSL point shader with circular discard and glowing lavender cores.
+ * 
+ * 3. Vertical Telemetry Pillars:
+ *    - 38 vertical light streams shooting upward from high-amplitude matrix peaks.
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - Frame culling: when `opacity <= 0.005`, group is hidden and math loops are skipped.
+ * - In-place buffer attribute updates (`positions.needsUpdate = true`).
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Point shader with bright neon purple / lavender glow
 const nodeVertexShader = `
   uniform float uPixelRatio;

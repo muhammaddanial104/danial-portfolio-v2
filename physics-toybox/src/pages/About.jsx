@@ -6,6 +6,20 @@ import CharRevealLabel from '../animations/CharRevealLabel.jsx'
 import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
 import MagneticButton from '../animations/MagneticButton.jsx'
 
+/**
+ * ============================================================================
+ * DANIAL® — About Page Route (/about)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 4: Cosmic Violet Aurora & Nebulae (atmospheric drifting curtains).
+ * 
+ * CONTENT:
+ * - Editorial headline: "NOT JUST A DEVELOPER. AN EXPLORER OF WHAT IS POSSIBLE."
+ * - Personal developer manifesto and engineering ethos.
+ * - Creative principles (Craftsmanship, Spatial Immersion, Accessible Scalability).
+ * - Location, timezone, and availability telemetry.
+ */
 export default function About() {
   return (
     <PageTransition className="pt-28 pb-20 md:pt-36 md:pb-28">

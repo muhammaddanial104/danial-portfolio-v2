@@ -6,6 +6,20 @@ import CharRevealLabel from '../animations/CharRevealLabel.jsx'
 import MagneticButton from '../animations/MagneticButton.jsx'
 import { skillsData } from '../data/skills.js'
 
+/**
+ * ============================================================================
+ * DANIAL® — Skills Page Route (/skills)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 3: Digital Network & Energy Grid (undulating matrix wireframe, 1,600+
+ *   glowing nodes, vertical light streams).
+ * 
+ * CONTENT:
+ * - Domain categories: Creative Technology & 3D Web, Core Frontend Engineering,
+ *   Backend & Full-Stack Systems.
+ * - Proficiency tags and highlighted masteries.
+ */
 export default function Skills() {
   return (
     <PageTransition className="pt-28 pb-20 md:pt-36 md:pb-28">

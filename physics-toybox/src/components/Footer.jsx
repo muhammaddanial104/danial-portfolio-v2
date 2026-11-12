@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom'
 import { ArrowUp, Sparkles } from 'lucide-react'
 
+/**
+ * ============================================================================
+ * DANIAL® — Global Editorial Footer
+ * ============================================================================
+ * 
+ * FEATURES:
+ * - Brand Monogram & Copyright
+ * - Fast internal page navigation links matching all 6 primary routes
+ * - Smooth scroll-to-top micro-interaction trigger
+ * - Real-time active status beacon
+ */
 export default function Footer() {
   const scrollToTop = (e) => {
     e.preventDefault()

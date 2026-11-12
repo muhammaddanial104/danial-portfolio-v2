@@ -6,6 +6,20 @@ import CharRevealLabel from '../animations/CharRevealLabel.jsx'
 import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
 import { journeyData } from '../data/journey.js'
 
+/**
+ * ============================================================================
+ * DANIAL® — Journey Page Route (/journey)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 5: Topographic Terrain & River of Light (procedural mountains, glowing
+ *   contour lines, neon river path, celestial sphere).
+ * 
+ * CONTENT:
+ * - Chronological evolution timeline (2024 Foundations -> 2025 Full-Stack ->
+ *   2026 Creative Technologist & 3D Web Studio).
+ * - Key milestones and architectural breakthroughs.
+ */
 export default function Journey() {
   return (
     <PageTransition className="pt-28 pb-20 md:pt-36 md:pb-28">

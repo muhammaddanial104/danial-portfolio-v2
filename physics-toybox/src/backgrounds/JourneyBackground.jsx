@@ -2,6 +2,35 @@ import React, { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 5: Topographic Terrain & River of Light (Journey Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A stylized topographic mountain range rendered in luminous violet contour lines,
+ * flanking a central radiant neon river that winds through the obsidian valley floor.
+ * In the distance, a mysterious celestial sphere hovers above the mountain horizon,
+ * symbolizing personal evolution, technical discovery, and career trajectory.
+ * 
+ * SHADER & GEOMETRY ARCHITECTURE:
+ * 1. Topographic Elevation Shader (topoVertexShader / topoFragmentShader):
+ *    - 2D Simplex noise generates mountainous peaks with an excavated central valley path.
+ *    - Analytical contour lines created via `sin(vElevation * 38.0)` with sharp derivatives (`fwidth`).
+ *    - Sinuous river path with glowing lilac neon edge and moving energy pulses.
+ * 
+ * 2. Celestial Horizon Orb:
+ *    - Distant glowing sphere with atmospheric violet Fresnel rim lighting.
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - Frame culling: when `opacity <= 0.005`, group visibility is set to false and time progression stops.
+ * - Single procedural mesh replaces thousands of individual spline curves.
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Custom Vertex & Fragment Shaders for Neon Topographic Contour Terrain
 const topoVertexShader = `
   uniform float uTime;

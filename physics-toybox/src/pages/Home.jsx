@@ -9,6 +9,26 @@ import MagneticButton from '../animations/MagneticButton.jsx'
 import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
 import { projectsData } from '../data/projects.js'
 
+/**
+ * ============================================================================
+ * DANIAL® — Home Page Route (/)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 1: Liquid Chrome Waves (Obsidian #08070D & Electric Violet #8B5CF6).
+ * 
+ * EDITORIAL LAYOUT SECTIONS:
+ * 1. Cinematic Hero:
+ *    - Word-by-word reveal: "I CREATE DIGITAL WORLDS."
+ *    - Status badge: "DANIAL® ARCHIVE — ISSUE 2026.1"
+ *    - Editorial mission statement and interactive CTAs
+ * 2. Signature Highlights:
+ *    - Featured project previews with link-outs to /projects
+ * 3. Kinetic Editorial Philosophy:
+ *    - ScrollTextReveal illuminating developer vision and craftsmanship
+ * 4. Multi-World Navigation Portal:
+ *    - Cards linking to the other 5 immersive digital worlds
+ */
 export default function Home() {
   const containerVariants = {
     hidden: { opacity: 0 },

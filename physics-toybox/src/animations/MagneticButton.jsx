@@ -2,6 +2,22 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 
+/**
+ * ============================================================================
+ * DANIAL® — MagneticButton Interactive Component
+ * ============================================================================
+ * 
+ * PURPOSE:
+ * Creates an award-winning tactile magnetic button effect. When the cursor hovers
+ * near the button, GSAP pulls the button element toward the cursor coordinates.
+ * On mouse leave, an elastic bounce-back spring (`elastic.out(1.1, 0.4)`) snaps
+ * the button back to its origin.
+ * 
+ * VERSATILITY:
+ * Automatically renders as a React Router `<Link>`, an external anchor `<a>`,
+ * or a standard `<button>` depending on the presence of `to`, `href`, or `onClick`.
+ * Automatically disables magnetic translation on touch devices.
+ */
 export default function MagneticButton({
   children,
   className = '',

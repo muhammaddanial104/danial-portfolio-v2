@@ -3,6 +3,41 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 2: Particle Universe & Constellations (Projects Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A deep obsidian cosmos populated by luminous electric purple and lavender star nodes.
+ * Dynamic geometric constellation lines interconnect nearby stars based on spatial
+ * proximity. Mouse pointer interactions gently warp and rotate the stellar field,
+ * conveying infinite technical depth.
+ * 
+ * SHADER & GEOMETRY ARCHITECTURE:
+ * 1. Antialiased Circular Points (particleVertexShader / particleFragmentShader):
+ *    - Replaces default square point sprites with antialiased circular discs via
+ *      `gl_PointCoord` discard and radial smoothstep falloff.
+ *    - Depth-dependent perspective sizing creates realistic foreground/background depth.
+ * 
+ * 2. Constellation Lines (THREE.LineSegments):
+ *    - Pre-allocated dynamic buffer for up to 1,200 line segments.
+ *    - Proximity threshold connects nodes closer than 2.8 units with alpha scaled
+ *      inversely by distance.
+ * 
+ * 3. Two-Layer Parallax:
+ *    - Dynamic interactive foreground nodes (140 stars).
+ *    - Ambient background cosmic dust layer (650 micro-stars).
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - Frame culling: when `opacity <= 0.005`, mesh calculations and buffer updates halt.
+ * - Distance evaluations use squared Euclidean distance (`distSq`) to avoid Math.sqrt in loop.
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Custom Point Shaders for Glowing Violet & Lavender Stars
 const particleVertexShader = `
   uniform float uTime;

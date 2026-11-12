@@ -2,6 +2,36 @@ import React, { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 4: Cosmic Violet Aurora & Atmospheric Nebulae (About Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A breathtaking cosmic sky ablaze with an ethereal aurora borealis in electric violet,
+ * deep magenta, and luminous lilac. The aurora curtains drift and fold rhythmically
+ * above dark obsidian cloudscapes, interspersed with thousands of shimmering stars.
+ * 
+ * SHADER & RENDERING ARCHITECTURE:
+ * 1. Procedural Aurora Curtains (auroraFragmentShader):
+ *    - 3-octave Fractal Brownian Motion (FBM) with domain warping.
+ *    - Vertical curtain modulation (`smoothstep`) produces vertical light folds that
+ *      sway with time and respond subtly to pointer position.
+ *    - Obsidian sky gradient blending with luminous purple ribbons and warm lilac peaks.
+ * 
+ * 2. Drifting Starfield:
+ *    - 500 circular star points using custom antialiased disc shaders.
+ *    - Subtle sinusoidal twinkle phases computed per-star.
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - Frame culling: when `opacity <= 0.005`, mesh is hidden and shader uniforms are untouched.
+ * - Screen-space quad rendering minimizes vertex count while maximizing visual fidelity.
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Custom GLSL Shaders for Cosmic Aurora Borealis (Panel 4 Reference)
 const auroraVertexShader = `
   varying vec2 vUv;

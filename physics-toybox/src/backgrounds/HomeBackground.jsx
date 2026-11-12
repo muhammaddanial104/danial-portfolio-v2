@@ -3,6 +3,38 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+/**
+ * ============================================================================
+ * DANIAL® — Panel 1: Liquid Chrome Waves (Home Background)
+ * ============================================================================
+ * 
+ * VISUAL CONCEPT:
+ * A luxurious, undulating sea of obsidian black and electric violet liquid chrome.
+ * Highlights glisten with iridescent lavender and silvery reflections, evoking
+ * molten metal flowing through a dark, high-end digital art studio.
+ * 
+ * SHADER ARCHITECTURE:
+ * 1. Vertex Shader (waveVertexShader):
+ *    - 2D Simplex Noise creates organic multi-layered wave elevations.
+ *    - Interactive Gaussian mouse/pointer ripple causes smooth localized displacement.
+ *    - Analytical normal approximation computes dynamic surface normals for accurate
+ *      lighting reflections without expensive geometry recalculations.
+ * 
+ * 2. Fragment Shader (waveFragmentShader):
+ *    - Multi-stop color blending: Obsidian (#08070D) -> Deep Violet (#2E1065) ->
+ *      Electric Purple (#8B5CF6) -> Lavender (#A78BFA) -> Chrome White (#FFFFFF).
+ *    - Fresnel reflection equation creates gleaming specular highlights on wave crests.
+ * 
+ * GPU PERFORMANCE OPTIMIZATIONS:
+ * - When `opacity <= 0.005`, the mesh is marked `visible = false` and frame loop
+ *   uniform calculations are immediately bypassed.
+ * - Single plane geometry allocation with responsive viewport dimension scaling.
+ * 
+ * @param {Object} props
+ * @param {number} props.opacity - Current interpolated opacity [0.0 - 1.0] from BackgroundManager
+ * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
+ */
+
 // Custom GLSL Shaders for Liquid Chrome Waves (Matching Panel 1 Reference)
 const waveVertexShader = `
   uniform float uTime;

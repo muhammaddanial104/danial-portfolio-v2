@@ -8,6 +8,20 @@ import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
 import MagneticButton from '../animations/MagneticButton.jsx'
 import { projectsData } from '../data/projects.js'
 
+/**
+ * ============================================================================
+ * DANIAL® — Projects Page Route (/projects)
+ * ============================================================================
+ * 
+ * 3D WORLD:
+ * - Panel 2: Particle Universe & Dynamic Constellations (140 interactive nodes,
+ *   distance-based lines, 650 background stars).
+ * 
+ * CONTENT:
+ * - Comprehensive case studies for Toolora (WASM PDF tools), AI Hub (LLM super
+ *   platform), AI Automation (autonomous media pipelines), and experimental labs.
+ * - Glassmorphic project cards with tech tags, status beacons, and feature bullet points.
+ */
 export default function Projects() {
   return (
     <PageTransition className="pt-28 pb-20 md:pt-36 md:pb-28">

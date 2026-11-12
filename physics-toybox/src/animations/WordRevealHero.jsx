@@ -4,6 +4,27 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+/**
+ * ============================================================================
+ * DANIAL® — WordRevealHero Cinematic Heading Animation
+ * ============================================================================
+ * 
+ * PURPOSE:
+ * Powers the grand entrance of the hero headline:
+ * "I CREATE DIGITAL WORLDS."
+ * 
+ * ANIMATION MECHANICS:
+ * 1. Multi-Stage Timeline:
+ *    - Each word translates vertically from +55px with 14px optical Gaussian blur.
+ *    - Staggered timing (0.14s) creates a majestic, fluid editorial rhythm.
+ *    - Gradient glowing underline blooms beneath the key phrase "WORLDS."
+ * 
+ * 2. Scroll-Linked Parallax:
+ *    - Gentle scroll scrub elevates and dims the hero heading as the user explores.
+ * 
+ * 3. Lifecycle Safety:
+ *    - Encapsulated within `gsap.context()` for clean teardown on unmount.
+ */
 export default function WordRevealHero({ className = '' }) {
   const containerRef = useRef(null)
   const lineUnderRef = useRef(null)

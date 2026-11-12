@@ -4,6 +4,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+/**
+ * ============================================================================
+ * DANIAL® — CharRevealLabel Micro-Animation Component
+ * ============================================================================
+ * 
+ * PURPOSE:
+ * Animates editorial eyebrow badges and section labels character-by-character
+ * using GSAP ScrollTrigger.
+ * 
+ * ACCESSIBILITY (a11y):
+ * The container retains the full text string inside `aria-label`, while individual
+ * split characters are marked `aria-hidden="true"`. This prevents screen readers
+ * from spelling out each character separately.
+ */
 export default function CharRevealLabel({ text, className = '' }) {
   const containerRef = useRef(null)
 

@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * DANIAL® — Skills & Technical Capabilities Data Store
+ * ============================================================================
+ * 
+ * Structured taxonomy of engineering domains: Creative Technology & 3D Web,
+ * Core Frontend Engineering, Backend & Full-Stack Systems, and Tools & Workflows.
+ */
 export const skillsData = [
   {
     category: 'Creative Technology & 3D Web',

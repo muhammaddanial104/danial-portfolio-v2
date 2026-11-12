@@ -1,3 +1,11 @@
+/**
+ * ============================================================================
+ * DANIAL® — Projects Data Store
+ * ============================================================================
+ * 
+ * Centralized registry of featured engineering endeavors and production platforms.
+ * Referenced by both the Home overview and the dedicated /projects route.
+ */
 export const projectsData = [
   {
     id: 'toolora',
