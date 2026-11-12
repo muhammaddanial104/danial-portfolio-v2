@@ -1,52 +1,228 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, MoveUpRight, RotateCcw, Sparkles, Volume2, VolumeX } from 'lucide-react'
+import { RotateCcw, Volume2, VolumeX, MoveUpRight, Sparkles, Layers, Code2, Award, Terminal } from 'lucide-react'
+import Navbar from './components/Navbar.jsx'
+import Hero from './sections/Hero.jsx'
 import Toybox from './components/Toybox.jsx'
-
-const rise = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: .7, ease: [0.22, 1, 0.36, 1] } } }
+import Footer from './components/Footer.jsx'
 
 export default function App() {
   const [resetKey, setResetKey] = useState(0)
   const [sound, setSound] = useState(false)
-  return <main className="min-h-screen overflow-hidden bg-[#f3f1eb] text-[#171817] selection:bg-[#c7ed4a]">
-    <nav className="relative z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 py-6 md:px-12">
-      <a href="#top" className="flex items-center gap-2 font-display text-lg font-bold tracking-[-.07em]"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#c7ed4a] text-xs">P</span> PLAYFORM<span className="ml-1 font-mono text-[9px] font-normal tracking-[.12em] text-black/45">® 001</span></a>
-      <div className="hidden items-center gap-8 font-mono text-[10px] uppercase tracking-[.14em] text-black/55 md:flex"><a className="hover:text-black" href="#playground">Playground</a><a className="hover:text-black" href="#about">About</a><a className="hover:text-black" href="mailto:hello@example.com">Contact</a></div>
-      <a href="#playground" className="group flex items-center gap-2 rounded-full border border-black/15 px-4 py-2 font-mono text-[10px] uppercase tracking-wider transition hover:bg-black hover:text-white">Let's play <ArrowUpRight size={13} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></a>
-    </nav>
 
-    <section id="top" className="relative mx-auto max-w-[1440px] px-6 pt-12 md:px-12 md:pt-16">
-      <div className="relative z-10 grid items-end gap-8 md:grid-cols-[1fr_auto]">
-        <motion.div initial="hidden" animate="show" variants={rise}>
-          <div className="mb-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[.19em] text-black/50"><span className="h-2 w-2 animate-pulse rounded-full bg-[#8bbd25]" /> A little playground for big ideas</div>
-          <h1 className="max-w-[900px] font-display text-[clamp(4rem,11.5vw,10.5rem)] font-semibold leading-[.78] tracking-[-.095em]">MAKE<br /><span className="relative inline-block">SOME <span className="relative inline-block text-[#8eaa46]">NOISE.</span></span></h1>
-        </motion.div>
-        <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .25, duration: .7 }} className="max-w-[250px] pb-2 font-display text-sm leading-relaxed text-black/60 md:text-base">A tiny physics playground where digital objects have a mind of their own. Go on. Poke around.</motion.p>
-      </div>
+  return (
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-obsidian text-brand-lilac selection:bg-brand-purple selection:text-white">
+      {/* Global Navigation */}
+      <Navbar />
 
-      <div id="playground" className="relative mt-10 h-[390px] overflow-hidden rounded-[28px] border border-black/[.07] bg-[#e9e7df] md:mt-14 md:h-[570px]">
-        <div className="absolute inset-0 z-0"><Toybox resetKey={resetKey} /></div>
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between p-5 md:p-7"><span className="font-mono text-[9px] uppercase tracking-[.16em] text-black/45">Interactive object study / 001</span><span className="font-mono text-[9px] uppercase tracking-[.16em] text-black/45">Real-time physics</span></div>
-        <div className="absolute bottom-5 left-5 z-10 flex items-center gap-2 rounded-full border border-black/10 bg-[#f3f1eb]/75 px-3 py-2 font-mono text-[9px] uppercase tracking-wider text-black/55 backdrop-blur-md md:bottom-7 md:left-7"><MoveUpRight size={12} /> Move your cursor to collide</div>
-        <div className="absolute bottom-5 right-5 z-10 flex gap-2 md:bottom-7 md:right-7">
-          <button onClick={() => setResetKey(k => k + 1)} aria-label="Reset objects" className="grid h-10 w-10 place-items-center rounded-full border border-black/15 bg-[#f3f1eb]/75 backdrop-blur-md transition hover:rotate-[-35deg] hover:bg-[#c7ed4a]"><RotateCcw size={15} /></button>
-          <button onClick={() => setSound(v => !v)} aria-label="Toggle sound" className="grid h-10 w-10 place-items-center rounded-full border border-black/15 bg-[#f3f1eb]/75 backdrop-blur-md transition hover:bg-[#c7ed4a]">{sound ? <Volume2 size={15} /> : <VolumeX size={15} />}</button>
-        </div>
-        <div className="pointer-events-none absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 rotate-90 font-mono text-[9px] uppercase tracking-[.22em] text-black/35 md:block">Drag your curiosity</div>
-      </div>
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
+        {/* Section 1: Cinematic Editorial Hero */}
+        <Hero />
 
-      <div className="grid gap-8 py-9 md:grid-cols-[1fr_auto] md:items-center">
-        <p className="max-w-xl font-display text-lg leading-snug tracking-[-.035em] md:text-2xl">Not everything needs a purpose. Sometimes, the best interface is the one that makes you <span className="text-black/35">feel something.</span></p>
-        <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[.14em] text-black/45"><Sparkles size={14} /> Built to be played with</div>
-      </div>
-    </section>
+        {/* Section 2: Interactive 3D Physics Toybox (Preserved & Styled for Phase 4) */}
+        <section id="toybox" className="relative mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 py-16 md:py-28 w-full overflow-hidden">
+          <div className="mb-8 md:mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <div className="mb-2 md:mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-brand-lavender">
+                <span className="h-2 w-2 rounded-full bg-brand-purple animate-ping" />
+                FEATURE 02 // REAL-TIME RAPIER ENGINE
+              </div>
+              <h2 className="font-editorial text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white">
+                PHYSICS <span className="text-brand-purple italic font-display font-medium">TOYBOX.</span>
+              </h2>
+            </div>
+            <p className="max-w-md font-display text-xs sm:text-sm md:text-base leading-relaxed text-brand-lilac/70">
+              A tactile sandbox powered by React Three Fiber and real Rapier physics. 
+              Collide, throw, and poke floating digital solids in real time.
+            </p>
+          </div>
 
-    <section id="about" className="border-t border-black/10 bg-[#e9e7df]">
-      <div className="mx-auto grid max-w-[1440px] gap-10 px-6 py-16 md:grid-cols-2 md:px-12 md:py-24">
-        <div><p className="mb-4 font-mono text-[10px] uppercase tracking-[.18em] text-black/45">01 / The idea</p><h2 className="max-w-lg font-display text-5xl font-semibold leading-[.95] tracking-[-.07em] md:text-7xl">A playful<br />kind of <span className="text-[#8eaa46]">technology.</span></h2></div>
-        <div className="flex flex-col justify-between gap-10"><p className="max-w-md text-base leading-relaxed text-black/60">PLAYFORM is a small experiment in making the web feel tangible. Soft bodies, shiny surfaces, unexpected collisions. Move around and see what happens.</p><div className="flex items-center justify-between border-t border-black/15 pt-4 font-mono text-[9px] uppercase tracking-[.15em] text-black/45"><span>React / Three.js / Rapier</span><span>© 2026 PLAYFORM</span></div></div>
-      </div>
-    </section>
-    <footer className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-7 font-mono text-[9px] uppercase tracking-[.15em] text-black/40 md:px-12"><span>Made for curious minds.</span><a href="#top" className="flex items-center gap-1 hover:text-black">Back to top <MoveUpRight size={11} /></a></footer>
-  </main>
+          {/* 3D Physics Canvas Container */}
+          <div className="relative h-[360px] sm:h-[420px] md:h-[600px] w-full overflow-hidden rounded-[24px] sm:rounded-[32px] border border-brand-purple/20 bg-gradient-to-b from-obsidian-card to-obsidian-surface/90 shadow-glass">
+            {/* Preserved Toybox Canvas */}
+            <div className="absolute inset-0 z-0">
+              <Toybox resetKey={resetKey} />
+            </div>
+
+            {/* Top Bar Info */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4 sm:p-5 md:p-8 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-brand-lilac/60">
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-purple" />
+                RAPID RIGID-BODY SIMULATION
+              </span>
+              <span className="hidden sm:inline-block">GRAVITY: -4.5 M/S²</span>
+            </div>
+
+            {/* Bottom Left: Interactive Hint */}
+            <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-5 md:bottom-7 md:left-7 z-10 hidden sm:flex items-center gap-2 rounded-full border border-brand-purple/20 bg-obsidian-surface/80 px-3.5 py-1.5 font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-brand-lilac/80 backdrop-blur-md">
+              <MoveUpRight size={12} className="text-brand-purple" />
+              <span>Cursor / Touch to Collide</span>
+            </div>
+
+            {/* Bottom Right: Interactive Controls */}
+            <div className="absolute bottom-4 right-4 sm:bottom-5 sm:right-5 md:bottom-7 md:right-7 z-10 flex items-center gap-2">
+              <button
+                onClick={() => setResetKey((k) => k + 1)}
+                aria-label="Reset physics objects"
+                title="Reset simulation"
+                className="group grid h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11 place-items-center rounded-full border border-brand-purple/25 bg-obsidian-surface/85 backdrop-blur-md text-brand-lilac transition-all duration-300 hover:rotate-[-45deg] hover:border-brand-purple hover:bg-brand-purple hover:text-white hover:shadow-glow-sm"
+              >
+                <RotateCcw size={15} />
+              </button>
+
+              <button
+                onClick={() => setSound((v) => !v)}
+                aria-label="Toggle sound effect placeholder"
+                title={sound ? 'Mute' : 'Enable audio feedback'}
+                className="grid h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11 place-items-center rounded-full border border-brand-purple/25 bg-obsidian-surface/85 backdrop-blur-md text-brand-lilac transition-all duration-300 hover:border-brand-purple hover:bg-brand-purple hover:text-white"
+              >
+                {sound ? <Volume2 size={15} /> : <VolumeX size={15} />}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Preview Placeholders for Upcoming Phases (Clear & Honest Roadmap) */}
+        <section id="about" className="border-t border-brand-purple/10 bg-obsidian-surface/30 py-16 md:py-20 w-full overflow-hidden">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 w-full">
+            <div className="grid gap-8 md:grid-cols-2 md:items-center">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-brand-purple">
+                  03 / PHILOSOPHY & ABOUT
+                </span>
+                <h2 className="mt-2 md:mt-3 font-editorial text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-white">
+                  NOT JUST A DEVELOPER. <br />
+                  <span className="text-brand-lavender">AN EXPLORER OF WHAT'S POSSIBLE.</span>
+                </h2>
+              </div>
+              <div className="rounded-2xl border border-brand-purple/15 bg-obsidian-card/40 p-5 sm:p-6 backdrop-blur-md">
+                <p className="font-display text-xs sm:text-sm md:text-base leading-relaxed text-brand-lilac/70">
+                  Crafting hyper-responsive interfaces, 3D digital artifacts, and intelligent automation systems. 
+                  Ready for detailed storytelling, interactive experience milestones, and journey highlights in Phase 5.
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-3 sm:gap-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-brand-lavender/60">
+                  <span className="flex items-center gap-1.5"><Layers size={12} /> Architecture</span>
+                  <span className="flex items-center gap-1.5"><Code2 size={12} /> Modern React</span>
+                  <span className="flex items-center gap-1.5"><Sparkles size={12} /> Three.js</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Selected Projects Preview Anchor */}
+        <section id="projects" className="border-t border-brand-purple/10 py-16 md:py-20 w-full overflow-hidden">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 w-full">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-8 md:mb-12">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-brand-purple">
+                  04 / SELECTED WORKS
+                </span>
+                <h2 className="mt-2 font-editorial text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-white">
+                  CURATED <span className="text-brand-purple italic font-display">SYSTEMS.</span>
+                </h2>
+              </div>
+              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-brand-lilac/50">
+                Phase 5 Development Milestone
+              </span>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {[
+                { title: 'Toolora', desc: 'All-in-one PDF tools platform with instant client-side processing.', tag: 'Web Utility' },
+                { title: 'AI Hub', desc: 'Next-generation AI super platform uniting modern generative models.', tag: 'AI Platform' },
+                { title: 'AI Automation', desc: 'Automated YouTube & social media workflow orchestrators.', tag: 'Automation' },
+              ].map((proj, idx) => (
+                <div
+                  key={proj.title}
+                  className="group relative rounded-2xl border border-brand-purple/15 bg-obsidian-card/50 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 hover:border-brand-purple/40 hover:bg-obsidian-card"
+                >
+                  <div className="flex items-center justify-between text-brand-lavender font-mono text-[10px]">
+                    <span>PROJ // 0{idx + 1}</span>
+                    <span className="rounded-full border border-brand-purple/20 px-2 py-0.5">{proj.tag}</span>
+                  </div>
+                  <h3 className="mt-3 sm:mt-4 font-editorial text-xl sm:text-2xl font-bold text-white group-hover:text-brand-lilac">
+                    {proj.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-brand-lilac/70">
+                    {proj.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skills & Journey Preview Anchor */}
+        <section id="skills" className="border-t border-brand-purple/10 bg-obsidian-surface/20 py-16 md:py-20 w-full overflow-hidden">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 w-full">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-8 md:mb-10">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-brand-purple">
+                  05 / CORE ARSENAL
+                </span>
+                <h2 className="mt-2 font-editorial text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-white">
+                  SKILLS & <span className="text-brand-lavender italic font-display">CAPABILITIES.</span>
+                </h2>
+              </div>
+              <div id="journey" className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-brand-lilac/50">
+                Skills & Journey Timeline Preview
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 sm:gap-2.5">
+              {[
+                'React', 'JavaScript', 'Tailwind CSS', 'Three.js', 'HTML / CSS', 
+                'Node.js', 'Express', 'MongoDB', 'GSAP', 'React Three Fiber', 'Rapier'
+              ].map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full border border-brand-purple/20 bg-obsidian-card/60 px-3.5 sm:px-4 py-1.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-wider text-brand-lilac/90 backdrop-blur-md hover:border-brand-purple hover:text-white"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section Anchor */}
+        <section id="contact" className="border-t border-brand-purple/15 bg-gradient-to-b from-obsidian to-obsidian-surface py-20 md:py-24 w-full overflow-hidden">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 text-center w-full">
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-brand-purple">
+              06 / GET IN TOUCH
+            </span>
+            <h2 className="mt-3 md:mt-4 font-editorial text-3xl sm:text-4xl md:text-7xl font-extrabold tracking-tight text-white">
+              HAVE AN IDEA? <br />
+              <span className="bg-gradient-to-r from-brand-lilac via-brand-purple to-brand-violet bg-clip-text text-transparent">
+                LET'S MAKE IT REAL.
+              </span>
+            </h2>
+            <p className="mx-auto mt-4 md:mt-6 max-w-lg font-display text-xs sm:text-sm md:text-base text-brand-lilac/70">
+              Currently accepting selected freelance commissions, full-time creative engineering opportunities, and 3D web collaborations.
+            </p>
+            <div className="mt-8 md:mt-10 flex flex-wrap justify-center gap-3 sm:gap-4">
+              <a
+                href="mailto:contact@danial.dev"
+                className="rounded-full bg-white px-6 sm:px-8 py-3 sm:py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian transition-all hover:bg-brand-lilac hover:shadow-glow-sm"
+              >
+                contact@danial.dev
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-brand-purple/30 bg-obsidian-surface px-6 sm:px-8 py-3 sm:py-3.5 font-mono text-xs uppercase tracking-wider text-brand-lilac transition-all hover:border-brand-purple hover:text-white"
+              >
+                GitHub Profile
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Global Footer */}
+      <Footer />
+    </div>
+  )
 }

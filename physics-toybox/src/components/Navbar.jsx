@@ -1,0 +1,133 @@
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Toybox', href: '#toybox' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Journey', href: '#journey' },
+    { name: 'Contact', href: '#contact' },
+  ]
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
+        scrolled
+          ? 'bg-[#08070D]/95 backdrop-blur-md border-b border-brand-purple/15 py-3 sm:py-4 shadow-glass'
+          : 'bg-transparent py-4 sm:py-6'
+      }`}
+    >
+      <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-4 sm:px-6 md:px-12 w-full">
+        {/* Brand Logo */}
+        <a
+          href="#top"
+          className="group flex items-center gap-2 sm:gap-2.5 font-editorial text-lg sm:text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-90 flex-shrink-0"
+        >
+          <span className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-purple to-brand-violet text-xs font-mono font-bold text-white shadow-glow-sm transition-transform duration-300 group-hover:scale-105">
+            D
+          </span>
+          <span className="tracking-wider">
+            DANIAL<span className="text-brand-purple font-mono text-sm ml-0.5">®</span>
+          </span>
+          <span className="hidden sm:inline-flex items-center gap-1 rounded-full border border-brand-purple/20 bg-brand-purple/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-brand-lavender">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
+            Studio
+          </span>
+        </a>
+
+        {/* Desktop Navigation Links */}
+        <div className="hidden items-center gap-8 md:flex">
+          <div className="flex items-center gap-6 rounded-full border border-brand-purple/15 bg-obsidian-card/60 px-6 py-2 backdrop-blur-md">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="font-mono text-xs uppercase tracking-widest text-brand-lilac/70 transition-colors duration-200 hover:text-white"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Button & Mobile Toggle */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a
+            href="#contact"
+            className="group hidden sm:flex items-center gap-2 rounded-full border border-brand-purple/30 bg-gradient-to-r from-brand-violet/20 to-brand-purple/20 px-4 sm:px-5 py-2 font-mono text-xs uppercase tracking-wider text-brand-lilac transition-all duration-300 hover:border-brand-purple hover:bg-brand-purple hover:text-white hover:shadow-glow-sm"
+          >
+            <span>Let's Connect</span>
+            <ArrowUpRight
+              size={14}
+              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation menu"
+            className="grid h-9 w-9 place-items-center rounded-full border border-brand-purple/40 bg-brand-purple/15 text-white transition-all hover:bg-brand-purple hover:border-brand-purple md:hidden flex-shrink-0 shadow-glow-sm"
+          >
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="absolute top-full left-0 right-0 border-b border-brand-purple/20 bg-[#08070D]/98 px-6 py-8 backdrop-blur-2xl md:hidden"
+          >
+            <div className="flex flex-col gap-5">
+              {navLinks.map((link, idx) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="flex items-center justify-between border-b border-white/5 pb-3 font-editorial text-2xl font-bold tracking-tight text-brand-lilac hover:text-white"
+                >
+                  <span>{link.name}</span>
+                  <span className="font-mono text-xs text-brand-purple">0{idx + 1}</span>
+                </motion.a>
+              ))}
+
+              <div className="pt-3">
+                <a
+                  href="#contact"
+                  onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-violet to-brand-purple py-3.5 font-mono text-xs uppercase tracking-wider text-white shadow-glow-sm"
+                >
+                  <span>Start a Project</span>
+                  <ArrowUpRight size={15} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  )
+}
