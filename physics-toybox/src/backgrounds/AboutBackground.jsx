@@ -239,6 +239,7 @@ export default function AboutBackground({ opacity = 1, reducedMotion = false }) 
   }, [viewport.width, viewport.height])
 
   useEffect(() => {
+    if (reducedMotion) return
     const handlePointerMove = (e) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
       const y = -(e.clientY / window.innerHeight) * 2 + 1
@@ -246,7 +247,7 @@ export default function AboutBackground({ opacity = 1, reducedMotion = false }) 
     }
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     return () => window.removeEventListener('pointermove', handlePointerMove)
-  }, [])
+  }, [reducedMotion])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -260,14 +261,15 @@ export default function AboutBackground({ opacity = 1, reducedMotion = false }) 
     uniforms.uOpacity.value = opacity
     starUniforms.uOpacity.value = opacity
 
-    const motionScale = reducedMotion ? 0.2 : 1.0
-    uniforms.uTime.value = state.clock.getElapsedTime() * motionScale
+    // When reduced motion is preferred, lock aurora time to a static scenic curtain
+    uniforms.uTime.value = reducedMotion ? 2.5 : state.clock.getElapsedTime()
 
-    smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.04)
-    smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.04)
-    uniforms.uMouse.value.set(smoothedMouse.current.x, smoothedMouse.current.y)
-
-    groupRef.current.position.x = smoothedMouse.current.x * 0.12
+    if (!reducedMotion) {
+      smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.04)
+      smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.04)
+      uniforms.uMouse.value.set(smoothedMouse.current.x, smoothedMouse.current.y)
+      groupRef.current.position.x = smoothedMouse.current.x * 0.12
+    }
   })
 
   return (

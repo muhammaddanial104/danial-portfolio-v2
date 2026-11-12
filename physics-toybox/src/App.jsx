@@ -6,13 +6,13 @@ import Footer from './components/Footer.jsx'
 import BackgroundManager from './backgrounds/BackgroundManager.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
-// Route Pages
-import Home from './pages/Home.jsx'
-import About from './pages/About.jsx'
-import Projects from './pages/Projects.jsx'
-import Skills from './pages/Skills.jsx'
-import Journey from './pages/Journey.jsx'
-import Contact from './pages/Contact.jsx'
+// Route Pages (Loaded dynamically via React.lazy on-demand)
+const Home = React.lazy(() => import('./pages/Home.jsx'))
+const About = React.lazy(() => import('./pages/About.jsx'))
+const Projects = React.lazy(() => import('./pages/Projects.jsx'))
+const Skills = React.lazy(() => import('./pages/Skills.jsx'))
+const Journey = React.lazy(() => import('./pages/Journey.jsx'))
+const Contact = React.lazy(() => import('./pages/Contact.jsx'))
 
 /**
  * ============================================================================
@@ -66,18 +66,20 @@ export default function App() {
 
         {/* Layer 10: Main Page Content */}
         <main className="relative z-10 w-full max-w-full overflow-x-hidden min-h-[85vh]">
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/skills" element={<Skills />} />
-              <Route path="/journey" element={<Journey />} />
-              <Route path="/contact" element={<Contact />} />
-              {/* Fallback wildcard route gracefully redirects to Home */}
-              <Route path="*" element={<Home />} />
-            </Routes>
-          </AnimatePresence>
+          <React.Suspense fallback={null}>
+            <AnimatePresence mode="wait">
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/skills" element={<Skills />} />
+                <Route path="/journey" element={<Journey />} />
+                <Route path="/contact" element={<Contact />} />
+                {/* Fallback wildcard route gracefully redirects to Home */}
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </AnimatePresence>
+          </React.Suspense>
         </main>
 
         {/* Layer 20: Shared Global Footer */}

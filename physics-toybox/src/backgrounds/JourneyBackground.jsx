@@ -176,8 +176,8 @@ export default function JourneyBackground({ opacity = 1, reducedMotion = false }
 
     uniforms.uOpacity.value = opacity
 
-    const motionScale = reducedMotion ? 0.2 : 1.0
-    uniforms.uTime.value = state.clock.getElapsedTime() * motionScale
+    // When reduced motion is preferred, pause river light pulsation
+    uniforms.uTime.value = reducedMotion ? 1.2 : state.clock.getElapsedTime()
 
     // Gentle camera elevation
     groupRef.current.position.y = -0.6

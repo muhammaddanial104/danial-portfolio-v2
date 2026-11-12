@@ -191,6 +191,8 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
   )
 
   useEffect(() => {
+    if (reducedMotion) return
+
     let timer
 
     const handlePointerMove = (e) => {
@@ -223,7 +225,7 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
       window.removeEventListener('touchmove', handleTouchMove)
       clearTimeout(timer)
     }
-  }, [viewport.width, viewport.height])
+  }, [viewport.width, viewport.height, reducedMotion])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -242,7 +244,7 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
     smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
     smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
 
-    const motionScale = reducedMotion ? 0.2 : 1.0
+    const motionScale = reducedMotion ? 0.0 : 1.0
     const mX = smoothedMouse.current.x
     const mY = smoothedMouse.current.y
     const mStr = mouseStrength.current
@@ -254,31 +256,33 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
     const halfW = (viewport.width * 1.8) / 2
     const halfH = (viewport.height * 2.0) / 2
 
-    for (let i = 0; i < CONSTELLATION_COUNT; i++) {
-      const idx = i * 3
-      posArr[idx] += velocities[idx] * motionScale
-      posArr[idx + 1] += velocities[idx + 1] * motionScale
-      posArr[idx + 2] += velocities[idx + 2] * motionScale
+    if (!reducedMotion) {
+      for (let i = 0; i < CONSTELLATION_COUNT; i++) {
+        const idx = i * 3
+        posArr[idx] += velocities[idx] * motionScale
+        posArr[idx + 1] += velocities[idx + 1] * motionScale
+        posArr[idx + 2] += velocities[idx + 2] * motionScale
 
-      if (posArr[idx] > halfW) posArr[idx] = -halfW
-      else if (posArr[idx] < -halfW) posArr[idx] = halfW
+        if (posArr[idx] > halfW) posArr[idx] = -halfW
+        else if (posArr[idx] < -halfW) posArr[idx] = halfW
 
-      if (posArr[idx + 1] > halfH) posArr[idx + 1] = -halfH
-      else if (posArr[idx + 1] < -halfH) posArr[idx + 1] = halfH
+        if (posArr[idx + 1] > halfH) posArr[idx + 1] = -halfH
+        else if (posArr[idx + 1] < -halfH) posArr[idx + 1] = halfH
 
-      // Interactive mouse attraction/repulsion field
-      const dx = posArr[idx] - mX
-      const dy = posArr[idx + 1] - mY
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      const maxDist = 2.6
+        // Interactive mouse attraction/repulsion field
+        const dx = posArr[idx] - mX
+        const dy = posArr[idx + 1] - mY
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        const maxDist = 2.6
 
-      if (dist < maxDist && dist > 0.001) {
-        const force = (1.0 - dist / maxDist) * 0.035 * mStr * motionScale
-        posArr[idx] += (dx / dist) * force
-        posArr[idx + 1] += (dy / dist) * force
+        if (dist < maxDist && dist > 0.001) {
+          const force = (1.0 - dist / maxDist) * 0.035 * mStr * motionScale
+          posArr[idx] += (dx / dist) * force
+          posArr[idx + 1] += (dy / dist) * force
+        }
       }
+      posAttr.needsUpdate = true
     }
-    posAttr.needsUpdate = true
 
     // Compute dynamic constellation lines
     let lineIdx = 0
@@ -331,9 +335,11 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
     lineGeo.attributes.color.needsUpdate = true
     lineGeo.setDrawRange(0, lineIdx * 2)
 
-    // Parallax sway
-    groupRef.current.rotation.y = smoothedMouse.current.x * 0.025
-    groupRef.current.rotation.x = -smoothedMouse.current.y * 0.025
+    // Parallax sway (only when reduced motion is disabled)
+    if (!reducedMotion) {
+      groupRef.current.rotation.y = smoothedMouse.current.x * 0.025
+      groupRef.current.rotation.x = -smoothedMouse.current.y * 0.025
+    }
   })
 
   return (

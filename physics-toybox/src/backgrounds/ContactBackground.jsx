@@ -193,6 +193,7 @@ export default function ContactBackground({ opacity = 1, reducedMotion = false }
   )
 
   useEffect(() => {
+    if (reducedMotion) return
     const handlePointerMove = (e) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
       const y = -(e.clientY / window.innerHeight) * 2 + 1
@@ -200,7 +201,7 @@ export default function ContactBackground({ opacity = 1, reducedMotion = false }
     }
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     return () => window.removeEventListener('pointermove', handlePointerMove)
-  }, [])
+  }, [reducedMotion])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -214,31 +215,33 @@ export default function ContactBackground({ opacity = 1, reducedMotion = false }
     floorUniforms.uOpacity.value = opacity
     sparkUniforms.uOpacity.value = opacity
 
-    const motionScale = reducedMotion ? 0.2 : 1.0
-    const time = state.clock.getElapsedTime() * motionScale
+    // When reduced motion is preferred, keep portal rings in a stationary majestic formation
+    const time = reducedMotion ? 1.0 : state.clock.getElapsedTime()
     floorUniforms.uTime.value = time
 
-    smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
-    smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
+    if (!reducedMotion) {
+      smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
+      smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
 
-    // Rotate concentric portal rings
-    if (portalRingsRef.current) {
-      const children = portalRingsRef.current.children
-      for (let i = 0; i < children.length; i++) {
-        const ring = children[i]
-        const dir = i % 2 === 0 ? 1 : -1
-        ring.rotation.z = time * 0.16 * dir * (1.0 + i * 0.08)
-        ring.rotation.y = Math.sin(time * 0.3 + i) * 0.06 + smoothedMouse.current.x * 0.08
+      // Rotate concentric portal rings
+      if (portalRingsRef.current) {
+        const children = portalRingsRef.current.children
+        for (let i = 0; i < children.length; i++) {
+          const ring = children[i]
+          const dir = i % 2 === 0 ? 1 : -1
+          ring.rotation.z = time * 0.16 * dir * (1.0 + i * 0.08)
+          ring.rotation.y = Math.sin(time * 0.3 + i) * 0.06 + smoothedMouse.current.x * 0.08
+        }
       }
-    }
 
-    if (sparksRef.current) {
-      sparksRef.current.rotation.z = -time * 0.12
-      sparksRef.current.rotation.y = time * 0.08
-    }
+      if (sparksRef.current) {
+        sparksRef.current.rotation.z = -time * 0.12
+        sparksRef.current.rotation.y = time * 0.08
+      }
 
-    groupRef.current.rotation.y = smoothedMouse.current.x * 0.04
-    groupRef.current.rotation.x = -smoothedMouse.current.y * 0.03
+      groupRef.current.rotation.y = smoothedMouse.current.x * 0.04
+      groupRef.current.rotation.x = -smoothedMouse.current.y * 0.03
+    }
   })
 
   return (

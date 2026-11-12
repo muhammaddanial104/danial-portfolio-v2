@@ -194,6 +194,7 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
   )
 
   useEffect(() => {
+    if (reducedMotion) return
     const handlePointerMove = (e) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
       const y = -(e.clientY / window.innerHeight) * 2 + 1
@@ -201,7 +202,7 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
     }
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     return () => window.removeEventListener('pointermove', handlePointerMove)
-  }, [viewport.width, viewport.height])
+  }, [viewport.width, viewport.height, reducedMotion])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -218,8 +219,8 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
     smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
     smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
 
-    const motionScale = reducedMotion ? 0.2 : 1.0
-    const time = state.clock.getElapsedTime() * 0.75 * motionScale
+    // When reduced motion is preferred, lock to a calm static cybernetic grid formation
+    const time = reducedMotion ? 1.5 : (state.clock.getElapsedTime() * 0.75)
 
     const posArr = currentPositions
     const mX = smoothedMouse.current.x

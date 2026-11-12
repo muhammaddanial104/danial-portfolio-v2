@@ -82,8 +82,8 @@ const waveVertexShader = `
     vUv = uv;
     vec3 pos = position;
 
-    float motionScale = uReducedMotion > 0.5 ? 0.2 : 1.0;
-    float time = uTime * 0.42 * motionScale;
+    // Freeze animation to an elegant static metallic landscape when reduced motion is preferred
+    float time = uReducedMotion > 0.5 ? 1.6 : (uTime * 0.40);
 
     // Dramatic rolling metallic ribbon waves
     float wave1 = sin(pos.x * 0.75 + time * 1.1) * cos(pos.y * 0.6 + time * 0.85) * 0.48;
@@ -92,20 +92,23 @@ const waveVertexShader = `
 
     // Multi-frequency organic liquid turbulence
     float noise1 = snoise(pos.xy * 0.55 + vec2(time * 0.2, -time * 0.15)) * 0.38;
-    float noise2 = snoise(pos.xy * 1.2 - vec2(time * 0.18, time * 0.22)) * 0.18;
+    float noise2 = snoise(pos.xy * 1.15 - vec2(time * 0.18, time * 0.22)) * 0.18;
 
-    // Mouse pointer reactive liquid displacement
-    float mouseDist = length(pos.xy - uMouse);
-    float mouseRipple = sin(mouseDist * 5.5 - time * 4.5) * exp(-mouseDist * 1.2) * uMouseStrength * 0.65;
+    // Mouse pointer reactive liquid displacement (disabled when reduced motion active)
+    float mouseRipple = 0.0;
+    if (uReducedMotion < 0.5) {
+      float mouseDist = length(pos.xy - uMouse);
+      mouseRipple = sin(mouseDist * 5.5 - time * 4.5) * exp(-mouseDist * 1.2) * uMouseStrength * 0.65;
+    }
 
     float elevation = (wave1 + wave2 + wave3 + noise1 + noise2 + mouseRipple) * 1.15;
     pos.z += elevation;
 
     vElevation = elevation;
 
-    // Analytical-like normal perturbation for crisp chrome reflections
+    // Analytical-like normal perturbation: reuse noise1 to eliminate expensive 3rd snoise evaluation!
     vec3 transformedNormal = normal;
-    transformedNormal.x -= (cos(pos.x * 0.75 + time * 1.1) * 0.35 + snoise(pos.xy * 1.1) * 0.2);
+    transformedNormal.x -= (cos(pos.x * 0.75 + time * 1.1) * 0.35 + noise1 * 0.45);
     transformedNormal.y -= (sin(pos.y * 0.6 + time * 0.85) * 0.35);
     vNormal = normalize(normalMatrix * transformedNormal);
 
@@ -121,6 +124,7 @@ const waveFragmentShader = `
   uniform float uTime;
   uniform vec2 uMouse;
   uniform float uGlobalOpacity;
+  uniform float uReducedMotion;
   uniform vec3 uColorObsidian;
   uniform vec3 uColorDeepViolet;
   uniform vec3 uColorElectricPurple;
@@ -168,15 +172,18 @@ const waveFragmentShader = `
     color += uColorChrome * (spec1 + ribbon);
     color += uColorLavender * (spec2 + fresnel * 0.45);
 
-    // Subtle traveling energy pulse
-    float energyBeam = sin(vUv.x * 3.5 + vUv.y * 2.5 - uTime * 0.65) * 0.5 + 0.5;
+    // Subtle traveling energy pulse (paused when reduced motion active)
+    float beamTime = uReducedMotion > 0.5 ? 0.0 : (uTime * 0.65);
+    float energyBeam = sin(vUv.x * 3.5 + vUv.y * 2.5 - beamTime) * 0.5 + 0.5;
     energyBeam = pow(energyBeam, 5.0) * 0.35;
     color += uColorElectricPurple * energyBeam;
 
-    // Interactive mouse aura
-    float mouseDist = length(vUv * 2.0 - 1.0 - uMouse * 0.35);
-    float mouseAura = exp(-mouseDist * 2.2) * 0.3;
-    color += uColorLavender * mouseAura;
+    // Interactive mouse aura (disabled when reduced motion active)
+    if (uReducedMotion < 0.5) {
+      float mouseDist = length(vUv * 2.0 - 1.0 - uMouse * 0.35);
+      float mouseAura = exp(-mouseDist * 2.2) * 0.3;
+      color += uColorLavender * mouseAura;
+    }
 
     // Contrast Shield for Typography: Gentle dampening on left zone
     float textProtection = smoothstep(0.0, 0.75, vUv.x);
@@ -218,6 +225,9 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
   )
 
   useEffect(() => {
+    // If user prefers reduced motion, disable interactive mouse ripple calculations
+    if (reducedMotion) return
+
     let timer
 
     const handlePointerMove = (e) => {
@@ -250,7 +260,7 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
       window.removeEventListener('touchmove', handleTouchMove)
       clearTimeout(timer)
     }
-  }, [viewport.width, viewport.height])
+  }, [viewport.width, viewport.height, reducedMotion])
 
   useFrame((state) => {
     if (!meshRef.current) return
@@ -263,12 +273,15 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
     if (!meshRef.current.visible) meshRef.current.visible = true
 
     uniforms.uGlobalOpacity.value = opacity
-    uniforms.uTime.value = state.clock.getElapsedTime()
 
-    smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
-    smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
-    uniforms.uMouse.value.set(smoothedMouse.current.x, smoothedMouse.current.y)
-    uniforms.uMouseStrength.value = THREE.MathUtils.lerp(uniforms.uMouseStrength.value, mouseStrength.current, 0.07)
+    // When reduced motion is preferred, pause time advancement
+    if (!reducedMotion) {
+      uniforms.uTime.value = state.clock.getElapsedTime()
+      smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
+      smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
+      uniforms.uMouse.value.set(smoothedMouse.current.x, smoothedMouse.current.y)
+      uniforms.uMouseStrength.value = THREE.MathUtils.lerp(uniforms.uMouseStrength.value, mouseStrength.current, 0.07)
+    }
 
     meshRef.current.rotation.x = -Math.PI / 3.6
     meshRef.current.position.y = -0.45
@@ -276,10 +289,13 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
 
   const planeWidth = viewport.width * 1.75
   const planeHeight = viewport.height * 2.1
+  const isMobile = viewport.width < 7.0
+  const segX = isMobile ? 70 : 80
+  const segY = isMobile ? 70 : 80
 
   return (
     <mesh ref={meshRef} position={[0, -0.45, -1.0]} rotation={[-Math.PI / 3.6, 0, 0]}>
-      <planeGeometry args={[planeWidth, planeHeight, 96, 96]} />
+      <planeGeometry args={[planeWidth, planeHeight, segX, segY]} />
       <shaderMaterial
         vertexShader={waveVertexShader}
         fragmentShader={waveFragmentShader}

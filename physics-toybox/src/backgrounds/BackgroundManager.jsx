@@ -1,13 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import HomeBackground from './HomeBackground.jsx'
-import ProjectsBackground from './ProjectsBackground.jsx'
-import SkillsBackground from './SkillsBackground.jsx'
-import AboutBackground from './AboutBackground.jsx'
-import JourneyBackground from './JourneyBackground.jsx'
-import ContactBackground from './ContactBackground.jsx'
 import { useActiveBackground } from '../hooks/useActiveBackground.js'
+
+// Route-specific 3D background scenes loaded dynamically on-demand
+const HomeBackground = React.lazy(() => import('./HomeBackground.jsx'))
+const ProjectsBackground = React.lazy(() => import('./ProjectsBackground.jsx'))
+const SkillsBackground = React.lazy(() => import('./SkillsBackground.jsx'))
+const AboutBackground = React.lazy(() => import('./AboutBackground.jsx'))
+const JourneyBackground = React.lazy(() => import('./JourneyBackground.jsx'))
+const ContactBackground = React.lazy(() => import('./ContactBackground.jsx'))
 
 /**
  * ============================================================================
@@ -23,11 +25,12 @@ import { useActiveBackground } from '../hooks/useActiveBackground.js'
  * Furthermore, recreating WebGL contexts incurs expensive pipeline compilation
  * stalls (shader linking, buffer reallocations, GPU driver initialization).
  * 
- * SOLUTION:
+ * SOLUTION & DYNAMIC CODE SPLITTING:
  * We mount exactly ONE persistent <Canvas> fixed behind the viewport (`inset-0`).
- * As the user navigates between routes, `SceneSwitcher` runs inside this single
- * context, smoothly interpolating opacity between worlds. When a world fades to
- * 0 opacity, its render calls and animations are culled to ensure 60fps.
+ * Scene implementations are loaded strictly on-demand via React.lazy().
+ * When a visitor first lands on Home, only HomeBackground is downloaded.
+ * Other worlds are downloaded only when the user navigates to them, after
+ * which they remain loaded for silky-smooth crossfade opacity lerps.
  */
 
 /**
@@ -42,6 +45,18 @@ import { useActiveBackground } from '../hooks/useActiveBackground.js'
  */
 function SceneSwitcher({ activeWorld, reducedMotion }) {
   const worlds = ['home', 'projects', 'skills', 'about', 'journey', 'contact']
+
+  // Track which worlds have been visited; only downloaded worlds are rendered
+  const [loadedWorlds, setLoadedWorlds] = useState(() => new Set([activeWorld]))
+
+  useEffect(() => {
+    setLoadedWorlds((prev) => {
+      if (prev.has(activeWorld)) return prev
+      const next = new Set(prev)
+      next.add(activeWorld)
+      return next
+    })
+  }, [activeWorld])
 
   // Mutable reference tracking the current interpolated opacity of each world [0.0 - 1.0]
   const opacities = useRef({
@@ -60,7 +75,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
   useFrame(() => {
     let hasChanged = false
     // Faster transition speed when reduced motion is preferred
-    const lerpSpeed = reducedMotion ? 0.15 : 0.07
+    const lerpSpeed = reducedMotion ? 0.2 : 0.07
     const nextState = {}
 
     for (const w of worlds) {
@@ -84,43 +99,55 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
   })
 
   return (
-    <>
+    <React.Suspense fallback={null}>
       {/* 1. Home — Liquid Chrome Waves (Panel 1) */}
-      <HomeBackground
-        opacity={renderOpacities.home}
-        reducedMotion={reducedMotion}
-      />
+      {loadedWorlds.has('home') && (
+        <HomeBackground
+          opacity={renderOpacities.home}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* 2. Projects — Particle Universe & Constellations (Panel 2) */}
-      <ProjectsBackground
-        opacity={renderOpacities.projects}
-        reducedMotion={reducedMotion}
-      />
+      {loadedWorlds.has('projects') && (
+        <ProjectsBackground
+          opacity={renderOpacities.projects}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* 3. Skills — Digital Network & Energy Grid (Panel 3) */}
-      <SkillsBackground
-        opacity={renderOpacities.skills}
-        reducedMotion={reducedMotion}
-      />
+      {loadedWorlds.has('skills') && (
+        <SkillsBackground
+          opacity={renderOpacities.skills}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* 4. About — Cosmic Violet Aurora & Nebulae (Panel 4) */}
-      <AboutBackground
-        opacity={renderOpacities.about}
-        reducedMotion={reducedMotion}
-      />
+      {loadedWorlds.has('about') && (
+        <AboutBackground
+          opacity={renderOpacities.about}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* 5. Journey — Topographic Terrain & River of Light (Panel 5) */}
-      <JourneyBackground
-        opacity={renderOpacities.journey}
-        reducedMotion={reducedMotion}
-      />
+      {loadedWorlds.has('journey') && (
+        <JourneyBackground
+          opacity={renderOpacities.journey}
+          reducedMotion={reducedMotion}
+        />
+      )}
 
       {/* 6. Contact — Concentric Energy Portal Rings (Panel 6) */}
-      <ContactBackground
-        opacity={renderOpacities.contact}
-        reducedMotion={reducedMotion}
-      />
-    </>
+      {loadedWorlds.has('contact') && (
+        <ContactBackground
+          opacity={renderOpacities.contact}
+          reducedMotion={reducedMotion}
+        />
+      )}
+    </React.Suspense>
   )
 }
 
