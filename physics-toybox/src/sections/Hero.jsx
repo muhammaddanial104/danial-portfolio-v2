@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion'
 import { ArrowDownRight, ArrowUpRight, Sparkles, Waves } from 'lucide-react'
+import WordRevealHero from '../animations/WordRevealHero.jsx'
+import CharRevealLabel from '../animations/CharRevealLabel.jsx'
+import MagneticButton from '../animations/MagneticButton.jsx'
 
 export default function Hero() {
   const containerVariants = {
@@ -7,14 +10,14 @@ export default function Hero() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.15,
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 22 },
+    hidden: { opacity: 0, y: 18 },
     show: {
       opacity: 1,
       y: 0,
@@ -23,28 +26,23 @@ export default function Hero() {
   }
 
   return (
-    <section id="top" className="relative min-h-[92vh] flex flex-col justify-between w-full pt-28 pb-12 md:pt-40 md:pb-16 overflow-hidden">
+    <section id="top" className="relative min-h-[95vh] flex flex-col justify-between w-full pt-28 pb-12 md:pt-40 md:pb-16 overflow-hidden">
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 w-full flex-1 flex flex-col justify-between">
         {/* Top Editorial Eyebrow & Status Tag */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="flex items-center justify-between gap-2 border-b border-brand-purple/15 pb-4 md:pb-6 font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-widest text-brand-lilac/60"
-        >
+        <div className="flex items-center justify-between gap-2 border-b border-brand-purple/15 pb-4 md:pb-6 font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-widest text-brand-lilac/60">
           <div className="flex items-center gap-2 min-w-0">
             <span className="relative flex h-2 w-2 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-purple opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-purple" />
             </span>
-            <span className="text-brand-lilac truncate">DANIAL® ARCHIVE — ISSUE 2026.1</span>
+            <CharRevealLabel text="DANIAL® ARCHIVE — ISSUE 2026.1" className="text-brand-lilac truncate" />
           </div>
 
           <div className="flex items-center gap-4 flex-shrink-0">
             <span className="hidden md:inline-block">CREATIVE TECHNOLOGIST & WEBGL ARTIST</span>
             <span className="hidden sm:inline-block text-brand-lavender">[ 51.5074° N, 0.1278° W ]</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Hero Central Editorial Statement */}
         <motion.div
@@ -64,21 +62,8 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Main Editorial Headline: Expansive Fluid Typography */}
-          <motion.h1
-            variants={itemVariants}
-            className="font-editorial text-[clamp(2.9rem,8.6vw,8.4rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white"
-          >
-            I CREATE <br />
-            <span className="bg-gradient-to-r from-white via-brand-lilac to-brand-purple bg-clip-text text-transparent">
-              DIGITAL
-            </span>{' '}
-            <br />
-            <span className="relative inline-block text-brand-lavender italic font-display font-medium">
-              WORLDS.
-              <span className="absolute -bottom-1 left-0 h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-violet to-transparent" />
-            </span>
-          </motion.h1>
+          {/* Cinematic Word-by-Word Reveal Headline */}
+          <WordRevealHero className="text-[clamp(2.9rem,8.6vw,8.4rem)]" />
 
           {/* Descriptive Editorial Paragraph */}
           <motion.p
@@ -89,12 +74,12 @@ export default function Hero() {
             Crafting digital art and scalable applications that provoke wonder, tactile curiosity, and unforgettable presence.
           </motion.p>
 
-          {/* Action Buttons: Clean, high-impact CTAs */}
+          {/* Action Buttons: Magnetic interactions on desktop */}
           <motion.div
             variants={itemVariants}
             className="mt-8 md:mt-11 flex flex-wrap items-center gap-3 sm:gap-4"
           >
-            <a
+            <MagneticButton
               href="#projects"
               className="group flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian transition-all duration-300 hover:bg-brand-lilac hover:shadow-glow-sm"
             >
@@ -103,15 +88,18 @@ export default function Hero() {
                 size={15}
                 className="transition-transform duration-300 group-hover:rotate-[-45deg]"
               />
-            </a>
+            </MagneticButton>
 
-            <a
+            <MagneticButton
               href="#about"
               className="group flex items-center justify-center gap-2 rounded-full border border-brand-purple/30 bg-obsidian-surface/60 px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-brand-lilac backdrop-blur-md transition-all duration-300 hover:border-brand-purple hover:bg-brand-purple/20 hover:text-white"
             >
               <span>The Philosophy</span>
-              <ArrowUpRight size={14} className="text-brand-purple transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+              <ArrowUpRight
+                size={14}
+                className="text-brand-purple transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </MagneticButton>
 
             {/* Interactive hint */}
             <div className="hidden lg:flex items-center gap-2 ml-4 font-mono text-[10px] uppercase tracking-widest text-brand-lilac/50">
