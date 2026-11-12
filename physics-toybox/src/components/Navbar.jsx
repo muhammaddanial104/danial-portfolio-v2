@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,13 +10,12 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const navLinks = [
     { name: 'About', href: '#about' },
-    { name: 'Toybox', href: '#toybox' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
     { name: 'Journey', href: '#journey' },
@@ -27,7 +26,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
         scrolled
-          ? 'bg-[#08070D]/95 backdrop-blur-md border-b border-brand-purple/15 py-3 sm:py-4 shadow-glass'
+          ? 'bg-[#08070D]/90 backdrop-blur-md border-b border-brand-purple/15 py-3 sm:py-4 shadow-glass'
           : 'bg-transparent py-4 sm:py-6'
       }`}
     >
