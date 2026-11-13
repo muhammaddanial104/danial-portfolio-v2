@@ -2,6 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
+import { detectGpuTier, getAdaptiveConfig } from '../utils/adaptiveQuality.js'
 
 /**
  * ============================================================================
@@ -67,10 +68,8 @@ const particleFragmentShader = `
   void main() {
     vec2 coord = gl_PointCoord - vec2(0.5);
     float dist = length(coord);
-    
-    if (dist > 0.5) discard;
-    
-    // Glowing radial falloff with bright white/lavender core
+
+    // Glowing radial falloff with bright white/lavender core (antialiased without thread discard stalls)
     float alpha = smoothstep(0.5, 0.05, dist) * vOpacity;
     float core = smoothstep(0.2, 0.0, dist) * 0.65;
     vec3 col = vColor + vec3(core);
@@ -84,17 +83,25 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
   const pointsRef = useRef()
   const bgStarsRef = useRef()
   const linesRef = useRef()
+  const prevLineCount = useRef(0)
+  const activePairs = useRef(new Int16Array(300))
+  const activeLineCount = useRef(0)
+  const frameCounter = useRef(0)
   const { viewport } = useThree()
 
   const targetMouse = useRef({ x: 0, y: 0 })
   const smoothedMouse = useRef({ x: 0, y: 0 })
   const mouseStrength = useRef(0)
 
-  // Particle counts
-  const CONSTELLATION_COUNT = 180
-  const BG_STAR_COUNT = 600
-  const MAX_LINES = 280
-  const CONNECT_DISTANCE = 2.15
+  // Adaptive rendering configuration based on GPU tier
+  const gpuInfo = useMemo(() => detectGpuTier(), [])
+  const adaptiveConfig = useMemo(() => getAdaptiveConfig(gpuInfo.tier, viewport.width), [gpuInfo.tier, viewport.width])
+
+  const CONSTELLATION_COUNT = adaptiveConfig.projectsConstellationCount
+  const BG_STAR_COUNT = adaptiveConfig.projectsBgStars
+  const MAX_LINES = adaptiveConfig.projectsMaxLines
+  const CONNECT_DISTANCE = adaptiveConfig.projectsConnectDistance
+  const CONNECT_DISTANCE_SQ = CONNECT_DISTANCE * CONNECT_DISTANCE
 
   // 1. Constellation Nodes (Connected by lines)
   const { positions, velocities, colors, sizes } = useMemo(() => {
@@ -130,7 +137,7 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
     }
 
     return { positions: pos, velocities: vel, colors: col, sizes: sz }
-  }, [viewport.width, viewport.height])
+  }, [CONSTELLATION_COUNT, viewport.width, viewport.height])
 
   // 2. Deep Ambient Background Stars (Dense starfield)
   const bgStarsData = useMemo(() => {
@@ -159,11 +166,11 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
     }
 
     return { positions: pos, colors: col, sizes: sz }
-  }, [viewport.width, viewport.height])
+  }, [BG_STAR_COUNT, viewport.width, viewport.height])
 
   // Preallocated buffer for dynamic constellation line geometry
-  const linePositions = useMemo(() => new Float32Array(MAX_LINES * 2 * 3), [])
-  const lineColors = useMemo(() => new Float32Array(MAX_LINES * 2 * 3), [])
+  const linePositions = useMemo(() => new Float32Array(MAX_LINES * 2 * 3), [MAX_LINES])
+  const lineColors = useMemo(() => new Float32Array(MAX_LINES * 2 * 3), [MAX_LINES])
 
   const lineGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -269,14 +276,15 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
         if (posArr[idx + 1] > halfH) posArr[idx + 1] = -halfH
         else if (posArr[idx + 1] < -halfH) posArr[idx + 1] = halfH
 
-        // Interactive mouse attraction/repulsion field
+        // Interactive mouse attraction/repulsion field (squared distance optimization)
         const dx = posArr[idx] - mX
         const dy = posArr[idx + 1] - mY
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        const maxDist = 2.6
+        const distSq = dx * dx + dy * dy
+        const maxDistSq = 6.76 // 2.6 * 2.6
 
-        if (dist < maxDist && dist > 0.001) {
-          const force = (1.0 - dist / maxDist) * 0.035 * mStr * motionScale
+        if (distSq < maxDistSq && distSq > 0.0001 && mStr > 0.02) {
+          const dist = Math.sqrt(distSq)
+          const force = (1.0 - dist / 2.6) * 0.035 * mStr * motionScale
           posArr[idx] += (dx / dist) * force
           posArr[idx + 1] += (dy / dist) * force
         }
@@ -284,56 +292,94 @@ export default function ProjectsBackground({ opacity = 1, reducedMotion = false 
       posAttr.needsUpdate = true
     }
 
-    // Compute dynamic constellation lines
-    let lineIdx = 0
+    // Dynamic constellation lines: alternating cadence
+    // Frame A (even): Topology discovery over candidate pairs
+    // Frame B (odd): Direct O(M) line vertex synchronization with particle positions
+    frameCounter.current++
+    const shouldRefreshTopology = frameCounter.current % 2 === 0
     const linePosArr = lineGeo.attributes.position.array
     const lineColArr = lineGeo.attributes.color.array
 
-    for (let i = 0; i < CONSTELLATION_COUNT && lineIdx < MAX_LINES; i++) {
-      const i3 = i * 3
-      const x1 = posArr[i3]
-      const y1 = posArr[i3 + 1]
-      const z1 = posArr[i3 + 2]
+    if (shouldRefreshTopology) {
+      let lineIdx = 0
+      const pairs = activePairs.current
 
-      for (let j = i + 1; j < CONSTELLATION_COUNT && lineIdx < MAX_LINES; j++) {
-        const j3 = j * 3
-        const dx = x1 - posArr[j3]
-        const dy = y1 - posArr[j3 + 1]
-        const dz = z1 - posArr[j3 + 2]
-        const d = Math.sqrt(dx * dx + dy * dy + dz * dz)
+      for (let i = 0; i < CONSTELLATION_COUNT && lineIdx < MAX_LINES; i++) {
+        const i3 = i * 3
+        const x1 = posArr[i3]
+        const y1 = posArr[i3 + 1]
+        const z1 = posArr[i3 + 2]
 
-        if (d < CONNECT_DISTANCE) {
-          const lIdx = lineIdx * 6
-          linePosArr[lIdx] = x1
-          linePosArr[lIdx + 1] = y1
-          linePosArr[lIdx + 2] = z1
-          linePosArr[lIdx + 3] = posArr[j3]
-          linePosArr[lIdx + 4] = posArr[j3 + 1]
-          linePosArr[lIdx + 5] = posArr[j3 + 2]
+        for (let j = i + 1; j < CONSTELLATION_COUNT && lineIdx < MAX_LINES; j++) {
+          const j3 = j * 3
+          const dx = x1 - posArr[j3]
+          const dy = y1 - posArr[j3 + 1]
+          const dz = z1 - posArr[j3 + 2]
+          const distSq = dx * dx + dy * dy + dz * dz
 
-          const alpha = (1.0 - d / CONNECT_DISTANCE) * 0.42 * opacity
+          // Fast squared distance check avoids Math.sqrt on 98% of candidate node pairs
+          if (distSq < CONNECT_DISTANCE_SQ) {
+            const d = Math.sqrt(distSq)
+            const lIdx = lineIdx * 6
+            linePosArr[lIdx] = x1
+            linePosArr[lIdx + 1] = y1
+            linePosArr[lIdx + 2] = z1
+            linePosArr[lIdx + 3] = posArr[j3]
+            linePosArr[lIdx + 4] = posArr[j3 + 1]
+            linePosArr[lIdx + 5] = posArr[j3 + 2]
 
-          // Violet to lavender gradient line
-          lineColArr[lIdx] = 0.54 * alpha
-          lineColArr[lIdx + 1] = 0.36 * alpha
-          lineColArr[lIdx + 2] = 0.96 * alpha
-          lineColArr[lIdx + 3] = 0.75 * alpha
-          lineColArr[lIdx + 4] = 0.65 * alpha
-          lineColArr[lIdx + 5] = 0.98 * alpha
+            const alpha = (1.0 - d / CONNECT_DISTANCE) * 0.42 * opacity
 
-          lineIdx++
+            // Violet to lavender gradient line
+            lineColArr[lIdx] = 0.54 * alpha
+            lineColArr[lIdx + 1] = 0.36 * alpha
+            lineColArr[lIdx + 2] = 0.96 * alpha
+            lineColArr[lIdx + 3] = 0.75 * alpha
+            lineColArr[lIdx + 4] = 0.65 * alpha
+            lineColArr[lIdx + 5] = 0.98 * alpha
+
+            // Record pair indices for instant sync on interleaved frames
+            pairs[lineIdx * 2] = i
+            pairs[lineIdx * 2 + 1] = j
+            lineIdx++
+          }
         }
       }
-    }
 
-    for (let k = lineIdx * 6; k < MAX_LINES * 6; k++) {
-      linePosArr[k] = 0
-      lineColArr[k] = 0
-    }
+      // Zero out previously occupied slots if line count decreased
+      const prev = prevLineCount.current
+      if (lineIdx < prev) {
+        for (let k = lineIdx * 6; k < prev * 6; k++) {
+          linePosArr[k] = 0
+          lineColArr[k] = 0
+        }
+      }
+      prevLineCount.current = lineIdx
+      activeLineCount.current = lineIdx
 
-    lineGeo.attributes.position.needsUpdate = true
-    lineGeo.attributes.color.needsUpdate = true
-    lineGeo.setDrawRange(0, lineIdx * 2)
+      lineGeo.attributes.position.needsUpdate = true
+      lineGeo.attributes.color.needsUpdate = true
+      lineGeo.setDrawRange(0, lineIdx * 2)
+    } else {
+      // Interleaved Frame: fast O(M) endpoint synchronization directly to moving stars
+      const count = activeLineCount.current
+      const pairs = activePairs.current
+
+      for (let l = 0; l < count; l++) {
+        const i3 = pairs[l * 2] * 3
+        const j3 = pairs[l * 2 + 1] * 3
+        const lIdx = l * 6
+
+        linePosArr[lIdx] = posArr[i3]
+        linePosArr[lIdx + 1] = posArr[i3 + 1]
+        linePosArr[lIdx + 2] = posArr[i3 + 2]
+        linePosArr[lIdx + 3] = posArr[j3]
+        linePosArr[lIdx + 4] = posArr[j3 + 1]
+        linePosArr[lIdx + 5] = posArr[j3 + 2]
+      }
+
+      lineGeo.attributes.position.needsUpdate = true
+    }
 
     // Parallax sway (only when reduced motion is disabled)
     if (!reducedMotion) {

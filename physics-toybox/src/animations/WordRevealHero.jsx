@@ -14,44 +14,69 @@ gsap.registerPlugin(ScrollTrigger)
  * "I CREATE DIGITAL WORLDS."
  * 
  * ANIMATION MECHANICS:
- * 1. Multi-Stage Timeline:
- *    - Each word translates vertically from +55px with 14px optical Gaussian blur.
- *    - Staggered timing (0.14s) creates a majestic, fluid editorial rhythm.
+ * 1. Hardware-Accelerated Multi-Stage Timeline:
+ *    - Each word translates vertically from within its masked overflow container.
+ *    - Staggered timing (0.12s) creates a majestic, fluid editorial rhythm.
+ *    - Pure GPU-composited transforms (`translateY`, `opacity`) prevent CPU/GPU
+ *      rasterization stalls during WebGL initialization.
  *    - Gradient glowing underline blooms beneath the key phrase "WORLDS."
  * 
- * 2. Scroll-Linked Parallax:
+ * 2. Intelligent Startup Scheduling:
+ *    - Accepts a configurable `delay` (default 0.55s) to allow Three.js WebGL
+ *      canvas and liquid chrome shaders to compile and stabilize prior to
+ *      triggering typography reveals.
+ * 
+ * 3. Scroll-Linked Parallax:
  *    - Gentle scroll scrub elevates and dims the hero heading as the user explores.
  * 
- * 3. Lifecycle Safety:
+ * 4. Accessibility & Lifecycle Safety:
+ *    - Respects `prefers-reduced-motion`.
  *    - Encapsulated within `gsap.context()` for clean teardown on unmount.
  */
-export default function WordRevealHero({ className = '' }) {
+export default function WordRevealHero({ className = '', delay = 0.55 }) {
   const containerRef = useRef(null)
   const lineUnderRef = useRef(null)
 
   useEffect(() => {
     if (!containerRef.current) return
 
+    // Accessibility check: immediately render static headline if user prefers reduced motion
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (prefersReducedMotion) {
+      if (lineUnderRef.current) {
+        lineUnderRef.current.style.transform = 'scaleX(1)'
+        lineUnderRef.current.style.opacity = '1'
+      }
+      return
+    }
+
     const words = containerRef.current.querySelectorAll('.hero-word-reveal')
+    if (!words.length) return
 
     const ctx = gsap.context(() => {
-      // 1. Cinematic entrance timeline: words float up, unblur, and fade in
-      const tl = gsap.timeline({ delay: 0.25 })
+      // 1. Cinematic entrance timeline: words float up and fade in with hardware transforms
+      const tl = gsap.timeline({ delay: delay })
 
       tl.fromTo(
         words,
         {
           opacity: 0,
-          y: 55,
-          filter: 'blur(14px)',
+          y: 48,
+          willChange: 'transform, opacity',
         },
         {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
-          duration: 1.15,
-          stagger: 0.14,
+          duration: 1.05,
+          stagger: 0.12,
           ease: 'power3.out',
+          onComplete: () => {
+            gsap.set(words, { clearProps: 'willChange' })
+          },
         }
       )
 
@@ -59,28 +84,43 @@ export default function WordRevealHero({ className = '' }) {
       if (lineUnderRef.current) {
         tl.fromTo(
           lineUnderRef.current,
-          { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 1.0, ease: 'expo.out' },
-          '-=0.5'
+          { scaleX: 0, opacity: 0, willChange: 'transform, opacity' },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: 'expo.out',
+            onComplete: () => {
+              gsap.set(lineUnderRef.current, { clearProps: 'willChange' })
+            },
+          },
+          '-=0.45'
         )
       }
 
       // 2. Subtle scroll-controlled upward drift & fade
-      gsap.to(containerRef.current, {
-        y: -40,
-        opacity: 0.45,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 20%',
-          end: 'bottom top',
-          scrub: 0.6,
-        },
-      })
+      // Defer ScrollTrigger attachment until entrance completes to eliminate measureScroll during startup
+      const scrollTimer = setTimeout(() => {
+        if (!containerRef.current) return
+        gsap.to(containerRef.current, {
+          y: -40,
+          opacity: 0.45,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 20%',
+            end: 'bottom top',
+            scrub: 0.6,
+            fastScrollEnd: true,
+          },
+        })
+      }, Math.round((delay + 1.2) * 1000))
+
+      return () => clearTimeout(scrollTimer)
     }, containerRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [delay])
 
   return (
     <h1
@@ -110,3 +150,4 @@ export default function WordRevealHero({ className = '' }) {
     </h1>
   )
 }
+

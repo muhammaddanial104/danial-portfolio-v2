@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useActiveBackground } from '../hooks/useActiveBackground.js'
+import { detectGpuTier } from '../utils/adaptiveQuality.js'
 
 // Route-specific 3D background scenes loaded dynamically on-demand
 const HomeBackground = React.lazy(() => import('./HomeBackground.jsx'))
@@ -46,18 +47,6 @@ const ContactBackground = React.lazy(() => import('./ContactBackground.jsx'))
 function SceneSwitcher({ activeWorld, reducedMotion }) {
   const worlds = ['home', 'projects', 'skills', 'about', 'journey', 'contact']
 
-  // Track which worlds have been visited; only downloaded worlds are rendered
-  const [loadedWorlds, setLoadedWorlds] = useState(() => new Set([activeWorld]))
-
-  useEffect(() => {
-    setLoadedWorlds((prev) => {
-      if (prev.has(activeWorld)) return prev
-      const next = new Set(prev)
-      next.add(activeWorld)
-      return next
-    })
-  }, [activeWorld])
-
   // Mutable reference tracking the current interpolated opacity of each world [0.0 - 1.0]
   const opacities = useRef({
     home: activeWorld === 'home' ? 1.0 : 0.0,
@@ -75,17 +64,22 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
   useFrame(() => {
     let hasChanged = false
     // Faster transition speed when reduced motion is preferred
-    const lerpSpeed = reducedMotion ? 0.2 : 0.07
+    const lerpSpeed = reducedMotion ? 0.25 : 0.08
     const nextState = {}
 
     for (const w of worlds) {
       const target = activeWorld === w ? 1.0 : 0.0
       const current = opacities.current[w]
       // Smooth linear interpolation toward target
-      const nextVal = THREE.MathUtils.lerp(current, target, lerpSpeed)
+      let nextVal = THREE.MathUtils.lerp(current, target, lerpSpeed)
+
+      // Snap cleanly to target when delta is small to ensure inactive worlds fully sleep (0.0)
+      if (Math.abs(target - nextVal) < 0.005) {
+        nextVal = target
+      }
 
       // Only trigger React state update if delta is perceptually significant
-      if (Math.abs(nextVal - current) > 0.001) {
+      if (Math.abs(nextVal - current) > 0.0005) {
         hasChanged = true
       }
 
@@ -101,7 +95,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
   return (
     <React.Suspense fallback={null}>
       {/* 1. Home — Liquid Chrome Waves (Panel 1) */}
-      {loadedWorlds.has('home') && (
+      {(activeWorld === 'home' || renderOpacities.home > 0.005) && (
         <HomeBackground
           opacity={renderOpacities.home}
           reducedMotion={reducedMotion}
@@ -109,7 +103,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
       )}
 
       {/* 2. Projects — Particle Universe & Constellations (Panel 2) */}
-      {loadedWorlds.has('projects') && (
+      {(activeWorld === 'projects' || renderOpacities.projects > 0.005) && (
         <ProjectsBackground
           opacity={renderOpacities.projects}
           reducedMotion={reducedMotion}
@@ -117,7 +111,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
       )}
 
       {/* 3. Skills — Digital Network & Energy Grid (Panel 3) */}
-      {loadedWorlds.has('skills') && (
+      {(activeWorld === 'skills' || renderOpacities.skills > 0.005) && (
         <SkillsBackground
           opacity={renderOpacities.skills}
           reducedMotion={reducedMotion}
@@ -125,7 +119,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
       )}
 
       {/* 4. About — Cosmic Violet Aurora & Nebulae (Panel 4) */}
-      {loadedWorlds.has('about') && (
+      {(activeWorld === 'about' || renderOpacities.about > 0.005) && (
         <AboutBackground
           opacity={renderOpacities.about}
           reducedMotion={reducedMotion}
@@ -133,7 +127,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
       )}
 
       {/* 5. Journey — Topographic Terrain & River of Light (Panel 5) */}
-      {loadedWorlds.has('journey') && (
+      {(activeWorld === 'journey' || renderOpacities.journey > 0.005) && (
         <JourneyBackground
           opacity={renderOpacities.journey}
           reducedMotion={reducedMotion}
@@ -141,7 +135,7 @@ function SceneSwitcher({ activeWorld, reducedMotion }) {
       )}
 
       {/* 6. Contact — Concentric Energy Portal Rings (Panel 6) */}
-      {loadedWorlds.has('contact') && (
+      {(activeWorld === 'contact' || renderOpacities.contact > 0.005) && (
         <ContactBackground
           opacity={renderOpacities.contact}
           reducedMotion={reducedMotion}
@@ -191,6 +185,10 @@ export default function BackgroundManager() {
     return () => media.removeEventListener('change', handler)
   }, [])
 
+  // Classify GPU capabilities once for optimal DPR and render throughput
+  const gpuTierInfo = useMemo(() => detectGpuTier(), [])
+  const adaptiveDpr = gpuTierInfo.tier === 'high' ? [1, 1.5] : 1.0
+
   if (!isSupported) {
     return <WebGLFallback />
   }
@@ -202,11 +200,13 @@ export default function BackgroundManager() {
     >
       <Canvas
         camera={{ position: [0, 0, 4.6], fov: 46 }}
-        dpr={[1, 1.5]}
+        dpr={adaptiveDpr}
         gl={{
-          antialias: true,
+          antialias: gpuTierInfo.tier === 'high',
           alpha: true,
           powerPreference: 'high-performance',
+          stencil: false,
+          depth: true,
         }}
         style={{ pointerEvents: 'none', position: 'absolute', inset: 0 }}
       >

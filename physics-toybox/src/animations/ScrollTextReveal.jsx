@@ -15,9 +15,12 @@ gsap.registerPlugin(ScrollTrigger)
  * and smoothly illuminate to bright radiant white (#FFFFFF) with radiant
  * lavender highlights (#E9D5FF) as the user scrolls through the section.
  * 
- * INTERACTION:
+ * INTERACTION & PERFORMANCE:
  * - Scrub-linked: animation smoothly tracks scrollbar movement bidirectionally.
- * - Cleanup: automatically reverts GSAP context on unmount to avoid leaks.
+ * - fastScrollEnd & preventOverlaps: prevents layout thrashing during fast scrolls.
+ * - Reduced Motion: respects accessibility preferences and avoids mounting
+ *   unnecessary scroll event listeners when reduced motion is preferred.
+ * - Cleanup: automatically reverts GSAP context on unmount to prevent memory leaks.
  */
 export default function ScrollTextReveal({
   text,
@@ -30,37 +33,55 @@ export default function ScrollTextReveal({
   useEffect(() => {
     if (!containerRef.current) return
 
+    // Accessibility check: immediately preserve legible static text if user prefers reduced motion
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (prefersReducedMotion) return
+
     const words = containerRef.current.querySelectorAll('.scroll-word')
     if (!words.length) return
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        words,
-        {
-          color: '#A09BB0',
-          opacity: 0.75,
-          y: 3,
-        },
-        {
-          color: (i, target) => {
-            const isHl = target.getAttribute('data-highlight') === 'true'
-            return isHl ? '#E9D5FF' : '#FFFFFF'
+    let ctx
+    // Defer ScrollTrigger initialization until after initial hero/WebGL startup has stabilized
+    const timer = setTimeout(() => {
+      if (!containerRef.current) return
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          words,
+          {
+            color: '#A09BB0',
+            opacity: 0.75,
+            y: 3,
           },
-          opacity: 1,
-          y: 0,
-          stagger: 0.04,
-          ease: 'power1.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 92%',
-            end: 'top 55%',
-            scrub: 0.6,
-          },
-        }
-      )
-    }, containerRef)
+          {
+            color: (i, target) => {
+              const isHl = target.getAttribute('data-highlight') === 'true'
+              return isHl ? '#E9D5FF' : '#FFFFFF'
+            },
+            opacity: 1,
+            y: 0,
+            stagger: 0.03,
+            ease: 'power1.out',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 92%',
+              end: 'top 55%',
+              scrub: 0.6,
+              fastScrollEnd: true,
+              preventOverlaps: true,
+            },
+          }
+        )
+      }, containerRef)
+    }, 450)
 
-    return () => ctx.revert()
+    return () => {
+      clearTimeout(timer)
+      if (ctx) ctx.revert()
+    }
   }, [text])
 
   const words = text.split(' ')
@@ -92,3 +113,4 @@ export default function ScrollTextReveal({
     </Component>
   )
 }
+

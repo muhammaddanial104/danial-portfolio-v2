@@ -2,6 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
+import { detectGpuTier, getAdaptiveConfig } from '../utils/adaptiveQuality.js'
 
 /**
  * ============================================================================
@@ -90,13 +91,13 @@ const waveVertexShader = `
     float wave2 = sin(pos.x * 1.3 - time * 0.75 + pos.y * 1.1) * 0.28;
     float wave3 = cos(pos.y * 1.8 + pos.x * 0.85 + time * 0.6) * 0.16;
 
-    // Multi-frequency organic liquid turbulence
+    // Multi-frequency organic liquid turbulence: primary organic fold + fast harmonic ripple
     float noise1 = snoise(pos.xy * 0.55 + vec2(time * 0.2, -time * 0.15)) * 0.38;
-    float noise2 = snoise(pos.xy * 1.15 - vec2(time * 0.18, time * 0.22)) * 0.18;
+    float noise2 = sin(pos.x * 2.1 - time * 0.75) * cos(pos.y * 1.9 + time * 0.6) * 0.12;
 
-    // Mouse pointer reactive liquid displacement (disabled when reduced motion active)
+    // Mouse pointer reactive liquid displacement (disabled when reduced motion active or mouse idle)
     float mouseRipple = 0.0;
-    if (uReducedMotion < 0.5) {
+    if (uReducedMotion < 0.5 && uMouseStrength > 0.02) {
       float mouseDist = length(pos.xy - uMouse);
       mouseRipple = sin(mouseDist * 5.5 - time * 4.5) * exp(-mouseDist * 1.2) * uMouseStrength * 0.65;
     }
@@ -121,8 +122,11 @@ const waveVertexShader = `
 `
 
 const waveFragmentShader = `
+  precision highp float;
+
   uniform float uTime;
   uniform vec2 uMouse;
+  uniform float uMouseStrength;
   uniform float uGlobalOpacity;
   uniform float uReducedMotion;
   uniform vec3 uColorObsidian;
@@ -138,6 +142,11 @@ const waveFragmentShader = `
   varying vec3 vEyeVector;
 
   void main() {
+    // Early exit if completely transparent
+    if (uGlobalOpacity <= 0.002) {
+      discard;
+    }
+
     // Normalizing elevation across smooth gradient thresholds
     float factor = clamp((vElevation + 0.45) * 0.75, 0.0, 1.0);
 
@@ -152,21 +161,35 @@ const waveFragmentShader = `
     vec3 normal = normalize(vNormal);
     vec3 viewDir = vEyeVector;
 
-    // Fresnel reflection
-    float fresnel = pow(1.0 - max(dot(viewDir, normal), 0.0), 3.2);
+    // Fast Fresnel reflection: (1.0 - dot)^3 approximation
+    float ndotv = max(dot(viewDir, normal), 0.0);
+    float f = 1.0 - ndotv;
+    float fresnel = f * f * f;
 
-    // Key Specular Highlight (Crisp metallic sheen)
-    vec3 lightDir1 = normalize(vec3(0.65, 0.85, 0.75));
+    // Key Specular Highlight (Crisp metallic sheen via pre-normalized light direction: 48th power)
+    const vec3 lightDir1 = vec3(0.52183, 0.68239, 0.60211);
     vec3 halfVec1 = normalize(lightDir1 + viewDir);
-    float spec1 = pow(max(dot(normal, halfVec1), 0.0), 48.0) * 0.85;
+    float ndoth1 = max(dot(normal, halfVec1), 0.0);
+    float s1_2 = ndoth1 * ndoth1;
+    float s1_4 = s1_2 * s1_2;
+    float s1_8 = s1_4 * s1_4;
+    float s1_16 = s1_8 * s1_8;
+    float s1_32 = s1_16 * s1_16;
+    float spec1 = s1_32 * s1_16 * 0.85;
 
-    // Secondary Specular Highlight (Soft violet rim light)
-    vec3 lightDir2 = normalize(vec3(-0.7, -0.5, 0.6));
+    // Secondary Specular Highlight (Soft violet rim light via pre-normalized light direction: 24th power)
+    const vec3 lightDir2 = vec3(-0.66952, -0.47823, 0.57387);
     vec3 halfVec2 = normalize(lightDir2 + viewDir);
-    float spec2 = pow(max(dot(normal, halfVec2), 0.0), 24.0) * 0.4;
+    float ndoth2 = max(dot(normal, halfVec2), 0.0);
+    float s2_2 = ndoth2 * ndoth2;
+    float s2_4 = s2_2 * s2_2;
+    float s2_8 = s2_4 * s2_4;
+    float s2_16 = s2_8 * s2_8;
+    float spec2 = s2_16 * s2_8 * 0.40;
 
-    // Glowing chrome ribbons along wave crests
-    float ribbon = pow(smoothstep(0.55, 0.95, factor), 3.0) * 0.6;
+    // Glowing chrome ribbons along wave crests: fast cubic power
+    float ribStep = smoothstep(0.55, 0.95, factor);
+    float ribbon = ribStep * ribStep * ribStep * 0.6;
 
     // Blend glossy chrome highlights
     color += uColorChrome * (spec1 + ribbon);
@@ -174,14 +197,15 @@ const waveFragmentShader = `
 
     // Subtle traveling energy pulse (paused when reduced motion active)
     float beamTime = uReducedMotion > 0.5 ? 0.0 : (uTime * 0.65);
-    float energyBeam = sin(vUv.x * 3.5 + vUv.y * 2.5 - beamTime) * 0.5 + 0.5;
-    energyBeam = pow(energyBeam, 5.0) * 0.35;
+    float beamWave = sin(vUv.x * 3.5 + vUv.y * 2.5 - beamTime) * 0.5 + 0.5;
+    float b2 = beamWave * beamWave;
+    float energyBeam = b2 * b2 * beamWave * 0.35;
     color += uColorElectricPurple * energyBeam;
 
-    // Interactive mouse aura (disabled when reduced motion active)
-    if (uReducedMotion < 0.5) {
+    // Interactive mouse aura (only when mouse is active)
+    if (uReducedMotion < 0.5 && uMouseStrength > 0.02) {
       float mouseDist = length(vUv * 2.0 - 1.0 - uMouse * 0.35);
-      float mouseAura = exp(-mouseDist * 2.2) * 0.3;
+      float mouseAura = exp(-mouseDist * 2.2) * 0.3 * uMouseStrength;
       color += uColorLavender * mouseAura;
     }
 
@@ -189,8 +213,10 @@ const waveFragmentShader = `
     float textProtection = smoothstep(0.0, 0.75, vUv.x);
     color = mix(uColorObsidian, color, 0.42 + textProtection * 0.58);
 
-    // Peripheral vignette blending into deep obsidian space
-    float edgeVignette = smoothstep(1.3, 0.3, length(vUv - 0.5) * 1.35);
+    // Peripheral vignette blending into deep obsidian space (fast squared distance falloff)
+    vec2 uvCentered = vUv - 0.5;
+    float uvDistSq = dot(uvCentered, uvCentered);
+    float edgeVignette = smoothstep(0.65, 0.05, uvDistSq * 1.6);
     color = mix(uColorObsidian, color, clamp(edgeVignette + 0.15, 0.0, 1.0));
 
     // Dark luxury grade
@@ -280,18 +306,22 @@ export default function HomeBackground({ opacity = 1, reducedMotion = false }) {
       smoothedMouse.current.x = THREE.MathUtils.lerp(smoothedMouse.current.x, targetMouse.current.x, 0.05)
       smoothedMouse.current.y = THREE.MathUtils.lerp(smoothedMouse.current.y, targetMouse.current.y, 0.05)
       uniforms.uMouse.value.set(smoothedMouse.current.x, smoothedMouse.current.y)
-      uniforms.uMouseStrength.value = THREE.MathUtils.lerp(uniforms.uMouseStrength.value, mouseStrength.current, 0.07)
+      
+      let nextStr = THREE.MathUtils.lerp(uniforms.uMouseStrength.value, mouseStrength.current, 0.07)
+      if (mouseStrength.current < 0.01 && nextStr < 0.01) {
+        nextStr = 0.0
+      }
+      uniforms.uMouseStrength.value = nextStr
     }
-
-    meshRef.current.rotation.x = -Math.PI / 3.6
-    meshRef.current.position.y = -0.45
   })
+
+  const gpuInfo = useMemo(() => detectGpuTier(), [])
+  const adaptiveConfig = useMemo(() => getAdaptiveConfig(gpuInfo.tier, viewport.width), [gpuInfo.tier, viewport.width])
 
   const planeWidth = viewport.width * 1.75
   const planeHeight = viewport.height * 2.1
-  const isMobile = viewport.width < 7.0
-  const segX = isMobile ? 70 : 80
-  const segY = isMobile ? 70 : 80
+  const segX = adaptiveConfig.homeSegX
+  const segY = adaptiveConfig.homeSegY
 
   return (
     <mesh ref={meshRef} position={[0, -0.45, -1.0]} rotation={[-Math.PI / 3.6, 0, 0]}>
