@@ -27,7 +27,7 @@ import { projectsData } from '../data/projects.js'
  *   geometric connection lines, stellar depth).
  * 
  * CONTENT:
- * - 9 curated projects spanning Full-Stack MERN applications, AI platforms,
+ * - 10 curated projects spanning Full-Stack MERN applications, AI platforms,
  *   autonomous systems, client-side document processing, and developer utilities.
  * - Category filter tabs (All, Full-Stack, AI & Automation, Web Utility).
  * - Editorial project cards with status badges, verified tech tags, and
@@ -35,10 +35,10 @@ import { projectsData } from '../data/projects.js'
  */
 
 const FILTER_TABS = [
-  { id: 'all', label: 'All Projects', count: 9 },
-  { id: 'fullstack', label: 'Full-Stack', count: 3 },
-  { id: 'ai', label: 'AI & Automation', count: 4 },
-  { id: 'utility', label: 'Web Utility', count: 2 },
+  { id: 'all', label: 'All Projects', count: projectsData.length },
+  { id: 'fullstack', label: 'Full-Stack', count: projectsData.filter((p) => p.filterCategory === 'fullstack').length },
+  { id: 'ai', label: 'AI & Automation', count: projectsData.filter((p) => p.filterCategory === 'ai').length },
+  { id: 'utility', label: 'Web Utility', count: projectsData.filter((p) => p.filterCategory === 'utility').length },
 ]
 
 export default function Projects() {
@@ -123,7 +123,7 @@ export default function Projects() {
             CURATED <span className="text-shimmer-violet italic font-display">SYSTEMS.</span>
           </h1>
           <p className="mt-4 max-w-2xl font-display text-sm sm:text-base md:text-lg text-brand-lilac/75 leading-relaxed">
-            A curated portfolio of 9 full-stack applications, client-side web utilities, and AI system concepts. Built with focus on clean architecture, performance, and tactile elegance.
+            A curated portfolio of 10 full-stack applications, client-side web utilities, and AI system concepts. Built with focus on clean architecture, performance, and tactile elegance.
           </p>
 
           {/* Category Filter Tabs */}
@@ -154,7 +154,7 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* 9 Projects Grid */}
+        {/* 10 Projects Grid */}
         <div className="grid gap-8 lg:grid-cols-2">
           {filteredProjects.map((project, idx) => (
             <motion.div

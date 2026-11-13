@@ -3,8 +3,8 @@
  * DANIAL® — Centralized Projects Data Store
  * ============================================================================
  * 
- * Factually grounded registry of all 9 engineering projects and prototypes.
- * - Completed: Verified internship work at ITS Gujrat or verified local codebases (Danix Tools, Toolora).
+ * Factually grounded registry of all 10 engineering projects and prototypes.
+ * - Completed: Verified internship work at ITS Gujrat or verified local codebases (Danix Tools, Toolora, DevForge).
  * - In Progress: Projects in active development with user-specified feature scopes.
  * - Concept: Conceptual platforms and UI prototypes awaiting repository configuration.
  */
@@ -213,5 +213,42 @@ export const projectsData = [
     liveUrl: null,
     githubUrl: null,
     repoStatus: 'UI Prototype Verified',
+  },
+  {
+    id: 'devforge',
+    num: '10',
+    title: 'DevForge — 14-in-1 Developer Utilities Hub',
+    category: 'Web Utility',
+    filterCategory: 'utility',
+    tag: 'Developer Tools',
+    status: 'Completed',
+    shortDesc:
+      'A fast, privacy-first suite of 14 browser-native developer tools, including React-to-Next.js and JavaScript-to-Python transpilers, a CSS-to-Tailwind v4 converter, JSON-to-Zod generator, and an LLM token cost calculator, paired with a Node.js/Express API for live usage telemetry and support requests.',
+    description:
+      'DevForge is a fast, privacy-first developer utility hub uniting 14 browser-native tools into a unified interface. All 14 utilities execute client-side in browser memory with zero server uploads of user code, tokens, or configurations. Features dedicated React-to-Next.js and JavaScript-to-Python transpilers, a CSS-to-Tailwind v4 converter, a JSON-to-Zod schema and TypeScript interface generator, and an LLM token cost calculator across top AI models, paired with a lightweight Node.js/Express backend API for live tool usage telemetry and support request persistence.',
+    tech: [
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS v4',
+      'Vite',
+      'Node.js',
+      'Express',
+      'REST API',
+      'JSZip',
+    ],
+    features: [
+      'React-to-Next.js App Router converter with automatic "use client" directive injection and routing hook migrations',
+      'JavaScript-to-Python transpiler converting ES6+ functions, arrow syntax, template literals to f-strings, and loop constructs',
+      'CSS-to-Tailwind v4 converter parsing standard CSS declarations into clean utility classes and arbitrary bracket values',
+      'JSON-to-Zod generator creating runtime validation schemas alongside strict TypeScript interfaces',
+      'LLM token cost calculator estimating prompt token consumption and comparing API costs across GPT-4o, Claude 3.7, Gemini, and DeepSeek',
+      'Full suite of 14 browser-native tools: Glassmorphism UI, Bento Grid Builder, ENV Formatter, SVG-to-React TSX, Favicon ZIP Pack, Cron Builder, JWT Debugger, Regex Tester, and OpenGraph Previewer',
+      '100% browser-native client-side processing paired with a Node.js/Express API for live usage telemetry and support requests',
+    ],
+    verifiedNotes:
+      'Verified working implementation in local repository (D:/devforge-tools). 14 client-side utilities and Node.js/Express telemetry API confirmed.',
+    liveUrl: null,
+    githubUrl: null,
+    repoStatus: 'Local Codebase Verified',
   },
 ]

@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom'
-import { ArrowUp, Sparkles } from 'lucide-react'
+import {
+  ArrowUp,
+  Github,
+  Linkedin,
+  Facebook,
+  Instagram,
+  MessageCircle,
+  Mail,
+} from 'lucide-react'
 
 /**
  * ============================================================================
@@ -9,8 +17,8 @@ import { ArrowUp, Sparkles } from 'lucide-react'
  * FEATURES:
  * - Brand Monogram & Copyright
  * - Fast internal page navigation links matching all 6 primary routes
+ * - Direct social & contact channels: WhatsApp, Email, GitHub, LinkedIn, Facebook, Instagram
  * - Smooth scroll-to-top micro-interaction trigger
- * - Real-time active status beacon
  */
 export default function Footer() {
   const scrollToTop = (e) => {
@@ -25,6 +33,45 @@ export default function Footer() {
     { name: 'Skills', path: '/skills' },
     { name: 'Journey', path: '/journey' },
     { name: 'Contact', path: '/contact' },
+  ]
+
+  const socialLinks = [
+    {
+      name: 'WhatsApp',
+      href: 'https://wa.me/923137525862',
+      icon: MessageCircle,
+      label: 'WhatsApp Chat',
+    },
+    {
+      name: 'Email',
+      href: 'mailto:innocentdanial00@gmail.com',
+      icon: Mail,
+      label: 'Email Inquiry',
+    },
+    {
+      name: 'GitHub',
+      href: 'https://github.com/muhammaddanial104/danial-tech',
+      icon: Github,
+      label: 'GitHub Profile',
+    },
+    {
+      name: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/muhammad-danial-2584b4432',
+      icon: Linkedin,
+      label: 'LinkedIn Profile',
+    },
+    {
+      name: 'Facebook',
+      href: 'https://www.facebook.com/share/1CD8FQZmT6/',
+      icon: Facebook,
+      label: 'Facebook Profile',
+    },
+    {
+      name: 'Instagram',
+      href: 'https://www.instagram.com/muhammad_danial604?exln=amEzODdkdHZzcnVp',
+      icon: Instagram,
+      label: 'Instagram Profile',
+    },
   ]
 
   return (
@@ -58,12 +105,34 @@ export default function Footer() {
           ))}
         </div>
 
+        {/* Social & Contact Channels */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {socialLinks.map((item) => {
+            const Icon = item.icon
+            const isMail = item.href.startsWith('mailto:')
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                target={isMail ? undefined : '_blank'}
+                rel={isMail ? undefined : 'noopener noreferrer'}
+                aria-label={item.label}
+                title={item.name}
+                className="grid h-8 w-8 place-items-center rounded-full border border-brand-purple/20 bg-obsidian-card/80 text-brand-lilac/70 transition-all hover:border-brand-purple hover:bg-brand-purple/20 hover:text-white focus:outline-none focus:ring-1 focus:ring-brand-purple"
+              >
+                <Icon size={14} />
+              </a>
+            )
+          })}
+        </div>
+
+        {/* Copyright & Top Trigger */}
         <div className="flex flex-wrap items-center justify-between sm:justify-start gap-4 sm:gap-6 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-brand-lilac/60">
           <span>© 2026 DANIAL®</span>
           <button
             onClick={scrollToTop}
             aria-label="Scroll back to top"
-            className="group flex items-center gap-1.5 sm:gap-2 rounded-full border border-brand-purple/20 bg-obsidian-card px-3 sm:px-4 py-1.5 sm:py-2 text-brand-lilac transition-all hover:border-brand-purple hover:bg-brand-purple/20 hover:text-white"
+            className="group flex items-center gap-1.5 sm:gap-2 rounded-full border border-brand-purple/20 bg-obsidian-card px-3 sm:px-4 py-1.5 sm:py-2 text-brand-lilac transition-all hover:border-brand-purple hover:bg-brand-purple/20 hover:text-white cursor-pointer"
           >
             <span>Top</span>
             <ArrowUp

@@ -23,7 +23,7 @@ import { projectsData } from '../data/projects.js'
  *    - Status badge: "DANIAL® ARCHIVE — ISSUE 2026.1"
  *    - Editorial mission statement and interactive CTAs
  * 2. Signature Highlights:
- *    - Featured project previews from 9 verified projects
+ *    - Featured project previews from 10 verified projects
  *    - Prominent link to complete /projects archive
  * 3. Kinetic Editorial Philosophy:
  *    - ScrollTextReveal illuminating developer vision and craftsmanship
@@ -115,7 +115,7 @@ export default function Home() {
                 to="/projects"
                 className="group flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian transition-all duration-300 hover:bg-brand-lilac hover:shadow-glow-sm"
               >
-                <span>Explore 9 Projects</span>
+                <span>Explore {projectsData.length} Projects</span>
                 <ArrowDownRight
                   size={15}
                   className="transition-transform duration-300 group-hover:rotate-[-45deg]"
@@ -181,7 +181,7 @@ export default function Home() {
               to="/projects"
               className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-brand-lavender hover:text-white transition-colors"
             >
-              <span>View All 9 Projects</span>
+              <span>View All {projectsData.length} Projects</span>
               <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
@@ -246,7 +246,7 @@ export default function Home() {
           <div className="mt-12 rounded-2xl border border-brand-purple/20 bg-gradient-to-r from-brand-violet/15 via-obsidian-card/70 to-brand-violet/15 p-6 sm:p-8 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
             <div>
               <h4 className="font-editorial text-lg sm:text-xl font-bold text-white">
-                Discover All 9 Engineered Projects
+                Discover All {projectsData.length} Engineered Projects
               </h4>
               <p className="mt-1 text-xs sm:text-sm text-brand-lilac/70 font-display">
                 Explore MERN stack client deliverables, AI guidance engines, developer utilities, and real-time systems with complete architecture breakdowns.
@@ -256,7 +256,7 @@ export default function Home() {
               to="/projects"
               className="flex-shrink-0 rounded-full bg-white px-6 py-3 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian hover:bg-brand-lilac transition-all shadow-glow-sm"
             >
-              View Full Archive (9)
+              View Full Archive ({projectsData.length})
             </MagneticButton>
           </div>
         </div>
