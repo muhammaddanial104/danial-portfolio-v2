@@ -1,6 +1,15 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Compass, Sparkles, Terminal, Layers, ArrowUpRight } from 'lucide-react'
+import {
+  Compass,
+  Sparkles,
+  Layers,
+  Cpu,
+  Palette,
+  Terminal,
+  Code2,
+  ArrowUpRight
+} from 'lucide-react'
 import PageTransition from '../components/PageTransition.jsx'
 import CharRevealLabel from '../animations/CharRevealLabel.jsx'
 import ScrollTextReveal from '../animations/ScrollTextReveal.jsx'
@@ -16,9 +25,13 @@ import MagneticButton from '../animations/MagneticButton.jsx'
  * 
  * CONTENT:
  * - Editorial headline: "NOT JUST A DEVELOPER. AN EXPLORER OF WHAT IS POSSIBLE."
- * - Personal developer manifesto and engineering ethos.
- * - Creative principles (Craftsmanship, Spatial Immersion, Accessible Scalability).
- * - Location, timezone, and availability telemetry.
+ * - Factually grounded narrative:
+ *   • Full-stack web development & MERN applications
+ *   • BS in Robotics & Autonomous Systems foundation
+ *   • ITS Gujrat 6-month software engineering internship client deliverables
+ *   • AI-powered applications & workflow automation
+ *   • Interactive web experiences & UI/UX design
+ * - Identity card & telemetry.
  */
 export default function About() {
   return (
@@ -45,31 +58,49 @@ export default function About() {
                 THE STUDIO MANIFESTO
               </span>
               <ScrollTextReveal
-                text="In an industry increasingly filled with repetitive, templated layouts, we sculpt digital environments with WebGL shaders, fluid dynamics, and tactile physics. Every detail is crafted to evoke wonder."
-                highlightWords={['templated', 'sculpt', 'environments', 'webgl', 'fluid', 'tactile', 'wonder']}
+                text="In an industry increasingly filled with repetitive, templated layouts, we sculpt digital environments with tactile physics, intelligent automation, and robust full-stack architecture. Every system is built to evoke wonder and deliver performance."
+                highlightWords={['templated', 'sculpt', 'environments', 'tactile', 'automation', 'architecture', 'wonder', 'performance']}
                 className="text-lg sm:text-2xl font-editorial font-bold text-white leading-snug"
               />
               <p className="mt-6 font-display text-sm sm:text-base leading-relaxed text-brand-lilac/75">
-                My approach to software is holistic. Code is not simply backend logic or markup — it is an artistic medium. 
-                Whether architecting full-stack React systems or programming GLSL vertex shaders, the goal remains singular:
-                deliver digital products that people genuinely remember.
+                My work centers on full-stack web development and MERN stack applications, paired with AI-powered tools, workflow automation, and tactile UI/UX design. With a foundation in Robotics & Autonomous Systems and software engineering internship experience developing MERN e-commerce platforms at ITS Gujrat (March–August 2024), I build software with a focus on clean logic, user privacy, and dependable performance.
+              </p>
+              <p className="mt-3 font-display text-sm sm:text-base leading-relaxed text-brand-lilac/75">
+                From developing client-side document utilities like Toolora and Danix Tools to prototyping conversational AI platforms and interactive WebGL shaders, the goal remains singular: engineer software that is practical, accessible, and memorable.
               </p>
             </div>
 
+            {/* Core Competencies 2x2 Grid */}
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
-                <Compass className="text-brand-purple mb-3" size={20} />
-                <h3 className="font-editorial text-lg font-bold text-white">Curiosity-Led R&D</h3>
+                <Layers className="text-brand-purple mb-3" size={20} />
+                <h3 className="font-editorial text-lg font-bold text-white">Full-Stack & MERN</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
-                  Continuously learning and experimenting with cutting-edge 3D graphics, physics simulations, and browser performance.
+                  End-to-end web engineering with React, Node.js, Express, and MongoDB. Secure, API-driven architectures with role-based access control.
                 </p>
               </div>
 
               <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
-                <Layers className="text-brand-lavender mb-3" size={20} />
-                <h3 className="font-editorial text-lg font-bold text-white">Full-Stack Discipline</h3>
+                <Cpu className="text-brand-lavender mb-3" size={20} />
+                <h3 className="font-editorial text-lg font-bold text-white">AI-Powered & Automation</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
-                  Bridging creative interactive design with dependable backend architectures in Node.js, Express, and modern databases.
+                  Integrating artificial intelligence models, conversational prompt interfaces, and Python scripts that streamline repetitive workflows.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+                <Sparkles className="text-brand-purple mb-3" size={20} />
+                <h3 className="font-editorial text-lg font-bold text-white">Interactive Experiences</h3>
+                <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
+                  Infusing web interfaces with real-time WebGL canvas shaders, fluid dynamics, and smooth, responsive micro-interactions.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+                <Palette className="text-brand-lavender mb-3" size={20} />
+                <h3 className="font-editorial text-lg font-bold text-white">UI/UX & Design Systems</h3>
+                <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
+                  Designing cohesive typography, dark obsidian visual themes, and accessible component structures that prioritize usability.
                 </p>
               </div>
             </div>
@@ -86,7 +117,7 @@ export default function About() {
                   <div>
                     <h3 className="font-editorial text-xl font-bold text-white">DANIAL®</h3>
                     <span className="font-mono text-[10px] text-brand-purple uppercase tracking-wider">
-                      Creative Developer & Technologist
+                      Full-Stack & Applied AI Developer
                     </span>
                   </div>
                 </div>
@@ -102,7 +133,11 @@ export default function About() {
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">PRIMARY FOCUS:</span>
-                  <span className="text-brand-lavender">WebGL, 3D Web & Full-Stack</span>
+                  <span className="text-brand-lavender">Full-Stack, MERN & AI Automation</span>
+                </div>
+                <div className="flex justify-between border-b border-white/5 pb-2">
+                  <span className="text-brand-lilac/50">EXPERTISE:</span>
+                  <span className="text-white">Web Utilities & UI/UX</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">PHILOSOPHY:</span>
@@ -117,7 +152,7 @@ export default function About() {
               <div className="mt-8 pt-4">
                 <MagneticButton
                   to="/contact"
-                  className="w-full rounded-xl bg-gradient-to-r from-brand-violet to-brand-purple py-3.5 font-mono text-xs uppercase tracking-wider text-white shadow-glow-sm hover:shadow-glow-md transition-all"
+                  className="w-full rounded-xl bg-gradient-to-r from-brand-violet to-brand-purple py-3.5 font-mono text-xs uppercase tracking-wider text-white shadow-glow-sm hover:shadow-glow-md transition-all text-center"
                 >
                   Initiate Discussion
                 </MagneticButton>

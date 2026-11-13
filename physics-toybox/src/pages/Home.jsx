@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, ArrowDownRight, Sparkles, Waves, Compass, Terminal, Layers } from 'lucide-react'
+import { ArrowUpRight, ArrowDownRight, Sparkles, Waves, Compass, Terminal, Layers, CheckCircle2 } from 'lucide-react'
 import PageTransition from '../components/PageTransition.jsx'
 import WordRevealHero from '../animations/WordRevealHero.jsx'
 import CharRevealLabel from '../animations/CharRevealLabel.jsx'
@@ -23,11 +23,12 @@ import { projectsData } from '../data/projects.js'
  *    - Status badge: "DANIAL® ARCHIVE — ISSUE 2026.1"
  *    - Editorial mission statement and interactive CTAs
  * 2. Signature Highlights:
- *    - Featured project previews with link-outs to /projects
+ *    - Featured project previews from 9 verified projects
+ *    - Prominent link to complete /projects archive
  * 3. Kinetic Editorial Philosophy:
  *    - ScrollTextReveal illuminating developer vision and craftsmanship
  * 4. Multi-World Navigation Portal:
- *    - Cards linking to the other 5 immersive digital worlds
+ *    - Direct entry points to About, Skills, and Contact
  */
 export default function Home() {
   const containerVariants = {
@@ -35,8 +36,8 @@ export default function Home() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.15,
+        staggerChildren: 0.14,
+        delayChildren: 0.45,
       },
     },
   }
@@ -50,6 +51,10 @@ export default function Home() {
     },
   }
 
+  // Curate 3 featured projects from the verified list
+  const featuredIds = ['mern-internship', 'danix-tools', 'toolora']
+  const featuredProjects = projectsData.filter((p) => featuredIds.includes(p.id))
+
   return (
     <PageTransition>
       {/* 1. Cinematic Hero Section */}
@@ -62,11 +67,11 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-purple opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-purple" />
               </span>
-              <CharRevealLabel text="DANIAL® ARCHIVE — ISSUE 2026.1" className="text-brand-lilac truncate" />
+              <CharRevealLabel text="DANIAL® ARCHIVE — ISSUE 2026.1" className="text-brand-lilac truncate" delay={0.25} useScrollTrigger={false} />
             </div>
 
             <div className="flex items-center gap-4 flex-shrink-0">
-              <span className="hidden md:inline-block">CREATIVE TECHNOLOGIST & WEBGL ARTIST</span>
+              <span className="hidden md:inline-block">FULL-STACK & AI DEVELOPER</span>
               <span className="hidden sm:inline-block text-brand-lavender">[ 51.5074° N, 0.1278° W ]</span>
             </div>
           </div>
@@ -85,20 +90,20 @@ export default function Home() {
             >
               <Sparkles size={13} className="text-brand-lavender animate-pulse flex-shrink-0" />
               <span className="font-mono text-[9px] sm:text-[11px] uppercase tracking-wider text-brand-lilac">
-                Creative Developer <span className="text-brand-purple">•</span> Interactive Experiences <span className="text-brand-purple">•</span> 3D Web
+                Full-Stack Web <span className="text-brand-purple">•</span> MERN Architecture <span className="text-brand-purple">•</span> AI Automation
               </span>
             </motion.div>
 
             {/* Cinematic Word-by-Word Reveal Headline */}
-            <WordRevealHero className="text-[clamp(2.9rem,8.6vw,8.4rem)]" />
+            <WordRevealHero delay={0.5} className="text-[clamp(2.9rem,8.6vw,8.4rem)]" />
 
             {/* Descriptive Editorial Paragraph */}
             <motion.p
               variants={itemVariants}
               className="mt-6 md:mt-8 max-w-2xl font-display text-sm sm:text-base md:text-xl leading-relaxed text-brand-lilac/80"
             >
-              Merging contemporary editorial design with real-time WebGL, fluid simulation, and generative code. 
-              Crafting digital art and scalable applications that provoke wonder, tactile curiosity, and unforgettable presence.
+              Developing full-stack MERN applications, client-side web utilities, and interactive digital experiences. 
+              Crafting software that combines clean engineering with memorable visual presence.
             </motion.p>
 
             {/* Action Buttons: True page routing */}
@@ -110,7 +115,7 @@ export default function Home() {
                 to="/projects"
                 className="group flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian transition-all duration-300 hover:bg-brand-lilac hover:shadow-glow-sm"
               >
-                <span>Explore Projects</span>
+                <span>Explore 9 Projects</span>
                 <ArrowDownRight
                   size={15}
                   className="transition-transform duration-300 group-hover:rotate-[-45deg]"
@@ -144,12 +149,12 @@ export default function Home() {
             className="grid grid-cols-3 gap-2 sm:gap-6 border-t border-brand-purple/15 pt-5 font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-brand-lilac/50 z-10"
           >
             <div>
-              <span className="block text-brand-purple font-semibold text-[8px] sm:text-[10px]">01 / MEDIUM</span>
-              <span className="mt-1 block text-brand-lilac/80 truncate">WebGL & GLSL Shaders</span>
+              <span className="block text-brand-purple font-semibold text-[8px] sm:text-[10px]">01 / DISCIPLINES</span>
+              <span className="mt-1 block text-brand-lilac/80 truncate">Full-Stack & AI Automation</span>
             </div>
             <div>
-              <span className="block text-brand-purple font-semibold text-[8px] sm:text-[10px]">02 / STACK</span>
-              <span className="mt-1 block text-brand-lilac/80 truncate">React • Three.js • GSAP</span>
+              <span className="block text-brand-purple font-semibold text-[8px] sm:text-[10px]">02 / CORE STACK</span>
+              <span className="mt-1 block text-brand-lilac/80 truncate">MERN • Next.js • Python</span>
             </div>
             <div>
               <span className="block text-brand-purple font-semibold text-[8px] sm:text-[10px]">03 / AESTHETIC</span>
@@ -166,7 +171,7 @@ export default function Home() {
             <div>
               <span className="font-mono text-[10px] uppercase tracking-widest text-brand-purple flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-purple" />
-                <CharRevealLabel text="CURATED PORTFOLIO" />
+                <CharRevealLabel text="CURATED PORTFOLIO HIGHLIGHTS" />
               </span>
               <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white">
                 FEATURED <span className="text-shimmer-violet italic font-display">WORKS.</span>
@@ -176,37 +181,83 @@ export default function Home() {
               to="/projects"
               className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-brand-lavender hover:text-white transition-colors"
             >
-              <span>View All Projects</span>
+              <span>View All 9 Projects</span>
               <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {projectsData.slice(0, 3).map((proj, idx) => (
+            {featuredProjects.map((proj, idx) => (
               <div
                 key={proj.id}
-                className="group relative rounded-2xl border border-brand-purple/20 bg-obsidian-card/65 p-6 md:p-8 backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-brand-purple/60 hover:bg-obsidian-card/85 hover:shadow-[0_0_40px_rgba(139,92,246,0.22)] hover:-translate-y-1.5"
+                className="group relative rounded-2xl border border-brand-purple/20 bg-obsidian-card/65 p-6 md:p-8 backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-brand-purple/60 hover:bg-obsidian-card/85 hover:shadow-[0_0_40px_rgba(139,92,246,0.22)] hover:-translate-y-1.5 flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between text-brand-lavender font-mono text-[10px]">
-                  <span>PROJ // 0{idx + 1}</span>
-                  <span className="rounded-full border border-brand-purple/25 bg-brand-violet/15 px-2.5 py-0.5">{proj.tag}</span>
+                <div>
+                  <div className="flex items-center justify-between text-brand-lavender font-mono text-[10px]">
+                    <span className="text-brand-purple font-semibold">PROJECT // {proj.num}</span>
+                    <span className="rounded-full border border-brand-purple/25 bg-brand-violet/15 px-2.5 py-0.5">{proj.category}</span>
+                  </div>
+
+                  <h3 className="mt-5 font-editorial text-2xl font-bold text-white group-hover:text-brand-lilac transition-colors">
+                    {proj.title}
+                  </h3>
+
+                  <p className="mt-3 text-xs sm:text-sm leading-relaxed text-brand-lilac/75 font-display">
+                    {proj.shortDesc}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {proj.tech.slice(0, 3).map((t) => (
+                      <span key={t} className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[9px] text-brand-lilac/80">
+                        {t}
+                      </span>
+                    ))}
+                    {proj.tech.length > 3 && (
+                      <span className="rounded-md border border-brand-purple/20 bg-brand-violet/10 px-1.5 py-0.5 font-mono text-[9px] text-brand-lavender">
+                        +{proj.tech.length - 3}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <h3 className="mt-5 font-editorial text-2xl font-bold text-white group-hover:text-brand-lilac transition-colors">
-                  {proj.title}
-                </h3>
-                <ScrollTextReveal
-                  text={proj.shortDesc}
-                  highlightWords={['all-in-one', 'webassembly', 'next-generation', 'autonomous', 'pipelines']}
-                  className="mt-3 text-xs sm:text-sm leading-relaxed"
-                />
-                <div className="mt-6 flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-brand-purple group-hover:text-brand-lavender transition-colors">
-                  <Link to="/projects" className="inline-flex items-center gap-1">
-                    <span>Inspect Details</span>
+
+                <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
+                  <span className={`inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider ${
+                    proj.status === 'Completed' ? 'text-emerald-400' : 'text-brand-lavender'
+                  }`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${
+                      proj.status === 'Completed' ? 'bg-emerald-400' : 'bg-brand-lavender animate-pulse'
+                    }`} />
+                    {proj.status}
+                  </span>
+
+                  <Link
+                    to="/projects"
+                    className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-brand-purple group-hover:text-brand-lavender transition-colors"
+                  >
+                    <span>Details</span>
                     <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom Callout Banner */}
+          <div className="mt-12 rounded-2xl border border-brand-purple/20 bg-gradient-to-r from-brand-violet/15 via-obsidian-card/70 to-brand-violet/15 p-6 sm:p-8 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <h4 className="font-editorial text-lg sm:text-xl font-bold text-white">
+                Discover All 9 Engineered Projects
+              </h4>
+              <p className="mt-1 text-xs sm:text-sm text-brand-lilac/70 font-display">
+                Explore MERN stack client deliverables, AI guidance engines, developer utilities, and real-time systems with complete architecture breakdowns.
+              </p>
+            </div>
+            <MagneticButton
+              to="/projects"
+              className="flex-shrink-0 rounded-full bg-white px-6 py-3 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian hover:bg-brand-lilac transition-all shadow-glow-sm"
+            >
+              View Full Archive (9)
+            </MagneticButton>
           </div>
         </div>
       </section>

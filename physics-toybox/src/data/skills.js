@@ -1,46 +1,91 @@
 /**
  * ============================================================================
- * DANIAL® — Skills & Technical Capabilities Data Store
+ * DANIAL® — Centralized Skills & Technical Capabilities Data Store
  * ============================================================================
  * 
- * Structured taxonomy of engineering domains: Creative Technology & 3D Web,
- * Core Frontend Engineering, Backend & Full-Stack Systems, and Tools & Workflows.
+ * 15 core technical capabilities structured across 7 engineering categories:
+ * - Frontend Development (7)
+ * - Backend Development (3)
+ * - Database (1)
+ * - Programming (1)
+ * - APIs & Integration (1)
+ * - AI & Automation (1)
+ * - Design (1)
+ * 
+ * Neutral, factual descriptions without arbitrary percentage scores or
+ * unverified proficiency claims.
  */
+
 export const skillsData = [
   {
-    category: 'Creative Technology & 3D Web',
-    description: 'Transforming mathematical shaders and 3D scenes into fluid, interactive digital worlds.',
+    category: 'Frontend Development',
+    clusterId: '01',
+    iconName: 'Layout',
+    description: 'Building responsive web interfaces, component structures, and styling systems.',
     skills: [
-      { name: 'Three.js', level: 'Intermediate', highlight: true },
-      { name: 'React Three Fiber', level: 'Intermediate', highlight: true },
-      { name: 'GLSL / Shaders', level: 'Working Knowledge', highlight: true },
-      { name: 'GSAP Animation & ScrollTrigger', level: 'Advanced', highlight: true },
-      { name: 'Rapier 3D Physics', level: 'Working Knowledge', highlight: false },
-      { name: 'Interactive Math & Vectors', level: 'Intermediate', highlight: false },
+      { name: 'React.js', highlight: true },
+      { name: 'Next.js', highlight: true },
+      { name: 'JavaScript', highlight: true },
+      { name: 'Tailwind CSS', highlight: true },
+      { name: 'Bootstrap', highlight: false },
+      { name: 'HTML', highlight: false },
+      { name: 'CSS', highlight: false },
     ],
   },
   {
-    category: 'Core Frontend Engineering',
-    description: 'Sculpting accessible, high-performance web applications with modern architecture.',
+    category: 'Backend Development',
+    clusterId: '02',
+    iconName: 'Server',
+    description: 'Server-side application development, routing, and backend logic.',
     skills: [
-      { name: 'React (Hooks, Context, Architecture)', level: 'Advanced', highlight: true },
-      { name: 'JavaScript (ESNext / TypeScript)', level: 'Advanced', highlight: true },
-      { name: 'Tailwind CSS', level: 'Advanced', highlight: true },
-      { name: 'HTML5 Semantic & WCAG Accessibility', level: 'Advanced', highlight: false },
-      { name: 'Responsive Layouts & Editorial Systems', level: 'Advanced', highlight: true },
-      { name: 'Framer Motion', level: 'Intermediate', highlight: false },
+      { name: 'Node.js', highlight: true },
+      { name: 'Express.js', highlight: true },
+      { name: 'Django', highlight: false },
     ],
   },
   {
-    category: 'Backend & Full-Stack Systems',
-    description: 'Building secure RESTful backends, data models, and scalable API pipelines.',
+    category: 'Database',
+    clusterId: '03',
+    iconName: 'Database',
+    description: 'Document data modeling, collection structures, and database queries.',
     skills: [
-      { name: 'Node.js', level: 'Intermediate', highlight: true },
-      { name: 'Express.js', level: 'Intermediate', highlight: true },
-      { name: 'MongoDB & Mongoose', level: 'Intermediate', highlight: true },
-      { name: 'RESTful API Architecture', level: 'Intermediate', highlight: false },
-      { name: 'Git & Version Control', level: 'Advanced', highlight: false },
-      { name: 'Vite & Modern Tooling', level: 'Advanced', highlight: false },
+      { name: 'MongoDB', highlight: true },
+    ],
+  },
+  {
+    category: 'Programming',
+    clusterId: '04',
+    iconName: 'Code',
+    description: 'General-purpose programming, script automation, and algorithmic logic.',
+    skills: [
+      { name: 'Python', highlight: true },
+    ],
+  },
+  {
+    category: 'APIs & Integration',
+    clusterId: '05',
+    iconName: 'Network',
+    description: 'Developing and consuming structured RESTful HTTP endpoints.',
+    skills: [
+      { name: 'REST APIs', highlight: true },
+    ],
+  },
+  {
+    category: 'AI & Automation',
+    clusterId: '06',
+    iconName: 'Cpu',
+    description: 'Integrating artificial intelligence models and workflow automation tools.',
+    skills: [
+      { name: 'AI Automation', highlight: true },
+    ],
+  },
+  {
+    category: 'Design',
+    clusterId: '07',
+    iconName: 'Palette',
+    description: 'User interface layouts, design hierarchies, and interactive user experience.',
+    skills: [
+      { name: 'UI/UX Design', highlight: true },
     ],
   },
 ]
