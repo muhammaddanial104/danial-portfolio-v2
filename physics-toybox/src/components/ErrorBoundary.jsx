@@ -110,14 +110,14 @@ export default class ErrorBoundary extends Component {
               <button
                 type="button"
                 onClick={this.handleReload}
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-medium text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#8B5CF6]/25 hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto px-6 py-3 rounded-full font-medium text-xs uppercase tracking-wider btn-primary hover:scale-105 active:scale-95"
               >
                 Reload Universe
               </button>
               <button
                 type="button"
                 onClick={this.handleReset}
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#181326] hover:bg-[#231C38] border border-[#8B5CF6]/30 text-[#E9D5FF] font-medium text-xs uppercase tracking-wider transition-all duration-300 hover:border-[#8B5CF6]/60"
+                className="w-full sm:w-auto px-6 py-3 rounded-full font-medium text-xs uppercase tracking-wider btn-secondary"
               >
                 Return to Origin
               </button>
@@ -129,7 +129,7 @@ export default class ErrorBoundary extends Component {
                 <button
                   type="button"
                   onClick={this.toggleDetails}
-                  className="text-[11px] font-mono text-[#A78BFA]/60 hover:text-[#A78BFA] transition-colors underline flex items-center gap-1 mx-auto"
+                  className="text-[11px] font-mono text-[#A78BFA]/80 hover:text-white transition-colors underline flex items-center gap-1 mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] rounded px-2 py-0.5 cursor-pointer"
                 >
                   {this.state.showDetails ? '▲ Hide Anomaly Telemetry' : '▼ View Anomaly Telemetry'}
                 </button>

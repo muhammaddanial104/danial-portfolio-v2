@@ -81,8 +81,14 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="my-auto py-10 md:py-16 max-w-5xl z-10"
+            className="my-auto py-10 md:py-16 max-w-5xl z-10 relative"
           >
+            {/* Subtle, soft ambient dark vignette for maximum text contrast against 3D WebGL waves */}
+            <div
+              className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(8,7,13,0.68)_0%,rgba(8,7,13,0.35)_55%,transparent_80%)] blur-2xl"
+              aria-hidden="true"
+            />
+
             {/* Subtitle Badge */}
             <motion.div
               variants={itemVariants}
@@ -95,12 +101,12 @@ export default function Home() {
             </motion.div>
 
             {/* Cinematic Word-by-Word Reveal Headline */}
-            <WordRevealHero delay={0.5} className="text-[clamp(2.9rem,8.6vw,8.4rem)]" />
+            <WordRevealHero delay={0.5} className="text-[clamp(2.35rem,8.6vw,8.4rem)]" />
 
             {/* Descriptive Editorial Paragraph */}
             <motion.p
               variants={itemVariants}
-              className="mt-6 md:mt-8 max-w-2xl font-display text-sm sm:text-base md:text-xl leading-relaxed text-brand-lilac/80"
+              className="mt-6 md:mt-8 max-w-2xl font-display text-sm sm:text-base md:text-xl leading-relaxed text-[#C4B5FD]"
             >
               Developing full-stack MERN applications, client-side web utilities, and interactive digital experiences. 
               Crafting software that combines clean engineering with memorable visual presence.
@@ -113,7 +119,7 @@ export default function Home() {
             >
               <MagneticButton
                 to="/projects"
-                className="group flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian transition-all duration-300 hover:bg-brand-lilac hover:shadow-glow-sm"
+                className="group flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold btn-primary"
               >
                 <span>Explore {projectsData.length} Projects</span>
                 <ArrowDownRight
@@ -124,7 +130,7 @@ export default function Home() {
 
               <MagneticButton
                 to="/about"
-                className="group flex items-center justify-center gap-2 rounded-full border border-brand-purple/30 bg-obsidian-surface/60 px-6 py-3.5 font-mono text-xs uppercase tracking-wider text-brand-lilac backdrop-blur-md transition-all duration-300 hover:border-brand-purple hover:bg-brand-purple/20 hover:text-white"
+                className="group flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-mono text-xs uppercase tracking-wider btn-secondary"
               >
                 <span>The Philosophy</span>
                 <ArrowUpRight
@@ -190,7 +196,7 @@ export default function Home() {
             {featuredProjects.map((proj, idx) => (
               <div
                 key={proj.id}
-                className="group relative rounded-2xl border border-brand-purple/20 bg-obsidian-card/65 p-6 md:p-8 backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-brand-purple/60 hover:bg-obsidian-card/85 hover:shadow-[0_0_40px_rgba(139,92,246,0.22)] hover:-translate-y-1.5 flex flex-col justify-between"
+                className="group relative rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/65 p-6 md:p-8 backdrop-blur-xl shadow-glass transition-all duration-300 hover:bg-obsidian-card/85 hover:shadow-[0_0_40px_rgba(139,92,246,0.22)] hover:-translate-y-1.5 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between text-brand-lavender font-mono text-[10px]">
@@ -243,7 +249,7 @@ export default function Home() {
           </div>
 
           {/* Bottom Callout Banner */}
-          <div className="mt-12 rounded-2xl border border-brand-purple/20 bg-gradient-to-r from-brand-violet/15 via-obsidian-card/70 to-brand-violet/15 p-6 sm:p-8 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div className="mt-12 rounded-2xl card-glow-border bg-gradient-to-r from-brand-violet/15 via-obsidian-card/70 to-brand-violet/15 p-6 sm:p-8 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
             <div>
               <h4 className="font-editorial text-lg sm:text-xl font-bold text-white">
                 Discover All {projectsData.length} Engineered Projects
@@ -254,7 +260,7 @@ export default function Home() {
             </div>
             <MagneticButton
               to="/projects"
-              className="flex-shrink-0 rounded-full bg-white px-6 py-3 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian hover:bg-brand-lilac transition-all shadow-glow-sm"
+              className="flex-shrink-0 rounded-full px-6 py-3 font-mono text-xs uppercase tracking-wider font-semibold btn-primary"
             >
               View Full Archive ({projectsData.length})
             </MagneticButton>
@@ -279,13 +285,13 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <MagneticButton
               to="/about"
-              className="rounded-full bg-brand-purple/20 border border-brand-purple/40 px-6 py-3 font-mono text-xs uppercase tracking-wider text-white hover:bg-brand-purple transition-all shadow-glow-sm"
+              className="rounded-full px-6 py-3 font-mono text-xs uppercase tracking-wider font-semibold btn-primary"
             >
               Read Full Manifesto
             </MagneticButton>
             <MagneticButton
               to="/skills"
-              className="rounded-full border border-white/10 bg-obsidian-card/60 px-6 py-3 font-mono text-xs uppercase tracking-wider text-brand-lilac hover:text-white transition-all"
+              className="rounded-full px-6 py-3 font-mono text-xs uppercase tracking-wider btn-secondary"
             >
               Inspect Core Arsenal
             </MagneticButton>

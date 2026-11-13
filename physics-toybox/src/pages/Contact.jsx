@@ -59,7 +59,7 @@ export default function Contact() {
             href="https://wa.me/923137525862"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative rounded-3xl border border-brand-purple/25 bg-obsidian-card/75 p-6 sm:p-8 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:border-emerald-500/60 hover:bg-obsidian-card/90 hover:shadow-[0_0_40px_rgba(16,185,129,0.2)] hover:-translate-y-1 block focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+            className="group relative rounded-3xl card-glow-border bg-obsidian-card/75 p-6 sm:p-8 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:bg-obsidian-card/90 hover:shadow-[0_0_40px_rgba(16,185,129,0.2)] hover:-translate-y-1 block focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -97,7 +97,7 @@ export default function Contact() {
           {/* Email Direct Card */}
           <a
             href="mailto:innocentdanial00@gmail.com"
-            className="group relative rounded-3xl border border-brand-purple/25 bg-obsidian-card/75 p-6 sm:p-8 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:border-brand-purple/70 hover:bg-obsidian-card/90 hover:shadow-[0_0_40px_rgba(139,92,246,0.25)] hover:-translate-y-1 block focus:outline-none focus:ring-2 focus:ring-brand-purple/50"
+            className="group relative rounded-3xl card-glow-border bg-obsidian-card/75 p-6 sm:p-8 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:bg-obsidian-card/90 hover:shadow-[0_0_40px_rgba(139,92,246,0.25)] hover:-translate-y-1 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] active:border-[#6D28D9]"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export default function Contact() {
               href="https://github.com/muhammaddanial104/danial-tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-2xl border border-brand-purple/20 bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:border-brand-purple hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-purple/50 block"
+              className="group rounded-2xl card-glow-border card-glow-stagger bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] active:border-[#6D28D9] block"
             >
               <div className="flex items-center justify-between text-brand-lavender">
                 <Github size={20} className="group-hover:text-white transition-colors" />
@@ -162,7 +162,7 @@ export default function Contact() {
               href="https://www.linkedin.com/in/muhammad-danial-2584b4432"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-2xl border border-brand-purple/20 bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:border-brand-purple hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-purple/50 block"
+              className="group rounded-2xl card-glow-border card-glow-stagger bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] active:border-[#6D28D9] block"
             >
               <div className="flex items-center justify-between text-brand-lavender">
                 <Linkedin size={20} className="group-hover:text-white transition-colors" />
@@ -181,7 +181,7 @@ export default function Contact() {
               href="https://www.facebook.com/share/1CD8FQZmT6/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-2xl border border-brand-purple/20 bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:border-brand-purple hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-purple/50 block"
+              className="group rounded-2xl card-glow-border card-glow-stagger bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] active:border-[#6D28D9] block"
             >
               <div className="flex items-center justify-between text-brand-lavender">
                 <Facebook size={20} className="group-hover:text-white transition-colors" />
@@ -200,7 +200,7 @@ export default function Contact() {
               href="https://www.instagram.com/muhammad_danial604?exln=amEzODdkdHZzcnVp"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-2xl border border-brand-purple/20 bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:border-brand-purple hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-purple/50 block"
+              className="group rounded-2xl card-glow-border card-glow-stagger bg-obsidian-surface/60 p-4 sm:p-5 backdrop-blur-xl transition-all duration-300 hover:bg-obsidian-card/85 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A78BFA] active:border-[#6D28D9] block"
             >
               <div className="flex items-center justify-between text-brand-lavender">
                 <Instagram size={20} className="group-hover:text-white transition-colors" />
@@ -234,7 +234,7 @@ export default function Contact() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/60 p-6 backdrop-blur-xl shadow-glass"
+              className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/60 p-6 backdrop-blur-xl shadow-glass"
             >
               <div className="font-mono text-[10px] text-brand-purple uppercase">SERVICE // 0{idx + 1}</div>
               <h3 className="mt-3 font-editorial text-lg font-bold text-white">{item.title}</h3>

@@ -62,13 +62,16 @@ export default function Navbar() {
         {/* Brand Logo */}
         <Link
           to="/"
-          className="group flex items-center gap-2 sm:gap-2.5 font-editorial text-lg sm:text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-90 flex-shrink-0"
+          className="group flex items-center gap-2.5 tracking-tight text-white transition-opacity hover:opacity-90 flex-shrink-0"
+          aria-label="DANIAL® Home"
         >
-          <span className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-purple to-brand-violet text-xs font-mono font-bold text-white shadow-glow-sm transition-transform duration-300 group-hover:scale-105">
-            D
-          </span>
-          <span className="tracking-wider">
-            DANIAL<span className="text-brand-purple font-mono text-sm ml-0.5">®</span>
+          <img
+            src="/danial-icon.png"
+            alt="DANIAL® Icon"
+            className="h-8 w-8 sm:h-9 sm:w-9 md:h-9 md:w-9 rounded-xl object-contain shadow-glow-sm transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="font-editorial text-lg sm:text-xl font-bold tracking-wider text-white">
+            DANIAL<span className="text-brand-purple font-mono text-xs ml-0.5">®</span>
           </span>
           <span className="hidden sm:inline-flex items-center gap-1 rounded-full border border-brand-purple/20 bg-brand-purple/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-brand-lavender">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
@@ -113,7 +116,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <MagneticButton
             href="/contact"
-            className="group hidden sm:flex items-center gap-2 rounded-full border border-brand-purple/30 bg-gradient-to-r from-brand-violet/20 to-brand-purple/20 px-4 sm:px-5 py-2 font-mono text-xs uppercase tracking-wider text-brand-lilac transition-all duration-300 hover:border-brand-purple hover:bg-brand-purple hover:text-white hover:shadow-glow-sm"
+            className="group hidden sm:flex items-center gap-2 rounded-full px-4 sm:px-5 py-2 font-mono text-xs uppercase tracking-wider btn-secondary"
           >
             <span>Let's Connect</span>
             <ArrowUpRight
@@ -124,9 +127,10 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle Button */}
           <button
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle navigation menu"
-            className="grid h-9 w-9 place-items-center rounded-full border border-brand-purple/40 bg-brand-purple/15 text-white transition-all hover:bg-brand-purple hover:border-brand-purple md:hidden flex-shrink-0 shadow-glow-sm"
+            className="grid h-9 w-9 place-items-center rounded-full btn-icon md:hidden flex-shrink-0"
           >
             {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -144,6 +148,23 @@ export default function Navbar() {
             className="absolute top-full left-0 right-0 border-b border-brand-purple/20 bg-[#08070D]/98 px-6 py-8 backdrop-blur-2xl md:hidden"
           >
             <div className="flex flex-col gap-4">
+              {/* Compact Mobile Brand Bar */}
+              <div className="flex items-center justify-between border-b border-brand-purple/20 pb-4 mb-1">
+                <div className="flex items-center gap-2.5">
+                  <img
+                    src="/danial-icon.png"
+                    alt="DANIAL®"
+                    className="h-7 w-7 rounded-lg object-contain shadow-glow-sm"
+                  />
+                  <span className="font-editorial text-base font-bold tracking-wider text-white">
+                    DANIAL<span className="text-brand-purple font-mono text-xs ml-0.5">®</span>
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1 rounded-full border border-brand-purple/20 bg-brand-purple/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-brand-lavender">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
+                  Studio
+                </span>
+              </div>
               {navLinks.map((link, idx) => {
                 const isActive =
                   link.path === '/'
@@ -178,7 +199,7 @@ export default function Navbar() {
                 <Link
                   to="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-violet to-brand-purple py-3.5 font-mono text-xs uppercase tracking-wider text-white shadow-glow-sm"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-mono text-xs uppercase tracking-wider btn-primary"
                 >
                   <span>Start a Project</span>
                   <ArrowUpRight size={15} />

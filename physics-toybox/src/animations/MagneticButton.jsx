@@ -33,7 +33,9 @@ export default function MagneticButton({
   const [isTouch, setIsTouch] = useState(false)
 
   useEffect(() => {
-    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setIsTouch(isTouchDevice || prefersReducedMotion)
   }, [])
 
   const handleMouseMove = (e) => {
@@ -98,6 +100,7 @@ export default function MagneticButton({
 
   return (
     <button
+      type="button"
       ref={buttonRef}
       onClick={onClick}
       onMouseMove={handleMouseMove}

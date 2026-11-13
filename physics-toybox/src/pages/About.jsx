@@ -53,7 +53,7 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-12">
           {/* Left Column: Personal Statement & Manifesto */}
           <div className="lg:col-span-7 space-y-8">
-            <div className="rounded-3xl border border-brand-purple/20 bg-obsidian-card/65 p-8 sm:p-10 backdrop-blur-2xl shadow-glass">
+            <div className="rounded-3xl card-glow-border bg-obsidian-card/65 p-8 sm:p-10 backdrop-blur-2xl shadow-glass">
               <span className="font-mono text-xs uppercase tracking-widest text-brand-lavender block mb-4">
                 THE STUDIO MANIFESTO
               </span>
@@ -72,7 +72,7 @@ export default function About() {
 
             {/* Core Competencies 2x2 Grid */}
             <div className="grid sm:grid-cols-2 gap-6">
-              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+              <div className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/50 p-6 backdrop-blur-xl">
                 <Layers className="text-brand-purple mb-3" size={20} />
                 <h3 className="font-editorial text-lg font-bold text-white">Full-Stack & MERN</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
@@ -80,7 +80,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+              <div className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/50 p-6 backdrop-blur-xl">
                 <Cpu className="text-brand-lavender mb-3" size={20} />
                 <h3 className="font-editorial text-lg font-bold text-white">AI-Powered & Automation</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
@@ -88,7 +88,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+              <div className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/50 p-6 backdrop-blur-xl">
                 <Sparkles className="text-brand-purple mb-3" size={20} />
                 <h3 className="font-editorial text-lg font-bold text-white">Interactive Experiences</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
@@ -96,7 +96,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-brand-purple/20 bg-obsidian-card/50 p-6 backdrop-blur-xl">
+              <div className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/50 p-6 backdrop-blur-xl">
                 <Palette className="text-brand-lavender mb-3" size={20} />
                 <h3 className="font-editorial text-lg font-bold text-white">UI/UX & Design Systems</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
@@ -108,7 +108,7 @@ export default function About() {
 
           {/* Right Column: Identity Card & Discipline Overview */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-3xl border border-brand-purple/30 bg-gradient-to-b from-brand-violet/20 via-obsidian-card/80 to-obsidian-card/90 p-8 backdrop-blur-2xl shadow-glass">
+            <div className="rounded-3xl card-glow-border bg-gradient-to-b from-brand-violet/20 via-obsidian-card/80 to-obsidian-card/90 p-8 backdrop-blur-2xl shadow-glass">
               <div className="flex items-center justify-between pb-6 border-b border-brand-purple/20">
                 <div className="flex items-center gap-3">
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-purple to-brand-violet font-mono text-lg font-bold text-white shadow-glow-sm">
@@ -152,7 +152,7 @@ export default function About() {
               <div className="mt-8 pt-4">
                 <MagneticButton
                   to="/contact"
-                  className="w-full rounded-xl bg-gradient-to-r from-brand-violet to-brand-purple py-3.5 font-mono text-xs uppercase tracking-wider text-white shadow-glow-sm hover:shadow-glow-md transition-all text-center"
+                  className="w-full rounded-xl py-3.5 font-mono text-xs uppercase tracking-wider btn-primary text-center"
                 >
                   Initiate Discussion
                 </MagneticButton>

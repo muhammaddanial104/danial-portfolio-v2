@@ -122,3 +122,194 @@ body {
 canvas {
   touch-action: pan-y;
 }
+
+/* ============================================================================
+   DANIAL® — Global Button Color System (Electric Violet & Lavender Palette)
+   ============================================================================ */
+
+/* Primary Button: Electric Violet -> Lavender Hover -> Deep Violet Active */
+.btn-primary {
+  background-color: #8B5CF6;
+  color: #08070D;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 20px -3px rgba(139, 92, 246, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: #A78BFA;
+  color: #08070D;
+  box-shadow: 0 0 25px -2px rgba(167, 139, 250, 0.45);
+}
+
+.btn-primary:active {
+  background-color: #6D28D9;
+  color: #FFFFFF;
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #08070D, 0 0 0 4px #A78BFA;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Secondary Button: Dark Obsidian-Violet (#171023) + #6D28D9 Border */
+.btn-secondary {
+  background-color: #171023;
+  border: 1px solid #6D28D9;
+  color: #FFFFFF;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover {
+  background-color: #1E152E;
+  border-color: #8B5CF6;
+  color: #FFFFFF;
+  box-shadow: 0 0 20px -3px rgba(139, 92, 246, 0.25);
+}
+
+.btn-secondary:active {
+  background-color: #120B1C;
+  border-color: #6D28D9;
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #08070D, 0 0 0 4px #A78BFA;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icon / Compact Action Button */
+.btn-icon {
+  background-color: #171023;
+  border: 1px solid #6D28D9;
+  color: #FFFFFF;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-icon:hover {
+  background-color: #8B5CF6;
+  border-color: #A78BFA;
+  color: #08070D;
+  box-shadow: 0 0 16px -2px rgba(167, 139, 250, 0.35);
+}
+
+.btn-icon:active {
+  background-color: #6D28D9;
+  border-color: #6D28D9;
+}
+
+.btn-icon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #08070D, 0 0 0 4px #A78BFA;
+}
+
+/* ============================================================================
+   DANIAL® — 360° Moving Violet Light Border Glow Effect
+   ============================================================================ */
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes borderRotate {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+.card-glow-border {
+  --border-delay: 0s;
+  --glow-speed: 6s;
+  position: relative;
+  isolation: isolate;
+}
+
+.card-glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--border-angle),
+    #2B1748 0deg,
+    #2B1748 260deg,
+    #6D28D9 300deg,
+    #8B5CF6 335deg,
+    #C4B5FD 355deg,
+    #FFFFFF 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: borderRotate var(--glow-speed) linear infinite;
+  animation-delay: var(--border-delay);
+  z-index: 1;
+  transition: filter 0.3s ease;
+}
+
+.card-glow-border:hover::before {
+  animation-duration: 4s;
+  filter: drop-shadow(0 0 5px rgba(196, 181, 253, 0.45));
+}
+
+/* Staggered desynchronization across cards */
+.card-glow-stagger:nth-child(2n)::before {
+  --border-delay: -1.2s;
+}
+.card-glow-stagger:nth-child(3n)::before {
+  --border-delay: -2.4s;
+}
+.card-glow-stagger:nth-child(4n)::before {
+  --border-delay: -3.6s;
+}
+.card-glow-stagger:nth-child(5n)::before {
+  --border-delay: -4.8s;
+}
+
+/* Explicit delay utility classes */
+.glow-delay-1::before { --border-delay: -1.2s; }
+.glow-delay-2::before { --border-delay: -2.4s; }
+.glow-delay-3::before { --border-delay: -3.6s; }
+.glow-delay-4::before { --border-delay: -4.8s; }
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-icon {
+    transition: none !important;
+  }
+  .card-glow-border::before {
+    animation: none;
+    background: #2B1748;
+  }
+  .card-glow-border:hover::before {
+    filter: none;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .card-glow-border:hover::before {
+    filter: drop-shadow(0 0 2px rgba(196, 181, 253, 0.3));
+  }
+}

@@ -136,16 +136,17 @@ export default function Projects() {
               const isActive = activeFilter === tab.id
               return (
                 <button
+                  type="button"
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`rounded-full px-4 py-1.5 font-mono text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                     isActive
-                      ? 'border border-brand-purple bg-brand-purple text-white shadow-glow-sm'
-                      : 'border border-brand-purple/20 bg-obsidian-surface/60 text-brand-lilac/80 hover:border-brand-purple/40 hover:text-white'
+                      ? 'btn-primary border border-[#8B5CF6]'
+                      : 'btn-secondary text-brand-lilac/90'
                   }`}
                 >
                   <span>{tab.label}</span>
-                  <span className={`text-[10px] rounded-full px-1.5 py-0.2 ${isActive ? 'bg-white/20 text-white' : 'bg-brand-purple/15 text-brand-lavender'}`}>
+                  <span className={`text-[10px] rounded-full px-1.5 py-0.2 ${isActive ? 'bg-[#08070D]/15 text-[#08070D] font-bold' : 'bg-[#6D28D9]/40 text-[#A78BFA]'}`}>
                     {tab.count}
                   </span>
                 </button>
@@ -164,7 +165,7 @@ export default function Projects() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ delay: idx * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative rounded-3xl border border-brand-purple/20 bg-obsidian-card/65 p-7 sm:p-9 md:p-10 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:border-brand-purple/60 hover:bg-obsidian-card/85 hover:shadow-[0_0_50px_rgba(139,92,246,0.22)] hover:-translate-y-1.5 flex flex-col justify-between"
+              className="group relative rounded-3xl card-glow-border card-glow-stagger bg-obsidian-card/65 p-7 sm:p-9 md:p-10 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:bg-obsidian-card/85 hover:shadow-[0_0_50px_rgba(139,92,246,0.22)] hover:-translate-y-1.5 flex flex-col justify-between"
             >
               {/* Subtle ambient radiant glow on hover */}
               <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-purple/10 via-transparent to-brand-violet/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -229,7 +230,7 @@ export default function Projects() {
                   <button
                     type="button"
                     onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-brand-purple/20 hover:bg-brand-purple px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider text-white transition-all shadow-glow-sm cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider btn-primary"
                   >
                     <span>View Details</span>
                     <ArrowUpRight size={13} />
@@ -242,7 +243,7 @@ export default function Projects() {
                         type="button"
                         onClick={(e) => handleActionClick(e, project, 'github')}
                         title="View GitHub Repository"
-                        className="p-1.5 rounded-full border border-brand-purple/25 text-brand-lilac/70 hover:text-white hover:border-brand-purple/60 hover:bg-brand-purple/10 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-full btn-icon text-brand-lilac/80"
                         aria-label={`GitHub link for ${project.title}`}
                       >
                         <Github size={14} />
@@ -251,7 +252,7 @@ export default function Projects() {
                         type="button"
                         onClick={(e) => handleActionClick(e, project, 'live')}
                         title="Open Live Demonstration"
-                        className="p-1.5 rounded-full border border-brand-purple/25 text-brand-lilac/70 hover:text-white hover:border-brand-purple/60 hover:bg-brand-purple/10 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-full btn-icon text-brand-lilac/80"
                         aria-label={`Live Demo link for ${project.title}`}
                       >
                         <ExternalLink size={14} />
@@ -286,7 +287,7 @@ export default function Projects() {
                 <button
                   type="button"
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-6 right-6 p-2 rounded-full border border-brand-purple/25 text-brand-lilac hover:text-white hover:border-brand-purple bg-obsidian-surface transition-colors cursor-pointer"
+                  className="absolute top-6 right-6 p-2 rounded-full btn-icon"
                   aria-label="Close project modal"
                 >
                   <X size={16} />
@@ -359,7 +360,7 @@ export default function Projects() {
                         <button
                           type="button"
                           onClick={(e) => handleActionClick(e, selectedProject, 'live')}
-                          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full border border-brand-purple/40 bg-brand-purple/20 hover:bg-brand-purple px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-white transition-all cursor-pointer"
+                          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-mono text-xs uppercase tracking-wider btn-primary"
                         >
                           <ExternalLink size={13} />
                           <span>Live Demo</span>
@@ -367,7 +368,7 @@ export default function Projects() {
                         <button
                           type="button"
                           onClick={(e) => handleActionClick(e, selectedProject, 'github')}
-                          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full border border-brand-purple/25 bg-obsidian-surface hover:border-brand-purple px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-brand-lilac hover:text-white transition-all cursor-pointer"
+                          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-mono text-xs uppercase tracking-wider btn-secondary"
                         >
                           <Github size={13} />
                           <span>Repository</span>
@@ -388,7 +389,7 @@ export default function Projects() {
                   <button
                     type="button"
                     onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto px-6 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider text-brand-lilac/70 hover:text-white transition-colors cursor-pointer text-center"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider btn-secondary text-center"
                   >
                     Close
                   </button>
@@ -419,7 +420,8 @@ export default function Projects() {
                   <button
                     type="button"
                     onClick={() => setLinkNotice(null)}
-                    className="text-brand-lilac/60 hover:text-white cursor-pointer"
+                    className="p-1 rounded-full btn-icon text-brand-lilac/80"
+                    aria-label="Close status notice"
                   >
                     <X size={15} />
                   </button>
@@ -434,7 +436,7 @@ export default function Projects() {
                   <button
                     type="button"
                     onClick={() => setLinkNotice(null)}
-                    className="px-4 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/20 text-white font-mono text-xs uppercase tracking-wider hover:bg-brand-purple transition-all cursor-pointer"
+                    className="px-4 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider btn-primary"
                   >
                     Understood
                   </button>
@@ -445,7 +447,7 @@ export default function Projects() {
         </AnimatePresence>
 
         {/* Collaboration Prompt */}
-        <div className="mt-16 sm:mt-24 rounded-3xl border border-brand-purple/30 bg-gradient-to-r from-brand-violet/20 via-obsidian-card/80 to-brand-purple/20 p-8 sm:p-12 text-center backdrop-blur-xl">
+        <div className="mt-16 sm:mt-24 rounded-3xl card-glow-border bg-gradient-to-r from-brand-violet/20 via-obsidian-card/80 to-brand-purple/20 p-8 sm:p-12 text-center backdrop-blur-xl">
           <span className="font-mono text-xs uppercase tracking-widest text-brand-purple">
             LOOKING FOR CUSTOM ENGINEERING?
           </span>
@@ -455,7 +457,7 @@ export default function Projects() {
           <div className="mt-6">
             <MagneticButton
               to="/contact"
-              className="rounded-full bg-white px-8 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold text-obsidian hover:bg-brand-lilac transition-all shadow-glow-sm"
+              className="rounded-full px-8 py-3.5 font-mono text-xs uppercase tracking-wider font-semibold btn-primary"
             >
               Initiate Collaboration
             </MagneticButton>

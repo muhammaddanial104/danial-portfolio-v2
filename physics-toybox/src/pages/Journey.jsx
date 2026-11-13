@@ -54,7 +54,7 @@ export default function Journey() {
               </div>
 
               {/* Milestone Card */}
-              <div className="rounded-3xl border border-brand-purple/20 bg-obsidian-card/60 p-7 sm:p-9 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:border-brand-purple/50 hover:bg-obsidian-card/80">
+              <div className="rounded-3xl card-glow-border card-glow-stagger bg-obsidian-card/60 p-7 sm:p-9 backdrop-blur-2xl shadow-glass transition-all duration-300 hover:bg-obsidian-card/80">
                 <div className="flex flex-wrap items-center justify-between gap-2 text-brand-lavender font-mono text-xs">
                   <span className="text-lg sm:text-xl font-bold text-white font-editorial tracking-wider">
                     {milestone.year}

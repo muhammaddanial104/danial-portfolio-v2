@@ -99,7 +99,7 @@ export default function Skills() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.08, duration: 0.5 }}
-                className={`rounded-3xl border border-brand-purple/20 bg-obsidian-card/65 p-6 sm:p-8 backdrop-blur-2xl shadow-glass flex flex-col justify-between transition-all duration-300 hover:border-brand-purple/50 hover:shadow-[0_0_35px_rgba(139,92,246,0.18)] ${
+                className={`rounded-3xl card-glow-border card-glow-stagger bg-obsidian-card/65 p-6 sm:p-8 backdrop-blur-2xl shadow-glass flex flex-col justify-between transition-all duration-300 hover:shadow-[0_0_35px_rgba(139,92,246,0.18)] ${
                   isWide ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
                 }`}
               >
@@ -164,7 +164,7 @@ export default function Skills() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="rounded-3xl border border-brand-purple/30 bg-gradient-to-br from-brand-violet/20 via-obsidian-card/80 to-obsidian-card/90 p-6 sm:p-8 backdrop-blur-2xl shadow-glass flex flex-col justify-between col-span-1"
+            className="rounded-3xl card-glow-border bg-gradient-to-br from-brand-violet/20 via-obsidian-card/80 to-obsidian-card/90 p-6 sm:p-8 backdrop-blur-2xl shadow-glass flex flex-col justify-between col-span-1"
           >
             <div>
               <div className="flex items-center gap-2.5 text-brand-lavender font-mono text-xs">
@@ -202,7 +202,7 @@ export default function Skills() {
             <div className="mt-6 pt-4 border-t border-brand-purple/20">
               <MagneticButton
                 to="/projects"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-purple/25 border border-brand-purple/40 py-2.5 font-mono text-xs uppercase tracking-wider text-white hover:bg-brand-purple hover:shadow-glow-sm transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 font-mono text-xs uppercase tracking-wider btn-primary"
               >
                 <span>View Projects Archive</span>
                 <ArrowUpRight size={14} />

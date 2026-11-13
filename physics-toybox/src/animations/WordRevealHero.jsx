@@ -125,25 +125,25 @@ export default function WordRevealHero({ className = '', delay = 0.55 }) {
   return (
     <h1
       ref={containerRef}
-      className={`font-editorial font-extrabold leading-[0.9] tracking-[-0.04em] text-white ${className}`}
+      className={`font-editorial font-extrabold leading-[0.9] tracking-[-0.04em] ${className}`}
     >
-      <span className="block overflow-hidden py-1">
-        <span className="hero-word-reveal inline-block mr-4">I</span>
-        <span className="hero-word-reveal inline-block">CREATE</span>
+      <span className="block overflow-hidden py-1 whitespace-nowrap">
+        <span className="hero-word-reveal inline-block mr-[0.35em] text-[#FFFFFF]">I</span>
+        <span className="hero-word-reveal inline-block text-[#FFFFFF]">CREATE</span>
       </span>
 
       <span className="block overflow-hidden py-1">
-        <span className="hero-word-reveal inline-block text-shimmer-violet">
+        <span className="hero-word-reveal inline-block bg-gradient-to-r from-[#7C3AED] via-[#8B5CF6] to-[#A78BFA] bg-clip-text text-transparent">
           DIGITAL
         </span>
       </span>
 
       <span className="block overflow-hidden py-1">
-        <span className="relative inline-block text-brand-lavender italic font-display font-medium">
-          <span className="hero-word-reveal inline-block">WORLDS.</span>
+        <span className="relative inline-block text-[#A78BFA] italic font-display font-medium">
+          <span className="hero-word-reveal inline-block text-[#A78BFA]">WORLDS.</span>
           <span
             ref={lineUnderRef}
-            className="absolute -bottom-1 left-0 h-[3px] w-full origin-left bg-gradient-to-r from-brand-purple via-brand-violet to-transparent"
+            className="absolute -bottom-1 left-0 h-[3px] w-full origin-left bg-gradient-to-r from-[#7C3AED] via-[#A78BFA] to-transparent shadow-[0_0_12px_rgba(167,139,250,0.5)]"
           />
         </span>
       </span>
