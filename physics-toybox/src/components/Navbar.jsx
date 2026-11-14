@@ -41,6 +41,28 @@ export default function Navbar() {
     window.scrollTo(0, 0)
   }, [location.pathname])
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isOpen])
+
+  // Handle Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen])
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
@@ -53,8 +75,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
-        scrolled
-          ? 'bg-[#08070D]/90 backdrop-blur-md border-b border-brand-purple/15 py-3 sm:py-4 shadow-glass'
+        scrolled || isOpen
+          ? 'bg-[#08070D] border-b border-brand-purple/15 py-3 sm:py-4 shadow-glass'
           : 'bg-transparent py-4 sm:py-6'
       }`}
     >
@@ -129,7 +151,9 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle navigation menu"
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation-menu"
             className="grid h-9 w-9 place-items-center rounded-full btn-icon md:hidden flex-shrink-0"
           >
             {isOpen ? <X size={18} /> : <Menu size={18} />}
@@ -137,34 +161,21 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu (Full-bleed solid Obsidian overlay) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            id="mobile-navigation-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="absolute top-full left-0 right-0 border-b border-brand-purple/20 bg-[#08070D]/98 px-6 py-8 backdrop-blur-2xl md:hidden"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute top-full left-0 right-0 h-[calc(100dvh-100%)] min-h-[calc(100vh-100%)] bg-[#08070D] border-t border-brand-purple/20 px-6 py-6 pb-12 overflow-y-auto flex flex-col justify-between md:hidden shadow-2xl"
           >
-            <div className="flex flex-col gap-4">
-              {/* Compact Mobile Brand Bar */}
-              <div className="flex items-center justify-between border-b border-brand-purple/20 pb-4 mb-1">
-                <div className="flex items-center gap-2.5">
-                  <img
-                    src="/danial-icon.png"
-                    alt="DANIAL®"
-                    className="h-7 w-7 rounded-lg object-contain shadow-glow-sm"
-                  />
-                  <span className="font-editorial text-base font-bold tracking-wider text-white">
-                    DANIAL<span className="text-brand-purple font-mono text-xs ml-0.5">®</span>
-                  </span>
-                </div>
-                <span className="inline-flex items-center gap-1 rounded-full border border-brand-purple/20 bg-brand-purple/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-brand-lavender">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
-                  Studio
-                </span>
-              </div>
+            <div className="flex flex-col gap-3">
               {navLinks.map((link, idx) => {
                 const isActive =
                   link.path === '/'
@@ -176,17 +187,17 @@ export default function Navbar() {
                     key={link.name}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.04 }}
+                    transition={{ delay: idx * 0.035 }}
                   >
                     <Link
                       to={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center justify-between border-b border-white/5 pb-3 font-editorial text-2xl font-bold tracking-tight transition-colors ${
+                      className={`flex items-center justify-between border-b border-white/5 pb-3 pt-1 font-editorial text-2xl font-bold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[#08070D] rounded-lg px-1 ${
                         isActive ? 'text-white' : 'text-brand-lilac/70 hover:text-white'
                       }`}
                     >
-                      <span className="flex items-center gap-2">
-                        {isActive && <span className="h-2 w-2 rounded-full bg-brand-purple" />}
+                      <span className="flex items-center gap-2.5">
+                        {isActive && <span className="h-2 w-2 rounded-full bg-brand-purple shadow-[0_0_8px_#8B5CF6]" />}
                         {link.name}
                       </span>
                       <span className="font-mono text-xs text-brand-purple">0{idx + 1}</span>
@@ -194,17 +205,17 @@ export default function Navbar() {
                   </motion.div>
                 )
               })}
+            </div>
 
-              <div className="pt-3">
-                <Link
-                  to="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-mono text-xs uppercase tracking-wider btn-primary"
-                >
-                  <span>Start a Project</span>
-                  <ArrowUpRight size={15} />
-                </Link>
-              </div>
+            <div className="pt-6 border-t border-brand-purple/15 mt-4">
+              <Link
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-mono text-xs uppercase tracking-wider btn-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple"
+              >
+                <span>Start a Project</span>
+                <ArrowUpRight size={15} />
+              </Link>
             </div>
           </motion.div>
         )}

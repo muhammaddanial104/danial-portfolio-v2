@@ -34,7 +34,7 @@ import gsap from 'gsap'
  * @param {boolean} props.reducedMotion - Accessibility flag to dampen animation speeds
  */
 
-// Point shader with bright neon purple / lavender glow
+// Point shader with luminous electric violet & lavender nodes
 const nodeVertexShader = `
   uniform float uPixelRatio;
   uniform float uOpacity;
@@ -47,7 +47,8 @@ const nodeVertexShader = `
   void main() {
     vColor = aColor;
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    gl_PointSize = aSize * uPixelRatio * (26.0 / -mvPosition.z);
+    // Depth-based perspective scaling with controlled maximum radius
+    gl_PointSize = aSize * uPixelRatio * (14.0 / -mvPosition.z);
     gl_Position = projectionMatrix * mvPosition;
     vOpacity = uOpacity;
   }
@@ -62,8 +63,9 @@ const nodeFragmentShader = `
     float dist = length(coord);
     if (dist > 0.5) discard;
 
-    float alpha = smoothstep(0.5, 0.05, dist) * vOpacity;
-    float core = smoothstep(0.2, 0.0, dist) * 0.75;
+    // Soft antialiased circular falloff with calm core
+    float alpha = smoothstep(0.5, 0.08, dist) * vOpacity * 0.70;
+    float core = smoothstep(0.2, 0.0, dist) * 0.25;
     vec3 col = vColor + vec3(core);
 
     gl_FragColor = vec4(col, alpha);
@@ -85,7 +87,7 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
   const COLS = 46
   const ROWS = 46
   const NODE_COUNT = COLS * ROWS
-  const PILLAR_COUNT = 32
+  const PILLAR_COUNT = 18
 
   // 1. Grid Node Positions & Colors
   const { gridBasePositions, nodeColors, nodeSizes } = useMemo(() => {
@@ -93,9 +95,9 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
     const col = new Float32Array(NODE_COUNT * 3)
     const sz = new Float32Array(NODE_COUNT)
 
-    const cViolet = new THREE.Color('#8B5CF6')
-    const cLavender = new THREE.Color('#A78BFA')
-    const cLilac = new THREE.Color('#E9D5FF')
+    const cViolet = new THREE.Color('#6D28D9')
+    const cLavender = new THREE.Color('#8B5CF6')
+    const cLilac = new THREE.Color('#A78BFA')
 
     const gridW = viewport.width * 2.2
     const gridH = viewport.height * 2.4
@@ -115,7 +117,7 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
         col[idx + 1] = colorPick.g
         col[idx + 2] = colorPick.b
 
-        sz[r * COLS + c] = (r + c) % 6 === 0 ? 3.0 : 2.0
+        sz[r * COLS + c] = (r + c) % 6 === 0 ? 1.5 : 1.0
       }
     }
     return { gridBasePositions: base, nodeColors: col, nodeSizes: sz }
@@ -154,12 +156,12 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
     const tipCol = new Float32Array(PILLAR_COUNT * 3)
     const tipSz = new Float32Array(PILLAR_COUNT)
 
-    const cTip = new THREE.Color('#FFFFFF')
+    const cTip = new THREE.Color('#C4B5FD')
     for (let i = 0; i < PILLAR_COUNT; i++) {
       tipCol[i * 3] = cTip.r
       tipCol[i * 3 + 1] = cTip.g
       tipCol[i * 3 + 2] = cTip.b
-      tipSz[i] = 4.2
+      tipSz[i] = 1.8
     }
 
     const geo = new THREE.BufferGeometry()
@@ -270,13 +272,13 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
           linePosArr[lIdx + 4] = posArr[rIdx + 1]
           linePosArr[lIdx + 5] = posArr[rIdx + 2]
 
-          const alpha = 0.28 * opacity
-          lineColArr[lIdx] = 0.54 * alpha
-          lineColArr[lIdx + 1] = 0.36 * alpha
-          lineColArr[lIdx + 2] = 0.96 * alpha
-          lineColArr[lIdx + 3] = 0.54 * alpha
-          lineColArr[lIdx + 4] = 0.36 * alpha
-          lineColArr[lIdx + 5] = 0.96 * alpha
+          const alpha = 0.08 * opacity
+          lineColArr[lIdx] = 0.45 * alpha
+          lineColArr[lIdx + 1] = 0.22 * alpha
+          lineColArr[lIdx + 2] = 0.85 * alpha
+          lineColArr[lIdx + 3] = 0.45 * alpha
+          lineColArr[lIdx + 4] = 0.22 * alpha
+          lineColArr[lIdx + 5] = 0.85 * alpha
 
           segIdx++
         }
@@ -293,13 +295,13 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
           linePosArr[lIdx + 4] = posArr[tIdx + 1]
           linePosArr[lIdx + 5] = posArr[tIdx + 2]
 
-          const alpha = 0.28 * opacity
-          lineColArr[lIdx] = 0.54 * alpha
-          lineColArr[lIdx + 1] = 0.36 * alpha
-          lineColArr[lIdx + 2] = 0.96 * alpha
-          lineColArr[lIdx + 3] = 0.54 * alpha
-          lineColArr[lIdx + 4] = 0.36 * alpha
-          lineColArr[lIdx + 5] = 0.96 * alpha
+          const alpha = 0.08 * opacity
+          lineColArr[lIdx] = 0.45 * alpha
+          lineColArr[lIdx + 1] = 0.22 * alpha
+          lineColArr[lIdx + 2] = 0.85 * alpha
+          lineColArr[lIdx + 3] = 0.45 * alpha
+          lineColArr[lIdx + 4] = 0.22 * alpha
+          lineColArr[lIdx + 5] = 0.85 * alpha
 
           segIdx++
         }
@@ -315,7 +317,7 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
       const y = posArr[nodeI + 1]
       const z = posArr[nodeI + 2]
 
-      const pHeight = 1.6 + Math.sin(time * 2.0 + i) * 0.4
+      const pHeight = 1.3 + Math.sin(time * 2.0 + i) * 0.3
       const pIdx = i * 6
 
       pillarPosArr[pIdx] = x
@@ -326,14 +328,14 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
       pillarPosArr[pIdx + 4] = y
       pillarPosArr[pIdx + 5] = z + pHeight
 
-      const alpha = (0.35 + Math.sin(time * 3.0 + i) * 0.25) * opacity
-      pillarColArr[pIdx] = 0.42 * alpha
-      pillarColArr[pIdx + 1] = 0.16 * alpha
-      pillarColArr[pIdx + 2] = 0.85 * alpha
+      const alpha = (0.12 + Math.sin(time * 2.5 + i) * 0.08) * opacity
+      pillarColArr[pIdx] = 0.30 * alpha
+      pillarColArr[pIdx + 1] = 0.12 * alpha
+      pillarColArr[pIdx + 2] = 0.65 * alpha
 
-      pillarColArr[pIdx + 3] = 0.92 * alpha
-      pillarColArr[pIdx + 4] = 0.85 * alpha
-      pillarColArr[pIdx + 5] = 1.0 * alpha
+      pillarColArr[pIdx + 3] = 0.55 * alpha
+      pillarColArr[pIdx + 4] = 0.35 * alpha
+      pillarColArr[pIdx + 5] = 0.85 * alpha
 
       // Tip beacon position
       pillarTipPos[i * 3] = x
@@ -345,12 +347,12 @@ export default function SkillsBackground({ opacity = 1, reducedMotion = false })
     pillarTipsRef.current.geometry.attributes.position.needsUpdate = true
 
     // Perspective tilt (angled slightly downward into the digital horizon)
-    groupRef.current.rotation.x = -Math.PI / 3.4
-    groupRef.current.position.y = -0.75
+    groupRef.current.rotation.x = -Math.PI / 3.2
+    groupRef.current.position.y = -1.1
   })
 
   return (
-    <group ref={groupRef} position={[0, -0.75, -1.2]}>
+    <group ref={groupRef} position={[0, -1.1, -1.8]}>
       {/* 1. Undulating Digital Grid Nodes */}
       <points ref={pointsRef}>
         <bufferGeometry>
