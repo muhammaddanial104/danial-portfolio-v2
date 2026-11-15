@@ -63,7 +63,7 @@ export default function About() {
                 className="text-lg sm:text-2xl font-editorial font-bold text-white leading-snug"
               />
               <p className="mt-6 font-display text-sm sm:text-base leading-relaxed text-brand-lilac/75">
-                My work centers on full-stack web development and MERN stack applications, paired with AI-powered tools, workflow automation, and tactile UI/UX design. With a foundation in Robotics & Autonomous Systems and software engineering internship experience developing MERN e-commerce platforms at ITS Gujrat (March–August 2024), I build software with a focus on clean logic, user privacy, and dependable performance.
+                My work centers on AI engineering, autonomous workflow automation, and full-stack MERN development. With a foundation in Robotics & Autonomous Systems and software engineering internship experience developing MERN e-commerce platforms at ITS Gujrat (March–August 2024), I engineer software with a focus on clean logic, user privacy, and dependable performance.
               </p>
               <p className="mt-3 font-display text-sm sm:text-base leading-relaxed text-brand-lilac/75">
                 From developing client-side document utilities like Toolora and Danix Tools to prototyping conversational AI platforms and interactive WebGL shaders, the goal remains singular: engineer software that is practical, accessible, and memorable.
@@ -82,9 +82,9 @@ export default function About() {
 
               <div className="rounded-2xl card-glow-border card-glow-stagger bg-obsidian-card/50 p-6 backdrop-blur-xl">
                 <Cpu className="text-brand-lavender mb-3" size={20} />
-                <h3 className="font-editorial text-lg font-bold text-white">AI-Powered & Automation</h3>
+                <h3 className="font-editorial text-lg font-bold text-white">AI Engineering & Automation</h3>
                 <p className="mt-2 text-xs sm:text-sm text-brand-lilac/70 leading-relaxed">
-                  Integrating artificial intelligence models, conversational prompt interfaces, and Python scripts that streamline repetitive workflows.
+                  Architecting intelligent AI automations, agentic workflows, conversational LLM interfaces, and custom Python scripts that streamline repetitive operations.
                 </p>
               </div>
 
@@ -117,7 +117,7 @@ export default function About() {
                   <div>
                     <h3 className="font-editorial text-xl font-bold text-white">DANIAL®</h3>
                     <span className="font-mono text-[10px] text-brand-purple uppercase tracking-wider">
-                      Full-Stack & Applied AI Developer
+                      AI Engineer & Full-Stack Developer
                     </span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function About() {
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">PRIMARY FOCUS:</span>
-                  <span className="text-brand-lavender">Full-Stack, MERN & AI Automation</span>
+                  <span className="text-brand-lavender">AI Engineering, AI Automation & Full-Stack</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">EXPERTISE:</span>

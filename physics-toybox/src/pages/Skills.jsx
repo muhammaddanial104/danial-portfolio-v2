@@ -74,7 +74,7 @@ export default function Skills() {
           <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[10px] uppercase tracking-wider text-brand-lilac/70">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-purple/30 bg-brand-violet/15 px-3 py-1 text-brand-lavender">
               <Sparkles size={12} className="text-brand-purple" />
-              7 Engineering Domains
+              {skillsData.length} Engineering Domains
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-obsidian-surface/60 px-3 py-1">
               <Layers size={12} className="text-brand-purple" />

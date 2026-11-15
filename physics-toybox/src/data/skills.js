@@ -3,14 +3,14 @@
  * DANIAL® — Centralized Skills & Technical Capabilities Data Store
  * ============================================================================
  * 
- * 15 core technical capabilities structured across 7 engineering categories:
- * - Frontend Development (7)
- * - Backend Development (3)
- * - Database (1)
- * - Programming (1)
- * - APIs & Integration (1)
- * - AI & Automation (1)
- * - Design (1)
+ * Technical capabilities structured across 7 foundational engineering categories:
+ * - Frontend Development
+ * - Backend Development
+ * - Database
+ * - Programming Languages
+ * - APIs & Integration
+ * - AI & Automation Engineering
+ * - Design
  * 
  * Neutral, factual descriptions without arbitrary percentage scores or
  * unverified proficiency claims.
@@ -25,11 +25,10 @@ export const skillsData = [
     skills: [
       { name: 'React.js', highlight: true },
       { name: 'Next.js', highlight: true },
-      { name: 'JavaScript', highlight: true },
       { name: 'Tailwind CSS', highlight: true },
       { name: 'Bootstrap', highlight: false },
-      { name: 'HTML', highlight: false },
-      { name: 'CSS', highlight: false },
+      { name: 'HTML5', highlight: false },
+      { name: 'CSS3', highlight: false },
     ],
   },
   {
@@ -53,12 +52,15 @@ export const skillsData = [
     ],
   },
   {
-    category: 'Programming',
+    category: 'Programming Languages',
     clusterId: '04',
     iconName: 'Code',
-    description: 'General-purpose programming, script automation, and algorithmic logic.',
+    description: 'Core languages for systems programming, data pipelines, and application engineering.',
     skills: [
       { name: 'Python', highlight: true },
+      { name: 'JavaScript (ES6+)', highlight: true },
+      { name: 'TypeScript', highlight: true },
+      { name: 'C / C++', highlight: false },
     ],
   },
   {
@@ -71,12 +73,15 @@ export const skillsData = [
     ],
   },
   {
-    category: 'AI & Automation',
+    category: 'AI & Automation Engineering',
     clusterId: '06',
     iconName: 'Cpu',
-    description: 'Integrating artificial intelligence models and workflow automation tools.',
+    description: 'Architecting artificial intelligence solutions, workflow automations, and LLM integrations.',
     skills: [
+      { name: 'AI Engineering', highlight: true },
       { name: 'AI Automation', highlight: true },
+      { name: 'Agentic Workflows', highlight: true },
+      { name: 'LLM Orchestration', highlight: false },
     ],
   },
   {

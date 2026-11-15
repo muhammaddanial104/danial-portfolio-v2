@@ -13,7 +13,7 @@ export const projectsData = [
   {
     id: 'mern-internship',
     num: '01',
-    title: 'ITS E-Commerce (MERN Internship)',
+    title: 'ITS GUJRAT',
     category: 'Full-Stack Development',
     filterCategory: 'fullstack',
     tag: 'MERN Stack',
