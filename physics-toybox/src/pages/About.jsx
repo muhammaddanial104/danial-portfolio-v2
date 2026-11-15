@@ -129,7 +129,7 @@ export default function About() {
               <div className="mt-6 space-y-4 font-mono text-xs">
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">LOCATION:</span>
-                  <span className="text-white">Earth // Digital Space</span>
+                  <span className="text-white">Gujrat, Pakistan</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-brand-lilac/50">PRIMARY FOCUS:</span>

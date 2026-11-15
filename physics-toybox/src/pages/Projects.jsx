@@ -75,9 +75,9 @@ export default function Projects() {
         message: type === 'live'
           ? (project.status === 'Completed'
               ? 'Live deployment is available upon request (internal client or local release).'
-              : project.status === 'In Progress'
-                ? 'Application in active development. Live deployment in progress.'
-                : 'Project concept / prototype. Live deployment is not hosted.')
+              : (project.status === 'Under Development' || project.status === 'In Progress')
+                ? 'Application under active development. Live deployment in progress.'
+                : 'Project in development roadmap / upcoming release.')
           : (project.repoStatus || 'Repository access is private or pending release.'),
       })
     }
@@ -92,19 +92,21 @@ export default function Projects() {
             Completed
           </span>
         )
+      case 'Under Development':
       case 'In Progress':
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-purple/35 bg-brand-purple/15 px-3 py-0.5 text-[11px] font-mono text-brand-lilac">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
-            In Progress
+            Under Development
           </span>
         )
+      case 'Upcoming':
       case 'Concept':
       default:
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-lavender/30 bg-brand-lavender/10 px-3 py-0.5 text-[11px] font-mono text-brand-lavender">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-lavender/70" />
-            Concept
+            Upcoming
           </span>
         )
     }
@@ -374,15 +376,15 @@ export default function Projects() {
                           <span>Repository</span>
                         </button>
                       </>
-                    ) : selectedProject.status === 'In Progress' ? (
+                    ) : (selectedProject.status === 'Under Development' || selectedProject.status === 'In Progress') ? (
                       <span className="inline-flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-4 py-2 font-mono text-xs text-brand-lilac">
                         <span className="h-1.5 w-1.5 rounded-full bg-brand-purple animate-pulse" />
-                        In Active Development
+                        Under Active Development
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-2 rounded-full border border-brand-lavender/30 bg-brand-lavender/10 px-4 py-2 font-mono text-xs text-brand-lavender">
                         <span className="h-1.5 w-1.5 rounded-full bg-brand-lavender/70" />
-                        Concept / UI Prototype
+                        Upcoming Platform
                       </span>
                     )}
                   </div>

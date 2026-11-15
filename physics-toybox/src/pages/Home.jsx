@@ -67,12 +67,12 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-purple opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-purple" />
               </span>
-              <CharRevealLabel text="DANIAL® ARCHIVE — ISSUE 2026.1" className="text-brand-lilac truncate" delay={0.25} useScrollTrigger={false} />
+              <CharRevealLabel text="DANIAL" className="text-brand-lilac truncate font-semibold" delay={0.25} useScrollTrigger={false} />
             </div>
 
             <div className="flex items-center gap-4 flex-shrink-0">
               <span className="hidden md:inline-block">FULL-STACK & AI DEVELOPER</span>
-              <span className="hidden sm:inline-block text-brand-lavender">[ 51.5074° N, 0.1278° W ]</span>
+              <span className="hidden sm:inline-block text-brand-lavender">[ 32.5744° N, 74.0754° E ]</span>
             </div>
           </div>
 
@@ -227,11 +227,19 @@ export default function Home() {
                 </div>
 
                 <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                  <span className={`inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider ${
-                    proj.status === 'Completed' ? 'text-emerald-400' : 'text-brand-lavender'
+                  <span className={`inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider ${
+                    proj.status === 'Completed'
+                      ? 'text-emerald-400'
+                      : proj.status === 'Under Development'
+                        ? 'text-brand-lilac'
+                        : 'text-brand-lavender'
                   }`}>
                     <span className={`h-1.5 w-1.5 rounded-full ${
-                      proj.status === 'Completed' ? 'bg-emerald-400' : 'bg-brand-lavender animate-pulse'
+                      proj.status === 'Completed'
+                        ? 'bg-emerald-400'
+                        : proj.status === 'Under Development'
+                          ? 'bg-brand-purple animate-pulse'
+                          : 'bg-brand-lavender/70'
                     }`} />
                     {proj.status}
                   </span>

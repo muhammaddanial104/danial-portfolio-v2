@@ -4,55 +4,44 @@
  * ============================================================================
  * 
  * Chronological evolution timeline highlighting key career epochs, technical
- * breakthroughs, and creative milestones from foundations to 3D WebGL mastery.
+ * breakthroughs, and creative milestones from the 2024 ITS Gujrat internship
+ * and full-stack freelancing to current AI engineering and automation.
  */
 export const journeyData = [
   {
-    year: '2026',
-    title: 'Creative Technologist & 3D Web Studio',
-    subtitle: 'DANIAL® Studio & Immersive WebGL Experiences',
+    year: 'August 2025 — Present',
+    title: 'AI Engineer & AI Automation',
+    subtitle: 'Applied AI Systems & Intelligent Workflow Automation',
     description:
-      'Diving deep into WebGL shader art, mathematical fluid simulation, and editorial layout architecture. Building signature interactive projects and pushing browser hardware limits.',
+      'Advancing into artificial intelligence engineering, custom agentic workflows, and automated pipeline integration. Designing prompt-driven architectures, autonomous Python scripts, and high-performance interactive interfaces.',
     milestones: [
-      'Engineered procedural GLSL wave displacement shaders and R3F systems',
-      'Developed multi-world background architectures with zero WebGL context drops',
-      'Crafted award-winning editorial typography systems and physics interactions',
+      'Engineering AI-powered platforms, conversational interfaces, and intelligent utilities',
+      'Architecting automated end-to-end business and developer workflow integrations',
+      'Connecting generative language models with full-stack web applications and REST APIs',
     ],
   },
   {
-    year: '2025',
-    title: 'Full-Stack Application Development',
-    subtitle: 'Node.js, Express, MongoDB & React Ecosystems',
+    year: 'Late 2024 — Mid 2025',
+    title: 'Full-Stack Freelance Developer',
+    subtitle: 'Independent Client Platforms & Web Utilities',
     description:
-      'Architected end-to-end full-stack web applications. Built secure backend APIs, integrated database layers, and connected modern responsive React frontends.',
+      'Transitioned into independent full-stack freelancing following the software engineering internship. Designed, engineered, and delivered responsive web platforms, document processing tools, and secure database-driven applications for diverse clients.',
     milestones: [
-      'Developed Toolora client-side WASM document processing platform',
-      'Engineered AI Hub LLM orchestration interfaces',
-      'Built automated content pipelines with Node.js and REST integrations',
+      'Delivered custom MERN-stack web applications, dynamic dashboards, and client portals',
+      'Architected browser-native document processing utilities including Toolora and Danix Tools',
+      'Engineered performant REST APIs with Node.js, Express, and MongoDB architectures',
     ],
   },
   {
-    year: '2024',
-    title: 'Modern Frontend & Component Architecture',
-    subtitle: 'React, Tailwind CSS & JavaScript Foundations',
+    year: 'March 2024 — August 2024',
+    title: 'Software Engineering Internship',
+    subtitle: 'ITS Gujrat // MERN Stack Development',
     description:
-      'Mastered modern component-driven development with React and Tailwind CSS. Focused on clean state management, modular design systems, and responsive design.',
+      'Completed an intensive six-month software engineering internship at ITS Gujrat from March to August 2024. Engineered production-grade MERN e-commerce platforms featuring dynamic catalog filtering, role-based authentication, and payment integrations.',
     milestones: [
-      'Built interactive responsive web applications with React Hooks',
-      'Adopted utility-first CSS and custom design token architectures',
-      'Deepened mastery of asynchronous JavaScript and API consumption',
-    ],
-  },
-  {
-    year: '2023',
-    title: 'The Spark: Entering the World of Code',
-    subtitle: 'HTML, CSS, JavaScript Exploration',
-    description:
-      'Wrote my first lines of code and discovered a profound passion for digital creation. Realized that code is not merely syntax, but a canvas to bring imagination to life.',
-    milestones: [
-      'Learned the building blocks of the web: HTML5 semantics and CSS layouts',
-      'Built first interactive web scripts and responsive pages',
-      'Ignited the commitment to become a world-class creative developer',
+      'Engineered full-stack MERN e-commerce storefronts with dynamic catalog and inventory management',
+      'Integrated Stripe checkout payment workflows and secure transaction processing',
+      'Implemented role-based access control (RBAC) and JSON Web Token (JWT) authorization',
     ],
   },
 ]

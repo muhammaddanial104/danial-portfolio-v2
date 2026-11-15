@@ -34,7 +34,7 @@ export default function Journey() {
             MY <span className="text-shimmer-violet italic font-display">JOURNEY.</span>
           </h1>
           <p className="mt-4 max-w-2xl font-display text-sm sm:text-base md:text-lg text-brand-lilac/75 leading-relaxed">
-            A chronological timeline documenting my progression, key milestones, and ongoing explorations in creative technology.
+            A chronological timeline documenting my career evolution from software engineering internship and full-stack freelancing to applied AI engineering and automation.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export default function Journey() {
 
                 <ScrollTextReveal
                   text={milestone.description}
-                  highlightWords={['webgl', 'fluid', 'shaders', 'full-stack', 'react', 'code', 'imagination']}
+                  highlightWords={['intelligence', 'automation', 'agentic', 'workflow', 'freelancing', 'platforms', 'internship', 'mern', 'ecommerce', 'stripe']}
                   className="mt-3 text-xs sm:text-sm md:text-base text-brand-lilac/80 font-display leading-relaxed"
                 />
 

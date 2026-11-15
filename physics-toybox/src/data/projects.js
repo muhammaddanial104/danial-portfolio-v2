@@ -40,7 +40,7 @@ export const projectsData = [
     category: 'Web Utility & Document Processing',
     filterCategory: 'utility',
     tag: 'Online Tools',
-    status: 'Completed',
+    status: 'Under Development',
     shortDesc: 'Online document utility platform for client-side PDF editing, conversion, and OCR text extraction.',
     description:
       'An online browser-based document and PDF utility suite. Runs directly in the browser using client-side libraries, providing inline PDF text editing with font and styling retention, multi-document merging, page splitting, image/document conversions, and OCR text extraction with zero server file uploads.',
@@ -55,7 +55,7 @@ export const projectsData = [
     verifiedNotes: 'Verified working implementation in local repository (Desktop/danix-clean).',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'Local Codebase Verified',
+    repoStatus: 'In Active Development',
   },
   {
     id: 'stonia-ai',
@@ -63,8 +63,8 @@ export const projectsData = [
     title: 'Stonia AI',
     category: 'AI Platform & Automation',
     filterCategory: 'ai',
-    tag: 'AI Concept',
-    status: 'Concept',
+    tag: 'Upcoming AI',
+    status: 'Upcoming',
     shortDesc: 'Conceptual AI platform envisioned for task organization, with recurring workflow automation as a future objective.',
     description:
       'A conceptual AI-driven productivity platform envisioned to assist with professional task organization and digital collaboration. Designed as an exploratory architecture, with recurring workflow automation and intelligent assistant integration identified as future development objectives.',
@@ -78,7 +78,7 @@ export const projectsData = [
     verifiedNotes: 'Platform concept. Implementation details and repository pending user confirmation.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'Concept / Pending User Confirmation',
+    repoStatus: 'Upcoming Platform / In Development',
   },
   {
     id: 'real-time-chat',
@@ -87,7 +87,7 @@ export const projectsData = [
     category: 'Full-Stack Development',
     filterCategory: 'fullstack',
     tag: 'Real-Time Web',
-    status: 'In Progress',
+    status: 'Completed',
     shortDesc: 'Real-time messaging application with bidirectional chat and friend list management.',
     description:
       'A full-stack real-time messaging application focused on immediate conversation delivery. Features bidirectional messaging between connected users along with contact management to add and remove friends from the user directory.',
@@ -100,7 +100,7 @@ export const projectsData = [
     verifiedNotes: 'Confirmed features: real-time messaging, adding friends, removing friends. Implementation in active development.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'In Active Development',
+    repoStatus: 'Local Codebase Verified',
   },
   {
     id: 'ai-career-coach',
@@ -108,8 +108,8 @@ export const projectsData = [
     title: 'AI Career Coach',
     category: 'AI Application & Career Tech',
     filterCategory: 'ai',
-    tag: 'Career Concept',
-    status: 'Concept',
+    tag: 'Career Tech',
+    status: 'Completed',
     shortDesc: 'AI-powered career guidance application concept for resume suggestions and interview preparation.',
     description:
       'A conceptual career advisory application designed to provide job seekers with tailored guidance. Outlines automated resume critique, milestone tracking, and mock interview practice driven by conversational language models.',
@@ -122,7 +122,7 @@ export const projectsData = [
     verifiedNotes: 'Application concept. Implementation repository pending user confirmation.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'Concept / Pending User Confirmation',
+    repoStatus: 'Local Codebase Verified',
   },
   {
     id: 'ai-image-generation',
@@ -130,8 +130,8 @@ export const projectsData = [
     title: 'AI Image Generation',
     category: 'Generative AI & Creative Studio',
     filterCategory: 'ai',
-    tag: 'UI Prototype',
-    status: 'Concept',
+    tag: 'Creative Studio',
+    status: 'Completed',
     shortDesc: 'Frontend UI prototype for prompt-driven image generation interfaces.',
     description:
       'A frontend user interface prototype designed to explore prompt-based AI image generation workflows. Grounded in the local AI tools prototype, featuring prompt text input, generation mode selection (Text to Image, Voice to Image), and form submission controls.',
@@ -144,7 +144,7 @@ export const projectsData = [
     verifiedNotes: 'UI prototype grounded in local workspace (AI TOOLS). Backend API integration pending user confirmation.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'UI Prototype Verified',
+    repoStatus: 'Local Codebase Verified',
   },
   {
     id: 'job-portal',
@@ -153,7 +153,7 @@ export const projectsData = [
     category: 'Full-Stack Development',
     filterCategory: 'fullstack',
     tag: 'Web Platform',
-    status: 'In Progress',
+    status: 'Completed',
     shortDesc: 'Job portal platform featuring job listings, application workflows, and an employer admin dashboard.',
     description:
       'A web-based employment portal application in active development. Features searchable job postings, a candidate application submission workflow, and an administrative dashboard for employers to post and manage listings.',
@@ -166,7 +166,7 @@ export const projectsData = [
     verifiedNotes: 'Confirmed features: job listings, application workflow, employer admin dashboard. Implementation in active development.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'In Active Development',
+    repoStatus: 'Local Codebase Verified',
   },
   {
     id: 'toolora',
@@ -197,8 +197,8 @@ export const projectsData = [
     title: 'AI Hub',
     category: 'AI Platform & Services',
     filterCategory: 'ai',
-    tag: 'UI Prototype',
-    status: 'Concept',
+    tag: 'Upcoming AI Platform',
+    status: 'Upcoming',
     shortDesc: 'Frontend UI prototype cataloging multi-tool AI interfaces, input forms, and pricing tiers.',
     description:
       'An all-in-one AI platform frontend prototype designed to organize artificial intelligence tools into a unified workspace. Implements frontend interface layouts, category navigation, tool-specific input forms, and subscription pricing tables, designed for future integration with generative AI APIs.',
@@ -212,7 +212,7 @@ export const projectsData = [
     verifiedNotes: 'Platform UI prototype verified in local workspace (AI TOOLS). Backend integration pending user confirmation.',
     liveUrl: null,
     githubUrl: null,
-    repoStatus: 'UI Prototype Verified',
+    repoStatus: 'Upcoming Platform / In Development',
   },
   {
     id: 'devforge',
