@@ -41,19 +41,28 @@ ABOUT MUHAMMAD DANIAL (DANIAL®):
 - Portfolio URL: https://danial-portfolio-v2.vercel.app/
 
 CORE SPECIALIZATIONS & SKILLS:
-- Frontend & 3D Engineering: React, Next.js, Three.js, React Three Fiber (@react-three/fiber), Rapier Physics, Framer Motion, Tailwind CSS, TypeScript, Canvas shaders, WebGL.
-- Full-Stack & AI Systems: Node.js, Python, Supabase (PostgreSQL & pgvector RAG), Groq AI (Llama 3.3, GPT-OSS-120B, Qwen), OpenAI, Baileys WhatsApp Web Automation, REST APIs, Microservices.
+- AI & Automation Engineering: AI Engineer, Agentic AI, n8n Agents, Gen AI, AI & Automation, LLM Orchestration, RAG Architecture (pgvector), Groq & OpenAI APIs.
+- Frontend & Mobile Development: React 19, Next.js, React Native App Development, Three.js, React Three Fiber (@react-three/fiber), Rapier Physics, Framer Motion, Tailwind CSS v4, TypeScript, Canvas shaders, WebGL.
+- Backend & Security: Node.js, Express 5, Helmet, CORS, express-rate-limit, Formspree, Python, FastAPI, Baileys WhatsApp Web Automation, REST APIs.
+- Code Transformation & AST: @babel/parser, @babel/types, @babel/generator, Zod validation, IndexedDB, Web Cryptography API, JSZip.
+- Quality Assurance: React Testing Library, JSDOM, Node.js Native Test Runner, Oxlint, Concurrently.
 - UI/UX & Architecture: Clean architecture, physics-driven toybox environments, glassmorphism, responsive web applications, high-performance rendering.
 
 SIGNIFICANT PROJECTS & CREATIONS:
-1. 3D Physics Toybox Portfolio (https://danial-portfolio-v2.vercel.app/):
-   - A WebGL 3D interactive portfolio featuring 6 procedural dynamic worlds (Liquid Waves, Cosmic Aurora, Topographic Terrain, etc.), physics sandbox toybox, procedural audio, and smooth Framer Motion transitions.
-2. ChatFlow AI (WhatsApp & Web AI SaaS):
+1. DevMaple (https://www.devmaple.com) — 38-in-1 Developer Utilities Suite:
+   - A fast, privacy-first production suite of 38 browser-native developer tools, transpilers, AST code transformers, and converters (live on www.devmaple.com), powered by a hardened Express 5 backend with Helmet, CORS, and rate limiting. Stack includes React 19, TypeScript, Vite, Tailwind CSS v4, @babel parser/types/generator, Zod, IndexedDB, and Web Cryptography API.
+2. Danix Tools & Toolora — 50-in-1 PDF Suite:
+   - All-in-one privacy-first document and PDF platform featuring almost 50 browser-based tools for inline editing, merging, splitting, conversion, OCR (Tesseract.js), watermarking, and cryptographic signing with 100% client-side execution.
+3. ChatFlow AI (WhatsApp & Web AI SaaS):
    - Multi-tenant enterprise SaaS platform enabling users to train customized AI bots from PDF/website URLs and connect them directly to WhatsApp via Baileys QR code and embeddable web chat widgets.
-3. DevForge Tools / DevMaple (https://www.devmaple.com):
-   - Production suite of 100+ developer utilities, code converters, formatting engines, and security helpers.
-4. Danix Tools / Toolora:
-   - High-throughput client-side PDF utility suite with OCR, extraction, merging, and cryptographic signing.
+4. 3D Physics Toybox Portfolio (https://danial-portfolio-v2.vercel.app/):
+   - A WebGL 3D interactive portfolio featuring 6 procedural dynamic worlds (Liquid Waves, Cosmic Aurora, Topographic Terrain, etc.), physics sandbox toybox, procedural audio, and smooth Framer Motion transitions.
+5. Doctor AI Tool (Upcoming):
+   - Intelligent healthcare AI diagnostic and triage platform designed for preliminary medical query analysis and clinical guidance.
+6. AI Hub (Under Development):
+   - Comprehensive AI platform uniting text, image, voice, and code intelligence into a unified productive workspace.
+7. ITS Gujrat (MERN E-Commerce Storefronts):
+   - MERN e-commerce platforms developed during a 6-month software engineering internship at ITS Gujrat (March–August 2024).
 
 PROFESSIONAL EXPERIENCE:
 - ITS Gujrat (Software Engineer & AI Solutions):

@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   // Curate 3 featured projects from the verified list
-  const featuredIds = ['mern-internship', 'danix-tools', 'toolora']
+  const featuredIds = ['devmaple', 'danix-tools', 'mern-internship']
   const featuredProjects = projectsData.filter((p) => featuredIds.includes(p.id))
 
   return (
@@ -72,7 +72,6 @@ export default function Home() {
 
             <div className="flex items-center gap-4 flex-shrink-0">
               <span className="hidden md:inline-block">FULL-STACK & AI DEVELOPER</span>
-              <span className="hidden sm:inline-block text-brand-lavender">[ 32.5744° N, 74.0754° E ]</span>
             </div>
           </div>
 
