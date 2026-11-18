@@ -5,6 +5,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import BackgroundManager from './backgrounds/BackgroundManager.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import DanialAIChatbot from './components/DanialAIChatbot.jsx'
 
 // Route Pages (Loaded dynamically via React.lazy on-demand)
 const Home = React.lazy(() => import('./pages/Home.jsx'))
@@ -168,6 +169,9 @@ export default function App() {
 
         {/* Layer 20: Shared Global Footer */}
         <Footer />
+
+        {/* Layer 50: Interactive 3D Portfolio AI Representative Chatbot */}
+        <DanialAIChatbot />
       </div>
     </ErrorBoundary>
   )
