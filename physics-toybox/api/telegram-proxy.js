@@ -11,10 +11,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-    if (!TELEGRAM_TOKEN) {
-      return res.status(500).json({ error: 'TELEGRAM_BOT_TOKEN is not configured.' });
-    }
+    const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8929246195:AAF2tAlCJweVOY-NpRf2NnCNE-ZrBJCWXN0';
 
     const rawPath = (req.query.path || '').replace(/^\/+/, '');
 
