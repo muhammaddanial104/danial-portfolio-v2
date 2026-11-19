@@ -4,18 +4,25 @@
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8929246195:AAF2tAlCJweVOY-NpRf2NnCNE-ZrBJCWXN0';
 const TG_API = `https://api.telegram.org/bot${TELEGRAM_TOKEN}`;
 const GROQ_KEY = process.env.GROQ_API_KEY;
+const ADMIN_SECRET = process.env.ADMIN_SECRET_KEY || 'danial_admin_786';
 
 export default async function handler(req, res) {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Telegram-Bot-Api-Secret-Token');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // GET: Setup & Webhook Status Check
+  // GET: Setup & Webhook Status Check (Protected by Admin Secret)
   if (req.method === 'GET') {
-    const { setup } = req.query || {};
+    const { setup, secret } = req.query || {};
+
+    // Require admin secret for setup or metadata inspection
+    if (secret !== ADMIN_SECRET) {
+      return res.status(200).json({ status: 'online', service: 'Telegram Webhook Engine' });
+    }
+
     try {
       if (setup === 'true') {
         const webhookUrl = 'https://danial-portfolio-v2.vercel.app/api/telegram';

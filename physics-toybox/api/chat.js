@@ -61,14 +61,12 @@ SIGNIFICANT PROJECTS & CREATIONS:
    - Intelligent healthcare AI diagnostic and triage platform designed for preliminary medical query analysis and clinical guidance.
 6. AI Hub (Under Development):
    - Comprehensive AI platform uniting text, image, voice, and code intelligence into a unified productive workspace.
-7. ITS Gujrat (MERN E-Commerce Storefronts):
-   - MERN e-commerce platforms developed during a 6-month software engineering internship at ITS Gujrat (March–August 2024).
 
 PROFESSIONAL EXPERIENCE:
-- ITS Gujrat (Software Engineer & AI Solutions):
-  - Engineered production web applications, automated business customer workflows with AI pipelines, and spearheaded modern frontend architectures.
-- Freelance Creative Developer (Global Clients):
-  - Shipped bespoke 3D interactive storefronts, AI customer support bots, and full-stack SaaS MVPs.
+- Founder & Lead AI Engineer (ChatFlow AI SaaS & DevMaple):
+  - Engineered omnichannel AI customer support automation platforms, real-time Whisper speech-to-text voice engines, and 38-in-1 developer tool suites.
+- Freelance Full-Stack & Creative Developer (Global Clients):
+  - Shipped bespoke 3D interactive storefronts, AI customer support bots, and production full-stack web applications.
 
 ================================================================================
 COMMUNICATION INSTRUCTIONS:
