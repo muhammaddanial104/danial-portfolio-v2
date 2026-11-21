@@ -132,8 +132,11 @@ How can I help you today?
               { text: '🌐 View Portfolio', url: 'https://danial-portfolio-v2.vercel.app/' },
             ],
             [
-              { text: '💬 WhatsApp Danial Directly', url: 'https://wa.me/923137525862' },
+              { text: '🤖 ChatFlow AI (SaaS)', url: 'https://chatflow-studio.vercel.app' },
               { text: '🛠️ DevMaple (38 Tools)', url: 'https://www.devmaple.com' },
+            ],
+            [
+              { text: '💬 WhatsApp Danial Directly', url: 'https://wa.me/923137525862' },
             ],
           ],
         };

@@ -53,8 +53,8 @@ SIGNIFICANT PROJECTS & CREATIONS:
    - A fast, privacy-first production suite of 38 browser-native developer tools, transpilers, AST code transformers, and converters (live on www.devmaple.com), powered by a hardened Express 5 backend with Helmet, CORS, and rate limiting. Stack includes React 19, TypeScript, Vite, Tailwind CSS v4, @babel parser/types/generator, Zod, IndexedDB, and Web Cryptography API.
 2. Danix Tools & Toolora — 50-in-1 PDF Suite:
    - All-in-one privacy-first document and PDF platform featuring almost 50 browser-based tools for inline editing, merging, splitting, conversion, OCR (Tesseract.js), watermarking, and cryptographic signing with 100% client-side execution.
-3. ChatFlow AI (WhatsApp & Web AI SaaS):
-   - Multi-tenant enterprise SaaS platform enabling users to train customized AI bots from PDF/website URLs and connect them directly to WhatsApp via Baileys QR code and embeddable web chat widgets.
+3. ChatFlow AI (https://chatflow-studio.vercel.app) — WhatsApp & Web AI SaaS:
+   - Multi-tenant enterprise SaaS platform enabling users to train customized AI bots from PDF/website URLs and connect them directly to WhatsApp (24/7 QR pairing) and embeddable web chat widgets with pgvector RAG and Groq AI inference.
 4. 3D Physics Toybox Portfolio (https://danial-portfolio-v2.vercel.app/):
    - A WebGL 3D interactive portfolio featuring 6 procedural dynamic worlds (Liquid Waves, Cosmic Aurora, Topographic Terrain, etc.), physics sandbox toybox, procedural audio, and smooth Framer Motion transitions.
 5. Doctor AI Tool (Upcoming):

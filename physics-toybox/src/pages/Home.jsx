@@ -51,9 +51,9 @@ export default function Home() {
     },
   }
 
-  // Curate 3 featured projects from the verified list
-  const featuredIds = ['devmaple', 'danix-tools', 'mern-internship']
-  const featuredProjects = projectsData.filter((p) => featuredIds.includes(p.id))
+  // Curate 3 featured projects from the verified list (ChatFlow AI, DevMaple, Danix Tools)
+  const featuredIds = ['chatflow-ai', 'devmaple', 'danix-tools']
+  const featuredProjects = featuredIds.map((id) => projectsData.find((p) => p.id === id)).filter(Boolean)
 
   return (
     <PageTransition>
